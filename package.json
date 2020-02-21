@@ -1,0 +1,17 @@
+{
+  "name": "hello_contracts_remote_node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "celo_deploy.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@celo/contractkit": "^0.2.14"
+  }
+}
