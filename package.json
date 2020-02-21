@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@celo/contractkit": "^0.2.14"
+    "@celo/contractkit": "^0.2.14",
+    "web3": "^1.2.6"
   }
 }
