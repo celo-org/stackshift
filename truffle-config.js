@@ -18,17 +18,6 @@
  *
  */
 
-const Kit = require('@celo/contractkit')
-const kit = Kit.newKit('https://alfajores-forno.celo-testnet.org')
-
-const getAccount = require('./getAccount').getAccount
-
-async function awaitWrapper(){
-    let account = await getAccount()
-    kit.addAccount(account.privateKey)
-}
-awaitWrapper()
-
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
