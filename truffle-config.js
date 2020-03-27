@@ -47,8 +47,8 @@ module.exports = {
       network_id: "*"
     },
     alfajores: {
-      provider: kit.web3.currentProvider, // CeloProvider
-      network_id: 44786                   // latest Alfajores network id
+    //  provider: kit.web3.currentProvider, // CeloProvider
+    //  network_id: 44786                   // latest Alfajores network id
     }
 
     // Another network with more advanced options...
