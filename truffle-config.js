@@ -7,16 +7,18 @@
  * More information about configuration can be found at:
  *
  * truffleframework.com/docs/advanced/configuration
- *
- * To deploy via Infura you'll need a wallet provider (like truffle-hdwallet-provider)
- * to sign your transactions before they're sent to a remote public node. Infura accounts
- * are available for free at: infura.io/register.
- *
- * You'll also need a mnemonic - the twelve word phrase the wallet uses to generate
- * public/private key pairs. If you're publishing your code to GitHub make sure you load this
- * phrase from a file you've .gitignored so it doesn't accidentally become public.
- *
  */
+
+const Kit = require('@celo/contractkit')
+const kit = Kit.newKit('https://alfajores-forno.celo-testnet.org')
+
+const getAccount = require('./getAccount').getAccount
+
+async function awaitWrapper(){
+    let account = await getAccount()
+    kit.addAccount(account.privateKey)
+}
+awaitWrapper()
 
 module.exports = {
   /**
@@ -47,8 +49,8 @@ module.exports = {
       network_id: "*"
     },
     alfajores: {
-    //  provider: kit.web3.currentProvider, // CeloProvider
-    //  network_id: 44787                   // latest Alfajores network id
+      provider: kit.web3.currentProvider, // CeloProvider
+      network_id: 44787                   // latest Alfajores network id
     }
 
     // Another network with more advanced options...
