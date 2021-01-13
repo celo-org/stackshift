@@ -8,15 +8,15 @@ async function awaitWrapper(){
     let account = await getAccount()
     console.log(account.address)
     
-//     kit.addAccount(account.privateKey) // this account must have a CELO balance to pay transaction fees
+    kit.connection.addAccount(account.privateKey) // this account must have a CELO balance to pay transaction fees
 
-//     let tx = await kit.sendTransaction({
-//         from: account.address,
-//         data: HelloWorld.bytecode
-//     })
+    let tx = await kit.connection.sendTransaction({
+        from: account.address,
+        data: HelloWorld.bytecode
+    })
 
-//     const receipt = await tx.waitReceipt()
-//     console.log(receipt)
+    const receipt = await tx.waitReceipt()
+    console.log(receipt)
 }
 
 awaitWrapper()
