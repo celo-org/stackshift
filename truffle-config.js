@@ -16,7 +16,7 @@ const getAccount = require('./getAccount').getAccount
 
 async function awaitWrapper(){
     let account = await getAccount()
-    kit.addAccount(account.privateKey)
+    kit.connection.addAccount(account.privateKey)
 }
 awaitWrapper()
 
@@ -49,7 +49,7 @@ module.exports = {
       network_id: "*"
     },
     alfajores: {
-      provider: kit.web3.currentProvider, // CeloProvider
+      provider: kit.connection.web3.currentProvider, // CeloProvider
       network_id: 44787                   // latest Alfajores network id
     }
 
