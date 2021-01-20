@@ -1,3 +1,6 @@
+// This script requires that you have already deployed HelloWorld.sol with Truffle
+// Go back and do that if you haven't already
+
 // 1. Import web3 and contractkit 
 const Web3 = require("web3")
 const ContractKit = require('@celo/contractkit')
