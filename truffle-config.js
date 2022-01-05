@@ -50,7 +50,12 @@ module.exports = {
       provider: kit.connection.web3.currentProvider, // CeloProvider
       network_id: 44787,                   // latest Alfajores network id
       gas: 4000000,                        // Gas limit used for deploys, truffle gas estimation doesn't work work so we have to hardcode it
-    }
+    },
+    mainnet: {
+      provider: kit.connection.web3.currentProvider, // make sure web3 (above) is connected to mainnet (ie https://forno.celo.org)
+      network_id: 42220,
+      gas: 4000000,
+    },
 
     // Another network with more advanced options...
     // advanced: {
