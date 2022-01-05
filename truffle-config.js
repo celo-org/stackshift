@@ -10,15 +10,13 @@
  */
 
 const Kit = require('@celo/contractkit')
-const kit = Kit.newKit('https://alfajores-forno.celo-testnet.org')
+const Web3 = require('web3')
+require('dotenv').config()
 
-const getAccount = require('./getAccount').getAccount
+const web3 = new Web3('https://alfajores-forno.celo-testnet.org')
+const kit = Kit.newKitFromWeb3(web3)
 
-async function awaitWrapper(){
-    let account = await getAccount()
-    kit.connection.addAccount(account.privateKey)
-}
-awaitWrapper()
+kit.connection.addAccount(process.env.PRIVATE_KEY)
 
 module.exports = {
   /**
@@ -50,7 +48,8 @@ module.exports = {
     },
     alfajores: {
       provider: kit.connection.web3.currentProvider, // CeloProvider
-      network_id: 44787                   // latest Alfajores network id
+      network_id: 44787,                   // latest Alfajores network id
+      gas: 4000000,
     }
 
     // Another network with more advanced options...
