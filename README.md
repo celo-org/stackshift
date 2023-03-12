@@ -47,11 +47,13 @@ Include a Prerequisites section explaining any prior knowledge required or any e
 - Move the Trello Card for your tutorial from Todo to In progress
 - Follow the link in the Trello card to access the Google Doc where you’ll write your tutorial content
 - Once you have completed your tutorial, move your Trello Card from In progress to Review and please wait as we review your tutorial and address any comments from your reviewer.
+- Only one submission will be accepted per week. I.E submitting a task for week3 while still in week2 will not be accepted and the submitted task will be disallowed.
+- Unfinished tasks from the previous week can be carried over to the next week but must be completed before snapshot for the month. Any submission for month-one after snapshot of month-one will not be compensated except when explicitly stated by the Devrel team. 
 
 
 ### How to Create a PR
 - Fork the https://github.com/celo-org/stackshift.
-- Create a branch name with syntax - stackshift/<tutorial-title>
+- Create a branch name with syntax - stackshift/task-title
 - Create a PR from your branch to main branch. Make sure to add ?template=celo-sage-template at the end of the PR URL to get the template for the PR.
 
 ### Best Practices
@@ -63,4 +65,7 @@ Include a Prerequisites section explaining any prior knowledge required or any e
 - If the paragraph is too big, then please break it into multiple lines. It will help in reviewing the PR.
 - Before creating a PR, make sure your code is well formatted and there are no errors in the console.
 
-
+### Reward schedule
+- Rewards are made on the basis of completed tasks.
+- A snapshot will be taken of the number of completed tasks on the Trello board at the end of the month and payments will be made accodingly (100 cUSD per submission representing each week. I.E if a participant completed all four tasks for the month, they get a bulk payment of 400 cUSD)
+- The recipient of the most helpful participant will be decided by all participants and the reward gets added to his/her/their payments.
