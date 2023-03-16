@@ -33,8 +33,8 @@ Add potential errors and troubleshooting. Of course, the tutorial shouldn't list
 ## Submitting your weekly task
 
 ### Submission Creation Process
-- Move the Trello Card for your tutorial from Todo to In progress
-- Follow the link in the Trello card to access the Google Doc where you’ll write your tutorial content
+- Create and Move the [Trello Card](https://trello.com/invite/b/3WDYSUka/ATTI84bc9379df8a44f59c997c94c38155aeEBC57A9B/stackshift-submissions) for your tutorial from Todo to In progress
+- create a link in the [Trello card](https://trello.com/invite/b/3WDYSUka/ATTI84bc9379df8a44f59c997c94c38155aeEBC57A9B/stackshift-submissions) to access the Google Doc where you’ll write your tutorial content
 - Once you have completed your submission, move your Trello Card from In progress to Review and please wait as we review your tutorial and address any comments from your reviewer.
 - Only one submission will be accepted per week. I.E submitting a task for week3 while still in week2 will not be accepted and the submitted task will be disallowed.
 - Unfinished tasks from the previous week can be rolled over to the next week but must be completed before snapshot for the month. Any submission for month-one after snapshot of month-one will not be compensated except when explicitly stated by the Devrel team. 
