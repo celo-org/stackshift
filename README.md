@@ -42,7 +42,6 @@ Add potential errors and troubleshooting. Of course, the tutorial shouldn't list
 
 ### Best Practices
 - Before creating a PR, make sure to pull the code from main branch - git pull upstream main.
-- Please run the prettier in your markdown file before creating a PR. You can use the prettier extension in VS Code or you can use the prettier online tool - Prettier Online.
 - To use prettier in VSCode, you can press Cmd/Ctrl + shift + p and search for Format Document with and select Prettier - Code formatter.
 - Before creating a PR, make sure your code is well formatted and there are no errors in the console.
 
