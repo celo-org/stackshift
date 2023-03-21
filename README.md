@@ -24,8 +24,6 @@ This eight-week program is designed to help developers become familiar with the 
 - Do not copy and paste existing content. Plagiarism is a serious issue and will not be tolerated. If the tutorial is inspired by some existing content (for example forking an Ethereum tutorial to convert it for use on Avalanche), reference it and link to it.
 Add potential errors and troubleshooting. Of course, the tutorial shouldn't list all possible errors but make an effort to catch the important or most common ones.
 - Include any walkthrough videos or video content in the PR by uploading it to Google Drive if needed.
-- Funding of accounts from faucets needs to be explained clearly as to which account is being funded, from where and why. Do not assume learners can accomplish this on their own!
-
 
 
 ## Submitting your weekly task
