@@ -4,8 +4,8 @@ Ann app that allows friends to split payment of a bill between each other
 
 ## install depencencies
 
-```npm install
-
+```
+npm install
 ```
 
 ## Testing
