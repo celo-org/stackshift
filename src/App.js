@@ -44,7 +44,6 @@ function App() {
 
   const getFund = async () => {
     const result = await FundSplitterContract.getContractBalance()
-    console.log('bal ', ethers.utils.formatEther(result))
     setBalance(ethers.utils.formatEther(result))
   }
 
@@ -84,16 +83,15 @@ function App() {
       let contract = await kit.contracts.getGoldToken();
       const accounts = await kit.web3.eth.getAccounts(); // get a list of available accounts on the network
       const from = accounts[0]; // use the first account as the sender
-      let transaction = await contract
+      await contract
         .transfer(contractAddress, amount)
         .send({from});
-      // let receipt = await transaction.waitReceipt();
-      // console.log(`Transaction: https://alfajores-blockscout.celo-testnet.org/tx/${receipt.transactionHash}/`, "\n", `Balance: ${kit.web3.utils.fromWei(balance.toString(), "ether")}`);
+
       setLoading(false)
       setFund('')
       document.getElementById('fund').value = ''
 
-      getFund()
+      await getFund()
     } catch (e) {
       console.log(e)
     }

@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react'
-import { NODE_URL, truncate } from '../utils'
-import { newKit } from '@celo/contractkit'
+import { useState } from 'react'
+import { truncate } from '../utils'
 
-const kit = newKit(NODE_URL)
 const AppHeader = () => {
 
   const [address, setAddress] = useState('')
