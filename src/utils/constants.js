@@ -1,0 +1,1 @@
+export const NODE_URL = 'https://alfajores-forno.celo-testnet.org'
