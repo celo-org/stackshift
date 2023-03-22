@@ -1,0 +1,41 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/home/justin/Projects/fresh-cra/contracts/FundSplitter.sol": {
+      "lastModificationDate": 1679437313200,
+      "contentHash": "ea07566111c6dca28097c5bbfc37c8fd",
+      "sourceName": "contracts/FundSplitter.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "FundSplitter",
+        "IERC20Token"
+      ]
+    }
+  }
+}
