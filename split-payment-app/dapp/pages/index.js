@@ -34,8 +34,6 @@ export default function Home() {
     kit.defaultAccount = accounts[0];
 
     setAddress(accounts[0])
-
-    console.log(address);
   };
 
   const getContract = () => {
