@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@celo/contractkit": "^3.2.0",
+    "@celo/react-celo": "^5.0.3",
     "@walletconnect/web3-provider": "^1.8.0",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",

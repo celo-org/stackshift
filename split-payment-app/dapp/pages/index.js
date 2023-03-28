@@ -5,9 +5,9 @@ import { useState, useEffect } from "react";
 import Web3 from "web3";
 import { newKitFromWeb3 } from "@celo/contractkit";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import { useCelo } from "@celo/react-celo";
+import { abi } from "../spilter.abi";
 
-import styles from "@/styles/Home.module.css";
-import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import EqualModal from "@/components/Modals/EquallyModal";
 import RatioModal from "@/components/Modals/RatioModal";
@@ -20,30 +20,36 @@ export default function Home() {
   const [openRatioModal, setRatioModal] = useState(false);
   const [billAmount, setBillAmount] = useState("");
   const [numberOfParticipants, setNumberOfParticipants] = useState("");
-  const [address, setAddress] = useState("");
-  const [contract, setContract] = useState();
+  // const [address, setAddress] = useState("");
+  // const [contract, setContract] = useState();
+  const {kit, address, connect} = useCelo();
 
-  const connectWallet = async () => {
-    await window.celo.enable();
+  const contract = new kit.connection.web3.eth.Contract(
+    abi,
+    "0x1467F4e1dEaEe91a3095B69E6142Ff41c49812e2"
+  );
 
-    const web3 = new Web3(window.celo);
-    const kit = newKitFromWeb3(web3);
+  // const connectWallet = async () => {
+  //   await window.celo.enable();
+
+  //   const web3 = new Web3(window.celo);
+  //   const kit = newKitFromWeb3(web3);
     
-    const accounts = await kit.web3.eth.getAccounts();
+  //   const accounts = await kit.web3.eth.getAccounts();
 
-    kit.defaultAccount = accounts[0];
+  //   kit.defaultAccount = accounts[0];
 
-    setAddress(accounts[0])
-  };
+  //   setAddress(accounts[0])
+  // };
 
-  const getContract = () => {
-    const contract = initializeContract();
-    setContract(contract);
-  }
+  // const getContract = () => {
+  //   const contract = initializeContract();
+  //   setContract(contract);
+  // }
 
-  useEffect(() => {
-    getContract();
-  }, [])
+  // useEffect(() => {
+  //   getContract();
+  // }, [])
 
   const submitBillAmountAndParticipants = (e) => {
     e.preventDefault();
@@ -123,7 +129,7 @@ export default function Home() {
               </div>
             </div>
           ) : (
-            <button className="text-white bg-blue-500 w-28 rounded-md py-2 mt-4" onClick={connectWallet}>
+            <button className="text-white bg-blue-500 w-28 rounded-md py-2 mt-4" onClick={() => connect().catch((e) => console.log(e.message))}>
               Connect Wallet
             </button>
           )}

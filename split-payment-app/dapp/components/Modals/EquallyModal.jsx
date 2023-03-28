@@ -10,7 +10,8 @@ const EqualModal = (props) => {
     localStorage.setItem("addresses", JSON.stringify(participantsArray));
   };
 
-  const splitBillEqually = () => {
+  const splitBillEqually = (e) => {
+    e.preventDefault();
     const participants = JSON.parse(localStorage.getItem("addresses"));
     console.log(participants);
 
