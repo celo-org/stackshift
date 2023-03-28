@@ -7,6 +7,6 @@
 3. To run this contract clone the repo and run `command` : `npx hardhat run scripts/deploy.js`
 
 <p float="left">
-  <img src="screenshot/IMG.png?raw=true" width="360" />
+  <img src="screenshot/IMG.PNG?raw=true" width="360" />
   
 </p>
