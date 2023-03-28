@@ -1,55 +1,24 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Web3 from "web3";
-import { newKitFromWeb3 } from "@celo/contractkit";
-import WalletConnectProvider from "@walletconnect/web3-provider";
 import { useCelo } from "@celo/react-celo";
 import { abi } from "../spilter.abi";
 
 import Link from "next/link";
 import EqualModal from "@/components/Modals/EquallyModal";
 import RatioModal from "@/components/Modals/RatioModal";
-import { initializeContract } from "@/helper";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [openEqualModal, setOpenEqualModal] = useState(false);
   const [openRatioModal, setRatioModal] = useState(false);
   const [billAmount, setBillAmount] = useState("");
   const [numberOfParticipants, setNumberOfParticipants] = useState("");
-  // const [address, setAddress] = useState("");
-  // const [contract, setContract] = useState();
   const {kit, address, connect} = useCelo();
 
   const contract = new kit.connection.web3.eth.Contract(
     abi,
     "0x1467F4e1dEaEe91a3095B69E6142Ff41c49812e2"
   );
-
-  // const connectWallet = async () => {
-  //   await window.celo.enable();
-
-  //   const web3 = new Web3(window.celo);
-  //   const kit = newKitFromWeb3(web3);
-    
-  //   const accounts = await kit.web3.eth.getAccounts();
-
-  //   kit.defaultAccount = accounts[0];
-
-  //   setAddress(accounts[0])
-  // };
-
-  // const getContract = () => {
-  //   const contract = initializeContract();
-  //   setContract(contract);
-  // }
-
-  // useEffect(() => {
-  //   getContract();
-  // }, [])
 
   const submitBillAmountAndParticipants = (e) => {
     e.preventDefault();
