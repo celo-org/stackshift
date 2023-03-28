@@ -60,8 +60,8 @@ contract Split is Ownable {
     enum ExpenseCategory {
         ACCOMODATION,
         TRANSPORTATION,
-        FOOD,
-        MISC
+        SHOOL,
+        CLOTHING
     }
 
     struct Participant {
