@@ -5,3 +5,8 @@
 2. the smart contract name `Splitter.Sol`
 
 3. To run this contract clone the repo and run `command` : `npx hardhat run scripts/deploy.js`
+
+<p float="left">
+  <img src="screenshot/IMG.png?raw=true" width="360" />
+  
+</p>
