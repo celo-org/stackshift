@@ -8,7 +8,12 @@ const { ethers } = require("hardhat");
 
 async function main() {
   const Splitter = await ethers.getContractFactory("Splitter");
-  const split = await Splitter.deploy("Hello, Hardhat!");
+  const split = await Splitter.deploy(
+    
+    "0x44477F952F3ac9EAdc8Eb694372182735b620975"
+  ,
+    "0xb395F443BA3Df615c7aF8A147c7d380dF6F9Db55"
+  );
 
   await split.deployed({});
 

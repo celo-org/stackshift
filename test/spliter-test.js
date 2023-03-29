@@ -14,6 +14,6 @@ describe("Splitter", function () {
     // // wait until the transaction is mined
     // await setBalance.wait();
 
-    expect(await split.payBill()).to.equal("Hola, mundo!");
+    expect(await split.payBill()).to.equal("Hola, split");
   });
 });
