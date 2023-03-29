@@ -1,6 +1,15 @@
-# Hello Contract (Truffle + Remote Node)
+# Split Bill Demo with Contract Kit for StackShift Week 1
 
-a 'hello world' exercise with truffle and celo [link](https://docs.celo.org/developer-guide/start/hello-contract-remote-node)
+To run:
+
+`npm install`
+
+`truffle compile`
+
+`truffle migrate --network alfajores`
+
+`node splitBill.js`
+
 
 Use with truffle version 5.4.0.
 
