@@ -2,7 +2,7 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("Splitter", function () {
-  it("Should return the new greeting once it's changed", async function () {
+  it("__should ask for freinds address address  ", async function () {
     const Splitter = await ethers.getContractFactory("Splitter");
     const split = await Splitter.deploy("Hello, split");
     await split.deployed();
