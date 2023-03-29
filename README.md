@@ -8,4 +8,5 @@
 
 <p float="left">
   <img src="screenshoot/IMG.png?raw=true" width="360" />
+   <img src="screenshoot/IMG2.png?raw=true" width="360" />
 </p>
