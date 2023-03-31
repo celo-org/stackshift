@@ -1,5 +1,6 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
+const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
 
 let Auction;
 let auction;
@@ -11,9 +12,11 @@ let addrs;
 // Before each test, deploy the contract and transfer ETH to it
     beforeEach(async function () {
         Auction = await ethers.getContractFactory('Auction');
-        [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
+        // [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
         auction = await Auction.deploy();
-        await auction.deployed();
+      await auction.deployed();
+      [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
+
         await addr2.sendTransaction({
         to: auction.address,
         value: ethers.utils.parseEther('1.0'),
@@ -23,18 +26,18 @@ let addrs;
     // Test the bidding functionality of the contract
     describe('Bid', function () {
         it('Should be able to place a bid', async function () {
-        await auction.bid({ value: ethers.utils.parseEther('1.5') });
+        await auction.connect(addr2).bid({value: ethers.utils.parseEther('1.5') });
         expect(await auction.highestBidder()).to.equal(addr2.address);
         expect(await auction.highestBid()).to.equal(ethers.utils.parseEther('1.5'));
         });
 
         it('Should not be able to place a bid after the auction has ended', async function () {
-        await auction.endAuction();
+        await auction.connect(addr2).endAuction();
         await expect(auction.connect(addr2).bid({ value: ethers.utils.parseEther('1.5') })).to.be.revertedWith('Auction already ended.');
         });
 
         it('Should not be able to place a bid lower than the current highest bid', async function () {
-        await expect(auction.bid({ value: ethers.utils.parseEther('0.5') })).to.be.revertedWith('There already is a higher bid.');
+        await expect(auction.connect(addr2).bid({ value: ethers.utils.parseEther('0.5') })).to.be.revertedWith('There already is a higher bid.');
         });
     });
 
