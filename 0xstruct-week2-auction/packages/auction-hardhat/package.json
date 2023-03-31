@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
     "dotenv": "^16.0.3"
   },
   "devDependencies": {
