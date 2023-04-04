@@ -94,7 +94,13 @@ contract Auction {
         host.transfer(topBid);
     }
 
-    function setEndtime() public {
-        endtime = block.timestamp;
+    function setEndtime(uint duration) public {
+        // check if msg.sender is host
+
+        endtime = block.timestamp + duration;
+    }
+
+    function getAuction() public view returns (address _host, uint _endtime, uint256 _topBid, address _topBidder, bool _finished) {
+        return (host, endtime, topBid, topBidder, finished);
     }
 }

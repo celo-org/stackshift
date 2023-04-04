@@ -22,10 +22,17 @@ async function main() {
   //     lockedAmount
   //   )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
   // );
-  const HelloCelo = await hre.ethers.getContractFactory("HelloCelo");
-  const helloCelo = await HelloCelo.deploy();
-  await helloCelo.deployed();
-  console.log("HelloCelo deployed to:", helloCelo.address);
+
+  // const HelloCelo = await hre.ethers.getContractFactory("HelloCelo");
+  // const helloCelo = await HelloCelo.deploy();
+  // await helloCelo.deployed();
+  // console.log("HelloCelo deployed to:", helloCelo.address);
+
+  const Auction = await hre.ethers.getContractFactory("Auction");
+  const auction = await Auction.deploy(24*60*60); // 24 hours
+  await auction.deployed();
+  console.log("Auction contract deployed to:", auction.address);
+
 }
 
 // We recommend this pattern to be able to use async/await everywhere
