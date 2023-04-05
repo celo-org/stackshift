@@ -1,4 +1,4 @@
-# stackshift
+git # stackshift
 Unlock Your Web3 Potential with the Celo StackShift Program.
 
 ## What is it?

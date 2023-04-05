@@ -1,0 +1,3 @@
+[submodule "decentralised-auction"]
+	path = decentralised-auction
+	url = https://github.com/J0shcodes/decentralised-auction.git
