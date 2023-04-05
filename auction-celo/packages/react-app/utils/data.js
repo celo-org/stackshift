@@ -12,7 +12,7 @@ export const products = [
       count: 120,
     },
 
-    address: "0x9abc...",
+    address: "0x44477F952F3ac9EAdc8Eb694372182735b620975",
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ export const products = [
       rate: 4.1,
       count: 259,
     },
-    address: "0x5678...",
+    address: "0x44477F952F3ac9EAdc8Eb694372182735b620975",
   },
   {
     id: 3,
@@ -41,7 +41,7 @@ export const products = [
       rate: 4.7,
       count: 500,
     },
-    address: "0x9abc...",
+    address: "0x44477F952F3ac9EAdc8Eb694372182735b620975",
   },
   {
     id: 4,
@@ -56,7 +56,7 @@ export const products = [
       count: 430,
     },
 
-    address: "0x9abc...",
+    address: "0x44477F952F3ac9EAdc8Eb694372182735b620975",
   },
   {
     id: 5,
@@ -71,7 +71,7 @@ export const products = [
       rate: 4.6,
       count: 400,
     },
-    address: "0x9abc...",
+    address: "0x44477F952F3ac9EAdc8Eb694372182735b620975",
   },
   {
     id: 6,
@@ -85,5 +85,6 @@ export const products = [
       rate: 3.9,
       count: 70,
     },
+    address: "0x44477F952F3ac9EAdc8Eb694372182735b620975",
   },
 ];

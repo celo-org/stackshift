@@ -65,4 +65,4 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   */
 };
 
-module.exports.tags = ["Greeter", "Storage", "SupportToken"];
+module.exports.tags = ["Greeter", "Storage", "SupportToken", "AuctionToken"];

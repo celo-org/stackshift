@@ -8,7 +8,6 @@ type AuctionProps = {
   description: string;
   address: string;
   onBid: (amount: string, address: string) => void;
-  donated: boolean;
   bid: boolean;
   rating: boolean;
   category: string;
