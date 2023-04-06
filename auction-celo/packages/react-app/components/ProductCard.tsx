@@ -1,9 +1,9 @@
 import { title } from "process";
 import React, { useState } from "react";
+import Image from "next/image";
 
 type AuctionProps = {
   image: string;
-  name: string;
   title: string;
   description: string;
   address: string;
@@ -11,13 +11,13 @@ type AuctionProps = {
   bid: boolean;
   rating: boolean;
   category: string;
-  id: string;
-  price: string;
+  id: number;
+  price: number;
 };
 
 const ProductCard = ({
   image,
-  name,
+
   description,
   address,
   onBid,
@@ -36,9 +36,8 @@ const ProductCard = ({
 
   return (
     <div className="card">
-      <img src={image} alt={name} />
+      <Image unoptimized src={image} alt={image} width={800} height={500} />
       <div className="card-body">
-        <h5 className="card-title">{name}</h5>
         <h5 className="card-title underline decoration-1">{title}</h5>
         <p className="card-text mt-4">{description}</p>
         <form onSubmit={handleBidSubmit}>

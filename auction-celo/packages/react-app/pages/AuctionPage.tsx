@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import ProductCard from "@/components/ProductCard";
 import { products } from "../utils/data";
-import { Bid } from "../../../../auction-celo/AuctionTokenUtils";
+import { Bid } from "../../..//AuctionTokenUtils";
 
 export default function Auction() {
   const [bid, setBid] = useState(false);
