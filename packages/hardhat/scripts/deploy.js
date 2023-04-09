@@ -14,12 +14,12 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const DomainNameAuction = await hre.ethers.getContractFactory("DomainNameAuction");
-  const domainNameAuction = await DomainNameAuction.deploy();
+  const JustinNFT = await hre.ethers.getContractFactory("JustinNFT");
+  const justinNFT = await JustinNFT.deploy();
 
-  await domainNameAuction.deployed();
+  await justinNFT.deployed();
 
-  console.log("DomainNameAuction deployed to:", domainNameAuction.address);
+  console.log("JustinNFT deployed to:", justinNFT.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
