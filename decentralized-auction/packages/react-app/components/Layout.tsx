@@ -1,22 +1,19 @@
 import { FC, ReactNode } from "react";
-import Footer from "./Footer";
 import Header from "./Header";
+import { Box } from "@mui/material";
 
 interface Props {
-    children: ReactNode
+  children: ReactNode;
 }
-const Layout: FC<Props> = ({children}) => {
-    return (
-        <>
-            <div className="bg-gypsum overflow-hidden flex flex-col min-h-screen">
-            <Header />
-                <div className="py-16 max-w-7xl mx-auto space-y-8 sm:px-6 lg:px-8">
-                    {children}
-                </div>
-            <Footer />
-            </div>
-        </>
-    )
-}
+const Layout: FC<Props> = ({ children }) => {
+  return (
+    <Box display={"flex"} flexDirection={"column"} height={"100vh"}>
+      <Header />
+      <Box flex={1} display={"flex"} overflow={"auto"}>
+        {children}
+      </Box>
+    </Box>
+  );
+};
 
 export default Layout;
