@@ -1,0 +1,40 @@
+{
+    "name": "stackshift-auction",
+    "version": "1.0.0",
+    "description": "Custom Celo Composer project.",
+    "private": true,
+    "author": "Celo",
+    "license": "MIT",
+    "scripts": {
+        "react-app:dev": "yarn workspace @stackshift-auction/react-app dev",
+        "react-app:build": "yarn workspace @stackshift-auction/react-app build",
+        "react-app:start": "yarn workspace @stackshift-auction/react-app start",
+        "react-app:lint": "yarn workspace @stackshift-auction/react-app lint",
+        "hardhat:test": "yarn workspace @stackshift-auction/hardhat test",
+        "hardhat:test-local": "yarn workspace @stackshift-auction/hardhat test-local",
+        "hardhat:accounts": "yarn workspace @stackshift-auction/hardhat accounts",
+        "hardhat:devchain": "yarn workspace @stackshift-auction/hardhat devchain",
+        "hardhat:deploy": "yarn workspace @stackshift-auction/hardhat deploy",
+        "hardhat:deploy-reset-watch": "yarn workspace @stackshift-auction/hardhat deploy-reset-watch",
+        "hardhat:watch": "yarn workspace @stackshift-auction/hardhat watch",
+        "hardhat:fork-mainnet": "yarn workspace @stackshift-auction/hardhat fork-mainnet"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/celo-org/celo-composer.git"
+    },
+    "bugs": {
+        "url": "https://github.com/celo-org/celo-composer/issues"
+    },
+    "homepage": "https://github.com/celo-org/celo-composer/blob/main/README.md",
+    "workspaces": [
+        "packages/*"
+    ],
+    "keywords": [
+        "celo-composer",
+        "celo"
+    ],
+    "dependencies": {
+        "web3": "^1.9.0"
+    }
+}
