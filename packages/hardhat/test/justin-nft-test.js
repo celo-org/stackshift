@@ -29,6 +29,6 @@ describe("JustinNFT contract", function () {
 
     // Check that the token has the correct URI
     const tokenURI = await nft.tokenURI(tokenId);
-    expect(tokenURI).to.equal("https://gateway.pinata.cloud/ipfs/QmcEoV3W8ToCdqHq88wFPp8DdnouhpFvCjtGArZFqaHJif/silver.json");
+    expect(tokenURI).to.equal("https://ipfs.io/ipfs/QmdfZ1zpmKEdS3QjbYzLULhm1H1KAkDe8C5NPh9ZXu8r61/nft1.json");
   });
 });
