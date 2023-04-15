@@ -31,9 +31,9 @@ contract JustinNFT is
 
 
     constructor() ERC721("Membership", "MMS") {
-        products.push(Product("Gucci Bag", "gucci.png", 30000000000000000));
-        products.push(Product("Zara Bag", "zara.png", 40000000000000000));
-        products.push(Product("Nike Shoe", "nike.png", 50000000000000000));
+        products.push(Product("Gucci Bag", "gucci.jpg", 30000000000000000));
+        products.push(Product("Zara Bag", "zara.jpg", 40000000000000000));
+        products.push(Product("Nike Shoe", "nike.jpg", 50000000000000000));
     }
 
     function _baseURI() internal pure override returns (string memory) {
@@ -81,7 +81,10 @@ contract JustinNFT is
 
         // Check if user can be upgraded.
 
-        if (point > 20) {
+        if (point < 3) {
+            string memory uri = "silver.json";
+            _setTokenURI(tokenId, uri);
+        } else if (point < 5) {
             string memory uri = "gold.json";
             _setTokenURI(tokenId, uri);
         } else {
