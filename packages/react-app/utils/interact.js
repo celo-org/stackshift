@@ -3,7 +3,7 @@ import axios  from 'axios'
 import { priceToWei } from './helpers'
 import JustinNFT from '../../hardhat/artifacts/contracts/JustinNFT.sol/JustinNFT.json'
 
-export const contractAddress = '0xbeF455423C86f610691B52ed3D444be1dcbB2C42'
+export const contractAddress = '0x58C02ABaa78f09E84B395b24E453869aBDc361c4'
 
 export async function getContract() {
 
