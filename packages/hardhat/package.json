@@ -32,6 +32,7 @@
         "hardhat-celo": "^0.0.3",
         "hardhat-deploy": "^0.11.19",
         "hardhat-gas-reporter": "^1.0.8",
+        "mocha": "^10.2.0",
         "node-watch": "^0.7.3",
         "solidity-coverage": "^0.7.21",
         "ts-node": ">=8.0.0",

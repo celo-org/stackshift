@@ -17,8 +17,6 @@ contract JustinNFT is
 
     Counters.Counter private _tokenIdCounter;
 
-    //uint256 public lastAnswer;
-
     struct Product {
         string name;
         string imagePath;
@@ -104,6 +102,17 @@ contract JustinNFT is
 
     function getProducts() public view returns(Product[] memory) {
         return products;
+    }
+
+    function getTokenId() public view returns (uint256) {
+
+        require(userMinted[msg.sender], "User has not NFT");
+
+        // User will always have 1 token.
+        uint256 tokenIndex = 0;
+
+        return tokenOfOwnerByIndex(msg.sender, tokenIndex);
+
     }
 
 }
