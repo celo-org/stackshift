@@ -10,8 +10,9 @@ export const timestampToDate = ts => {
   return `${d.getDate()}/${(d.getMonth()+1)}/${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}`
 }
 
-export const priceToWei = price => price ? ethers.utils.parseEther(price.toString()) : 0
+// export const priceToWei = price => price ? ethers.utils.parseEther(price.toString()) : 0
+export const priceToWei = price => price ? ethers.utils.parseUnits(price.toString(), 'ether').toString() : 0
 
-export const formatPrice = (kit, price) => price ? kit.connection.web3.utils.fromWei(String(price)) : ''
+export const formatPrice = (price) => price ? ethers.utils.formatEther(String(price)) : ''
 
 export const toCheckSum  = (kit, address) => kit.connection.web3.utils.toChecksumAddress(address)

@@ -1,7 +1,8 @@
 import { providers, Contract, ethers } from 'ethers'
-import Auction from '../../hardhat/artifacts/contracts/DomainNameAuction.sol/DomainNameAuction.json'
+import { priceToWei } from './helpers'
+import Auction from '../../hardhat/artifacts/contracts/JustinNFT.sol/JustinNFT.json'
 
-export const auctionContractAddress = '0x87d54bC0d03C57936974Fa9289C876bE1De9517e'
+export const auctionContractAddress = '0x6361afB7A61E8C3FcF366C818F38EEbC78D30371'
 
 export async function getContract() {
 
@@ -18,6 +19,16 @@ export async function getContract() {
     console.log("ERROR:", error)
   }
   return auctionContract
+}
+
+export const createNFT = async (NFTURI, price) => {
+  try {
+    const contract = await getContract()
+    const res = await contract.createNFT(NFTURI, price)
+    return await res.wait()
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 export const createAuction = async (domainName, reservePrice, endTime) => {
@@ -55,11 +66,11 @@ export const getAuctions = async () => {
   }
 }
 
-export const bidAuction = async (index, value) => {
-  return console.log(value)
+export const buyProduct = async (index, price, address) => {
+
   try {
     const contract = await getContract()
-    let res = await contract.bid(index, {value: ethers.utils.parseEther(value)})
+    let res = await contract.buyProduct(auctionContractAddress, index, {value: priceToWei(price)})
     res = await res.wait()
     console.log('bidd ', res)
     return res
@@ -69,30 +80,15 @@ export const bidAuction = async (index, value) => {
   }
 }
 
-export const endAuction = async index => {
-  console.log(index)
+export const getProducts = async () => {
+
   try {
     const contract = await getContract()
-    let res = await contract.endAuction(index)
-    res = await res.wait()
-    console.log('bidd ', res)
-    return res
+    return await contract.getProducts()
 
   } catch (e) {
     console.log(e)
   }
 }
 
-export const startAuction = async (index, value) => {
-  try {
-    const contract = await getContract()
-    let res = await contract.bid(index, {value: ethers.utils.parseEther(value)})
-    res = await res.wait()
-    console.log('bidd ', res)
-    return res
-
-  } catch (e) {
-    console.log(e)
-  }
-}
 
