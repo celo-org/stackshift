@@ -3,12 +3,12 @@ async function main() {
   const { WrapperBuilder } = require("@redstone-finance/evm-connector");
 
   // We get the contract to deploy
-  const Membership = await hre.ethers.getContractFactory("JustinNFT");
-  const membership = await Membership.attach(
+  const JustinNFT = await hre.ethers.getContractFactory("JustinNFT");
+  const justinNFT = await JustinNFT.attach(
     "0x6D801bF793248ecf9bC20d465246e9305311aDD5"
   );
 
-  const wrappedContract = WrapperBuilder.wrap(membership).usingDataService(
+  const wrappedContract = WrapperBuilder.wrap(JustinNFT).usingDataService(
     {
       dataServiceId: "redstone-custom-urls-demo",
       uniqueSignersCount: 2,
@@ -22,7 +22,7 @@ async function main() {
 
   await res.wait();
 
-  const tokenUri = await membership.tokenURI(0);
+  const tokenUri = await justinNFT.tokenURI(0);
 
   console.table({ tokenUri });
 }

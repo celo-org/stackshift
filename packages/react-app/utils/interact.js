@@ -1,8 +1,9 @@
-import { providers, Contract, ethers } from 'ethers'
+import { providers, Contract } from 'ethers'
+import axios  from 'axios'
 import { priceToWei } from './helpers'
-import Auction from '../../hardhat/artifacts/contracts/JustinNFT.sol/JustinNFT.json'
+import JustinNFT from '../../hardhat/artifacts/contracts/JustinNFT.sol/JustinNFT.json'
 
-export const auctionContractAddress = '0x6361afB7A61E8C3FcF366C818F38EEbC78D30371'
+export const contractAddress = '0xbeF455423C86f610691B52ed3D444be1dcbB2C42'
 
 export async function getContract() {
 
@@ -13,7 +14,7 @@ export async function getContract() {
 
     const provider = new providers.Web3Provider(ethereum)
     const signer = provider.getSigner()
-    auctionContract = new Contract(auctionContractAddress, Auction.abi, signer)
+    auctionContract = new Contract(contractAddress, JustinNFT.abi, signer)
 
   } catch (error) {
     console.log("ERROR:", error)
@@ -31,52 +32,18 @@ export const createNFT = async (NFTURI, price) => {
   }
 }
 
-export const createAuction = async (domainName, reservePrice, endTime) => {
-  try {
-    const contract = await getContract()
-      const res = await contract.createAuction(domainName, ethers.utils.parseEther(reservePrice.toString()), endTime)
-      return await res.wait()
-  } catch (e) {
-    console.log(e)
-  }
-}
-
-export const getAuctions = async () => {
-  try {
-    const contract = await getContract()
-    const domainCount = await contract.getDomainCount()
-
-    let auctions = []
-
-    for (let i = 0; i < domainCount; i++) {
-      const auction = await contract.getAuction(i)
-      auctions.push({
-        owner: auction._owner,
-        name: auction._name,
-        highestBid: auction._highestBid,
-        endTime: auction._endTime,
-        ended: auction._ended,
-      })
-    }
-    console.log('auctions ', auctions)
-    return auctions
-
-  } catch (e) {
-    console.log(e)
-  }
-}
-
-export const buyProduct = async (index, price, address) => {
+export const buyProduct = async (index, price) => {
 
   try {
     const contract = await getContract()
-    let res = await contract.buyProduct(auctionContractAddress, index, {value: priceToWei(price)})
+    let res = await contract.buyProduct(contractAddress, index, {value: priceToWei(price)})
     res = await res.wait()
     console.log('bidd ', res)
     return res
 
   } catch (e) {
     console.log(e)
+    console.log('e here', e)
   }
 }
 
@@ -88,6 +55,31 @@ export const getProducts = async () => {
 
   } catch (e) {
     console.log(e)
+  }
+}
+
+export const getNFT = async () => {
+
+  try {
+    let NFT = undefined
+    const contract = await getContract()
+    const tokenId = await contract.getTokenId()
+    if (tokenId) {
+      const tokenURI = await contract.tokenURI(tokenId)
+      NFT = await getNFTMeta(tokenURI)
+    }
+    return NFT
+
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+export const getNFTMeta = async URI => {
+  try {
+    return (await axios.get(URI)).data
+  } catch (e) {
+    console.log({ e })
   }
 }
 

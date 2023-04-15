@@ -11,7 +11,7 @@ export const timestampToDate = ts => {
 }
 
 // export const priceToWei = price => price ? ethers.utils.parseEther(price.toString()) : 0
-export const priceToWei = price => price ? ethers.utils.parseUnits(price.toString(), 'ether').toString() : 0
+export const priceToWei = price => price ? ethers.utils.parseUnits(price.toString(), 'wei').toString() : 0
 
 export const formatPrice = (price) => price ? ethers.utils.formatEther(String(price)) : ''
 

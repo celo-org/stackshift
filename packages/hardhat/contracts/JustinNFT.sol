@@ -4,18 +4,12 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "@redstone-finance/evm-connector/contracts/data-services/CustomUrlsConsumerBase.sol";
 
 contract JustinNFT is
     ERC721,
     ERC721Enumerable,
-    ERC721URIStorage,
-    CustomUrlsConsumerBase
+    ERC721URIStorage
 {
-    using Counters for Counters.Counter;
-
-    Counters.Counter private _tokenIdCounter;
 
     struct Product {
         string name;
@@ -38,7 +32,7 @@ contract JustinNFT is
 
     function _baseURI() internal pure override returns (string memory) {
         return
-            "https://gateway.pinata.cloud/ipfs/QmcEoV3W8ToCdqHq88wFPp8DdnouhpFvCjtGArZFqaHJif/";
+            "https://ipfs.io/ipfs/QmdfZ1zpmKEdS3QjbYzLULhm1H1KAkDe8C5NPh9ZXu8r61/";
     }
 
     // The following functions are overrides required by Solidity.
@@ -82,20 +76,20 @@ contract JustinNFT is
         // Check if user can be upgraded.
 
         if (point < 3) {
-            string memory uri = "silver.json";
+            string memory uri = "nft1.json";
             _setTokenURI(tokenId, uri);
         } else if (point < 5) {
-            string memory uri = "gold.json";
+            string memory uri = "nft2.json";
             _setTokenURI(tokenId, uri);
         } else {
-            string memory uri = "platinum.json";
+            string memory uri = "nft3.json";
             _setTokenURI(tokenId, uri);
         }
 
         } else {
 
             uint256 tokenId = 0;
-            string memory uri = "silver.json";
+            string memory uri = "nft1.json";
             _safeMint(msg.sender, tokenId);
             _setTokenURI(tokenId, uri);
             userMinted[msg.sender] = true;

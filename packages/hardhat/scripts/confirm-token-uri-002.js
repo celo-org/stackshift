@@ -2,12 +2,12 @@ async function main() {
   const [deployer] = await ethers.getSigners();
 
   // We get the contract to deploy
-  const Membership = await hre.ethers.getContractFactory("JustinNFT");
-  const membership = await Membership.attach(
+  const JustinNFT = await hre.ethers.getContractFactory("JustinNFT");
+  const justinNFT = await JustinNFT.attach(
     "0x6D801bF793248ecf9bC20d465246e9305311aDD5"
   );
 
-  const tokenUri = await membership.tokenURI(0);
+  const tokenUri = await justinNFT.tokenURI(0);
 
   console.table({ tokenUri });
 }
