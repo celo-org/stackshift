@@ -75,10 +75,10 @@ contract JustinNFT is
 
         // Check if user can be upgraded.
 
-        if (point < 3) {
+        if (point < 2) {
             string memory uri = "nft1.json";
             _setTokenURI(tokenId, uri);
-        } else if (point < 5) {
+        } else if (point < 3) {
             string memory uri = "nft2.json";
             _setTokenURI(tokenId, uri);
         } else {
