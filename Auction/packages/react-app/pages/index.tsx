@@ -1,4 +1,44 @@
+// @ts-nocheck
+import React, { useState, useRef, useEffect } from "react";
+import { useSigner, useAccount } from "wagmi";
+import { fetchBalance } from "@wagmi/core";
+import { ethers } from "ethers";
+import auctionABI from "../abi/auction.json";
+import { auctionAddress } from "../utils/constant";
+import { Web3Storage } from "web3.storage/dist/bundle.esm.min.js";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
+import Image from "next/image";
+
 export default function Home() {
+  const { data: signer } = useSigner();
+  const [auc, setAuc] = useState([]);
+
+  const createAuctionContract = async () => {
+    const auctionContract = new ethers.Contract(
+      auctionAddress,
+      auctionABI.abi,
+      signer
+    );
+    return auctionContract;
+  };
+
+  const getAuction = async () => {
+    const contract = await createAuctionContract();
+    try {
+      const auctions = await contract.fetchAuctions();
+      console.log(auctions);
+      setAuc(auctions);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAuction();
+  }, [signer]);
+
   return (
     <div>
       <section className="home-section1">
@@ -9,7 +49,7 @@ export default function Home() {
             you have been searching for.
           </div>
         </div>
-        <img className="hero" src="./hero.png" alt="hero" />
+        <Image className="hero" src="./hero.png" alt="hero" />
       </section>
 
       <section className="home-section2">
@@ -18,42 +58,39 @@ export default function Home() {
           <div className="text4">View all auctions</div>
         </div>
         <div className="live">
-          <div className="card">
-            <img className="" src="./a1.png" alt="hero" />
-            <div className="textflex1">
-              <div className="text5">Eyes of oasis</div>
-              <div className="text6">Ends in 3 minutes</div>
-            </div>
-            <div className="text7">Current Bid - 1.5eth</div>
-            <div className="bidflex">
-              <button className="bidbut1">Place a bid</button>
-              <button className="bidbut2">2.3 ETH/$300</button>
-            </div>
-          </div>
-          <div className="card">
-            <img className="" src="./a1.png" alt="hero" />
-            <div className="textflex1">
-              <div className="text5">Eyes of oasis</div>
-              <div className="text6">Ends in 3 minutes</div>
-            </div>
-            <div className="text7">Current Bid - 1.5eth</div>
-            <div className="bidflex">
-              <button className="bidbut1">Place a bid</button>
-              <button className="bidbut2">2.3 ETH/$300</button>
-            </div>
-          </div>
-          <div className="card">
-            <img className="" src="./a1.png" alt="hero" />
-            <div className="textflex1">
-              <div className="text5">Eyes of oasis</div>
-              <div className="text6">Ends in 3 minutes</div>
-            </div>
-            <div className="text7">Current Bid - 1.5eth</div>
-            <div className="bidflex">
-              <button className="bidbut1">Place a bid</button>
-              <button className="bidbut2">2.3 ETH/$300</button>
-            </div>
-          </div>
+          {auc.map((item, index) => {
+            return (
+              <div key={index} className="card">
+                <Image className="" src={item.img} alt="hero" />
+                <div className="textflex1">
+                  <div className="text5">{item.name}</div>
+                  <div className="text6">Ends in 3 minutes</div>
+                </div>
+                <div className="text7">
+                  Current Bid -{" "}
+                  {Number(ethers.BigNumber.from(item.start_bid) / 10 ** 18)}
+                  celo
+                </div>
+                <div className="bidflex">
+                  <Link
+                    href={`/detail/${Number(
+                      ethers.BigNumber.from(item.auctionId)
+                    )}`}
+                  >
+                    <button className="bidbut1">Place a bid</button>
+                  </Link>
+
+                  <Link
+                    href={`/auto/${Number(
+                      ethers.BigNumber.from(item.auctionId)
+                    )}`}
+                  >
+                    <button className="bidbut2">Auto Bid</button>
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -63,42 +100,39 @@ export default function Home() {
           <div className="text4">View all auctions</div>
         </div>
         <div className="live">
-          <div className="card">
-            <img className="" src="./a1.png" alt="hero" />
-            <div className="textflex1">
-              <div className="text5">Eyes of oasis</div>
-              <div className="text6">Ends in 3 minutes</div>
-            </div>
-            <div className="text7">Current Bid - 1.5eth</div>
-            <div className="bidflex">
-              <button className="bidbut1">Place a bid</button>
-              <button className="bidbut2">2.3 ETH/$300</button>
-            </div>
-          </div>
-          <div className="card">
-            <img className="" src="./a1.png" alt="hero" />
-            <div className="textflex1">
-              <div className="text5">Eyes of oasis</div>
-              <div className="text6">Ends in 3 minutes</div>
-            </div>
-            <div className="text7">Current Bid - 1.5eth</div>
-            <div className="bidflex">
-              <button className="bidbut1">Place a bid</button>
-              <button className="bidbut2">2.3 ETH/$300</button>
-            </div>
-          </div>
-          <div className="card">
-            <img className="" src="./a1.png" alt="hero" />
-            <div className="textflex1">
-              <div className="text5">Eyes of oasis</div>
-              <div className="text6">Ends in 3 minutes</div>
-            </div>
-            <div className="text7">Current Bid - 1.5eth</div>
-            <div className="bidflex">
-              <button className="bidbut1">Place a bid</button>
-              <button className="bidbut2">2.3 ETH/$300</button>
-            </div>
-          </div>
+          {auc.map((item, index) => {
+            return (
+              <div key={index} className="card">
+                <img className="" src={item.img} alt="hero" />
+                <div className="textflex1">
+                  <div className="text5">{item.name}</div>
+                  <div className="text6">Ends in 3 minutes</div>
+                </div>
+                <div className="text7">
+                  Current Bid -{" "}
+                  {Number(ethers.BigNumber.from(item.start_bid) / 10 ** 18)}
+                  celo
+                </div>
+                <div className="bidflex">
+                  <Link
+                    href={`/detail/${Number(
+                      ethers.BigNumber.from(item.auctionId)
+                    )}`}
+                  >
+                    <button className="bidbut1">Place a bid</button>
+                  </Link>
+
+                  <Link
+                    href={`/auto/${Number(
+                      ethers.BigNumber.from(item.auctionId)
+                    )}`}
+                  >
+                    <button className="bidbut2">Auto Bid</button>
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 

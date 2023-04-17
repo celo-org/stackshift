@@ -13,6 +13,7 @@ import {
 } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
+import { ToastContainer } from "react-toastify";
 
 // Import known recommended wallets
 import { Valora, CeloWallet, CeloDance } from "@celo/rainbowkit-celo/wallets";
@@ -58,6 +59,7 @@ function App({ Component, pageProps }: AppProps) {
         <Layout>
           <Component {...pageProps} />
         </Layout>
+        <ToastContainer autoClose={15000} />
       </RainbowKitProvider>
     </WagmiConfig>
   );

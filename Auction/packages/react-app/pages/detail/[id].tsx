@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 
-export default function detail() {
+export default function Detail() {
   return (
     <div>
       <div className="detail">

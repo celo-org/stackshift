@@ -1,6 +1,8 @@
+// @ts-nocheck
 import React, { useState } from "react";
+import Image from "next/image";
 
-export default function profile() {
+export default function Profile() {
   const [state, setState] = useState(true);
 
   return (
@@ -23,7 +25,7 @@ export default function profile() {
           </div>
           <div className="live">
             <div className="card">
-              <img className="" src="./a1.png" alt="hero" />
+              <Image className="" src="./a1.png" alt="hero" />
               <div className="textflex1">
                 <div className="text5">Eyes of oasis</div>
                 <div className="text6">Ends in 3 minutes</div>
@@ -35,7 +37,7 @@ export default function profile() {
               </div>
             </div>
             <div className="card">
-              <img className="" src="./a1.png" alt="hero" />
+              <Image className="" src="./a1.png" alt="hero" />
               <div className="textflex1">
                 <div className="text5">Eyes of oasis</div>
                 <div className="text6">Ends in 3 minutes</div>
@@ -47,7 +49,7 @@ export default function profile() {
               </div>
             </div>
             <div className="card">
-              <img className="" src="./a1.png" alt="hero" />
+              <Image className="" src="./a1.png" alt="hero" />
               <div className="textflex1">
                 <div className="text5">Eyes of oasis</div>
                 <div className="text6">Ends in 3 minutes</div>

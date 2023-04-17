@@ -34,13 +34,13 @@
 
 .header-inner3 {
   display: flex;
-  width: 50%;
+  width: 40%;
 }
 
 .header-inner4 {
   display: flex;
   justify-content: space-between;
-  width: 25%;
+  width: 40%;
 }
 
 .hbut {

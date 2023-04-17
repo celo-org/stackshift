@@ -88,6 +88,7 @@
 
 .card {
   width: 400px;
+  margin-bottom: 30px;
 }
 
 .text7 {
@@ -227,6 +228,21 @@
   font-weight: 400;
   font-size: 16px;
   color: #3c3c3c;
+  border: 1px solid blue;
+  padding-right: 10px;
+}
+
+.textarea {
+  height: 250px;
+  width: 100%;
+  padding-left: 10px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #3c3c3c;
+  border: 1px solid blue;
+  padding-right: 10px;
 }
 
 .formbox {
