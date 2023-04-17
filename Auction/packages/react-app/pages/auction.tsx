@@ -34,7 +34,7 @@ export default function Auction() {
 
       const url = `https://ipfs.io/ipfs/${cid}/${file.name}`;
       console.log(url);
-      toast.success("Image uploaded successfully");
+      toast.success("img uploaded successfully");
       setFileUrl(url);
     } catch (error) {
       console.log("Error uploading file: ", error);

@@ -9,7 +9,7 @@ import { Web3Storage } from "web3.storage/dist/bundle.esm.min.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
-import Image from "next/image";
+import img from "next/img";
 
 export default function Home() {
   const { data: signer } = useSigner();
@@ -49,7 +49,7 @@ export default function Home() {
             you have been searching for.
           </div>
         </div>
-        <Image className="hero" src="./hero.png" alt="hero" />
+        <img className="hero" src="./hero.png" alt="hero" />
       </section>
 
       <section className="home-section2">
@@ -61,7 +61,7 @@ export default function Home() {
           {auc.map((item, index) => {
             return (
               <div key={index} className="card">
-                <Image className="" src={item.img} alt="hero" />
+                <img className="" src={item.img} alt="hero" />
                 <div className="textflex1">
                   <div className="text5">{item.name}</div>
                   <div className="text6">Ends in 3 minutes</div>
