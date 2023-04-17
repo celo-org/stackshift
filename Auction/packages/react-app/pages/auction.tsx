@@ -27,7 +27,7 @@ export default function auction() {
               <input className="input" placeholder="Reserve Price" />
             </div>
             <div className="input-box">
-              <label className="label">Bid Type</label>
+              <label className="label">Auction Type</label>
               <input className="input" placeholder="Reserve Price" />
             </div>
 
