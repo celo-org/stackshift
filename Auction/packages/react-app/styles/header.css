@@ -1,0 +1,78 @@
+.header {
+  background: #fbfbfb;
+  border: 1px solid #bdbdbd;
+  padding: 40px;
+}
+
+.logo {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 41px;
+  margin-right: 100px;
+}
+
+.header-inner {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-inner2 {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  padding-top: 5px;
+}
+
+.header-inner3 {
+  display: flex;
+  width: 50%;
+}
+
+.header-inner4 {
+  display: flex;
+  justify-content: space-between;
+  width: 25%;
+}
+
+.hbut {
+  background: #1609af;
+  border-radius: 200px;
+  width: 150px;
+  height: 50px;
+  background: #1609af;
+  border-radius: 200px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.dtf {
+  display: flex;
+  justify-content: space-between;
+}
+.bb {
+  width: 167px;
+  height: 64px;
+  border: 1px solid #bdbdbd;
+  border-radius: 200px;
+  cursor: pointer;
+}
+
+.bbf {
+  display: flex;
+  width: 500px;
+  justify-content: space-between;
+  margin-top: 100px;
+  margin-left: 100px;
+}
