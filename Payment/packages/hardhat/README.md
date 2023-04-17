@@ -1,5 +1,13 @@
 # Hardhat | Celo Composer
 
+## Payment Spliter Contract
+
+0x2a84c10cD87FC4F3d192437b9058eA8e2f38b2C8
+
+This is a decentralized app that allows users to split payment between friends, users can track payment, create group to fast-track sharing of bills and add username to replace wallet address.
+
+Link - https://payment-split.netlify.app/
+
 This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
 
 ## Setup & Installation
@@ -10,7 +18,7 @@ This project demonstrates a basic Hardhat use case. It comes with a sample contr
 
 1. Create a `.env` file similar to `.envexample`.
 2. Paste the private key in `.env`.
-> note: depending on how you generate your private key, you may have to prepend `0x` in the private key does not already have it prepended. 
+   > note: depending on how you generate your private key, you may have to prepend `0x` in the private key does not already have it prepended.
 3. Faucet your account with the Alfajores testnet faucet [here](https://celo.org/developers/faucet).
 
 ## Develop

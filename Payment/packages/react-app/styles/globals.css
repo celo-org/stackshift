@@ -1,3 +1,126 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.split-flex {
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.split-flex2 {
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 100px;
+}
+
+.split-flex3 {
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  background-color: #38c1f5;
+  padding-bottom: 50px;
+}
+
+.split {
+  background-color: #020204;
+  min-height: 85vh;
+  padding-bottom: 100px;
+}
+
+.claim {
+  background-color: white;
+  border-radius: 4px;
+  padding: 20px;
+  width: 40%;
+  background-color: #38c1f5;
+}
+.tb {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+tr:nth-child(odd) {
+  background-color: #38c1f5;
+}
+
+.amf {
+  display: flex;
+  justify-content: space-between;
+}
+
+.fr {
+  background-color: #020204;
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+.my {
+  max-height: 400px;
+}
+
+.my2 {
+  max-height: 300px;
+}
+.sbut {
+  background-color: #38c1f5;
+  height: 50px;
+  width: 400px;
+  border: none;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  margin-top: 100px;
+  border-radius: 10px;
+}
+
+.wid {
+  width: 50%;
+  padding-top: 100px;
+}
+
+.box {
+  padding-top: 100px;
+}
+
+.but {
+  background-color: #38c1f5;
+  width: 30%;
+  border-radius: 5px;
+}
+
+.butf {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
