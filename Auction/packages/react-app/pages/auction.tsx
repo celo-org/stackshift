@@ -5,7 +5,7 @@ import { fetchBalance } from "@wagmi/core";
 import { ethers } from "ethers";
 import auctionABI from "../abi/auction.json";
 import { auctionAddress } from "../utils/constant";
-import { Web3Storage } from "web3.storage/dist/bundle.esm.min.js";
+import { Web3Storage } from "web3.storage";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
