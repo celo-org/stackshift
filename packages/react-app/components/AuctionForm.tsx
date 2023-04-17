@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import { toTimestamp, createAuction, priceToWei } from '../utils'
+import { toTimestamp, createAuction } from '../utils'
 
 // interface AuctionFormProps {
 //   updateList: DoSomethingFunction;
 // }
 
 export default function AuctionForm(props: AuctionFormProps) : JSX.Element {
-// export default function AuctionForm() : JSX.Element {
 
   const [loading, setLoading] = useState(false)
   const [domainName, setDomainName] = useState('')
@@ -31,7 +30,7 @@ export default function AuctionForm(props: AuctionFormProps) : JSX.Element {
         </div>
         <div className="flex items-center space-x-2">
           <label htmlFor="item-price" className="sr-only">Reserve Price</label>
-          <input onChange={e => setReservePrice(priceToWei(e.target.value))} type="number" name="item-price" id="item-price" placeholder="Item Price"
+          <input onChange={e => setReservePrice(e.target.value)} type="number" name="item-price" id="item-price" placeholder="Item Price"
                  className="w-24 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"/>
         </div>
         <div className="flex items-center space-x-2">

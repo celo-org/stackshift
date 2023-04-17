@@ -20,7 +20,6 @@ export default function Home(props: HomeProps) : JSX.Element{
 
   const getAuctionHandler = async () => {
     const res = await getAuctions()
-    console.log(res)
     setAuctions(res)
   }
 
@@ -37,12 +36,6 @@ export default function Home(props: HomeProps) : JSX.Element{
   }
 
   useEffect(() => {
-    // const getAuctionHandler = async () => {
-    //   alert('here')
-    //   const res = await getAuctions()
-    //   console.log(res)
-    //   setAuctions(res)
-    // }
 
     getAuctionHandler()
 

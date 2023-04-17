@@ -11,7 +11,3 @@ export const timestampToDate = ts => {
 }
 
 export const priceToWei = price => price ? ethers.utils.parseEther(price.toString()) : 0
-
-export const formatPrice = (kit, price) => price ? kit.connection.web3.utils.fromWei(String(price)) : ''
-
-export const toCheckSum  = (kit, address) => kit.connection.web3.utils.toChecksumAddress(address)
