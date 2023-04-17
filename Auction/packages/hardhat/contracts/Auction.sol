@@ -1,9 +1,6 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-// remember to remove unnecessary imports and its use when deploying your smart contract
-import "hardhat/console.sol";
-
 contract AuctionContract {
     uint256 public counter = 0;
 

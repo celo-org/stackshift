@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function auction() {
+  const [fileUrl, setFileUrl] = useState(null);
   return (
     <div>
       <div className="auction">
         <div className="text10">Create Auction</div>
         <div className="formflex">
           <div>
-            <div>Upload Item</div>
+            <input type="file" />
           </div>
           <div className="formbox">
             <div className="input-box">
