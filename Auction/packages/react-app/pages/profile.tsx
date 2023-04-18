@@ -239,6 +239,21 @@ export default function Profile() {
                     Balance -{" "}
                     {Number(ethers.BigNumber.from(item.balance)) / 10 ** 18}
                   </div>
+                  <div style={{ color: "blue" }} className="text7">
+                    {Math.round(
+                      (Number(ethers.BigNumber.from(item.ac.end_time)) -
+                        new Date().getTime() / 1000) /
+                        60 /
+                        60 /
+                        24
+                    ) <= 0 ? (
+                      <div>
+                        {item.ac.winner === address
+                          ? "You won the auction"
+                          : ""}
+                      </div>
+                    ) : null}
+                  </div>
                   <div className="bidflex">
                     <Link
                       href={`/detail/${Number(
