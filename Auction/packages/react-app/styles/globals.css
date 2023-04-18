@@ -88,7 +88,7 @@
 
 .card {
   width: 400px;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 }
 
 .text7 {
@@ -390,4 +390,39 @@
   font-weight: 800;
   font-size: 24px;
   color: #1609af;
+}
+
+.card2 {
+  margin-left: 100px;
+  width: 50%;
+  background-color: #1609af;
+  color: white;
+  border-radius: 10px;
+  padding: 30px;
+  margin-top: 40px;
+}
+
+.wbut {
+  width: 100%;
+  height: 50px;
+  background-color: #130f26;
+  margin-top: 30px;
+}
+
+.winput {
+  height: 64px;
+  width: 100%;
+  border: none;
+  color: black;
+  margin-top: 20px;
+  padding-left: 10px;
+}
+
+.text61 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  color: white;
+  padding-top: 10px;
 }

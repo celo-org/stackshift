@@ -10,8 +10,9 @@ import { Web3Storage } from "web3.storage/dist/bundle.esm.min.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import img from "next/img";
+import { filter } from "lodash";
 
-export default function All() {
+export default function Winners() {
   const { data: signer } = useSigner();
   const [auc, setAuc] = useState([]);
 
@@ -29,7 +30,11 @@ export default function All() {
     try {
       const auctions = await contract.fetchAuctions();
       console.log(auctions);
-      setAuc(auctions);
+      const filtered = auctions.filter(
+        (item) => new Date().getTime() / 1000 > item.end_time
+      );
+      console.log("fil", filtered);
+      setAuc(filtered);
     } catch (error) {
       console.log(error);
     }
@@ -42,7 +47,7 @@ export default function All() {
     <div>
       <section className="home-section2">
         <div className="home-section2-inner">
-          <div className="text3">Find Super Rare Items</div>
+          <div className="text3">Winners</div>
         </div>
         <div className="live">
           {auc.map((item, index) => {
@@ -93,26 +98,13 @@ export default function All() {
                   </div>
                 </div>
                 <div className="text7">
-                  Current Bid -{" "}
+                  Winning Bid -{" "}
                   {Number(ethers.BigNumber.from(item.winningBid) / 10 ** 18)}
                   celo
                 </div>
-                <div className="bidflex">
-                  <Link
-                    href={`/detail/${Number(
-                      ethers.BigNumber.from(item.auctionId)
-                    )}`}
-                  >
-                    <button className="bidbut1">Place a bid</button>
-                  </Link>
-
-                  <Link
-                    href={`/auto/${Number(
-                      ethers.BigNumber.from(item.auctionId)
-                    )}`}
-                  >
-                    <button className="bidbut2">Auto Bid</button>
-                  </Link>
+                <div className="text7">
+                  Winner - {item.winner.slice(0, 5)}..
+                  {item.winner.slice(-5, -1)}
                 </div>
               </div>
             );

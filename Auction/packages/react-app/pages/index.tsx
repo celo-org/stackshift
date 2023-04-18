@@ -5,11 +5,8 @@ import { fetchBalance } from "@wagmi/core";
 import { ethers } from "ethers";
 import auctionABI from "../abi/auction.json";
 import { auctionAddress } from "../utils/constant";
-import { Web3Storage } from "web3.storage/dist/bundle.esm.min.js";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
-import img from "next/img";
 
 export default function Home() {
   const { data: signer } = useSigner();
@@ -67,16 +64,44 @@ export default function Home() {
                 <div className="textflex1">
                   <div className="text5">{item.name}</div>
                   <div className="text6">
-                    {" "}
-                    Ends in{" "}
                     {Math.round(
                       (Number(ethers.BigNumber.from(item.end_time)) -
-                        Number(ethers.BigNumber.from(item.start_time))) /
+                        new Date().getTime() / 1000) /
                         60 /
                         60 /
                         24
-                    )}{" "}
-                    days
+                    ) >= 1 ? (
+                      <span>
+                        Ends in{" "}
+                        {Math.round(
+                          (Number(ethers.BigNumber.from(item.end_time)) -
+                            new Date().getTime() / 1000) /
+                            60 /
+                            60 /
+                            24
+                        )}{" "}
+                        days
+                      </span>
+                    ) : Math.round(
+                        (Number(ethers.BigNumber.from(item.end_time)) -
+                          new Date().getTime() / 1000) /
+                          60 /
+                          60 /
+                          24
+                      ) > 0 ? (
+                      <span>
+                        {" "}
+                        Ends in{" "}
+                        {Math.round(
+                          (Number(ethers.BigNumber.from(item.end_time)) -
+                            new Date().getTime() / 1000) /
+                            60
+                        )}{" "}
+                        minutes
+                      </span>
+                    ) : (
+                      <span>Auction has ended</span>
+                    )}
                   </div>
                 </div>
                 <div className="text7">
@@ -120,15 +145,44 @@ export default function Home() {
                 <div className="textflex1">
                   <div className="text5">{item.name}</div>
                   <div className="text6">
-                    Ends in{" "}
                     {Math.round(
                       (Number(ethers.BigNumber.from(item.end_time)) -
-                        Number(ethers.BigNumber.from(item.start_time))) /
+                        new Date().getTime() / 1000) /
                         60 /
                         60 /
                         24
-                    )}{" "}
-                    days
+                    ) >= 1 ? (
+                      <span>
+                        Ends in{" "}
+                        {Math.round(
+                          (Number(ethers.BigNumber.from(item.end_time)) -
+                            new Date().getTime() / 1000) /
+                            60 /
+                            60 /
+                            24
+                        )}{" "}
+                        days
+                      </span>
+                    ) : Math.round(
+                        (Number(ethers.BigNumber.from(item.end_time)) -
+                          new Date().getTime() / 1000) /
+                          60 /
+                          60 /
+                          24
+                      ) > 0 ? (
+                      <span>
+                        {" "}
+                        Ends in{" "}
+                        {Math.round(
+                          (Number(ethers.BigNumber.from(item.end_time)) -
+                            new Date().getTime() / 1000) /
+                            60
+                        )}{" "}
+                        minutes
+                      </span>
+                    ) : (
+                      <span>Auction has ended</span>
+                    )}
                   </div>
                 </div>
                 <div className="text7">

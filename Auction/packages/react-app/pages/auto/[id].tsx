@@ -93,12 +93,39 @@ export default function Auto() {
           <div className="dtf">
             <div className="detail-text1 ">{auc.name}</div>
             <div className="detail-text2">
-              {" "}
-              Ends in{" "}
               {Math.round(
-                (Number(auc.end_time) - Number(auc.start_time)) / 60 / 60 / 24
-              )}{" "}
-              days
+                (Number(auc.end_time) - new Date().getTime() / 1000) /
+                  60 /
+                  60 /
+                  24
+              ) >= 1 ? (
+                <span>
+                  Ends in{" "}
+                  {Math.round(
+                    (Number(auc.end_time) - new Date().getTime() / 1000) /
+                      60 /
+                      60 /
+                      24
+                  )}{" "}
+                  days
+                </span>
+              ) : Math.round(
+                  (Number(auc.end_time) - new Date().getTime() / 1000) /
+                    60 /
+                    60 /
+                    24
+                ) > 0 ? (
+                <span>
+                  {" "}
+                  Ends in{" "}
+                  {Math.round(
+                    (Number(auc.end_time) - new Date().getTime() / 1000) / 60
+                  )}{" "}
+                  minutes
+                </span>
+              ) : (
+                <span>Auction has ended</span>
+              )}
             </div>
           </div>
 

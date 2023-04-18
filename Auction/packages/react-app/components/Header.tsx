@@ -21,6 +21,9 @@ export default function Header() {
             <Link href="/profile">
               <div>Your Auctions</div>
             </Link>
+            <Link href="/winners">
+              <div>Winners</div>
+            </Link>
           </div>
         </div>
 
