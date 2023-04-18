@@ -15,6 +15,7 @@ import abi from "@/utils/contract.json";
 import { ethers } from "ethers";
 import Loader from "../Loader";
 import { AuctionTypes } from "@/types";
+import { notify } from "@/functions";
 
 const theme = createTheme({
   typography: {
@@ -99,14 +100,15 @@ export default function AuctionDialog({
           closeBidModal();
           updateAuctions();
           setBidAmount(0);
+          notify("success", "Bid placed successfully");
           setBidding(false);
         })
         .catch((error) => {
-          console.log(error);
+          notify("error", "Could not place bid");
           setBidding(false);
         });
     } catch (error) {
-      console.log(JSON.parse(JSON.stringify(error))?.reason);
+      notify("error", "Could not place bid");
       setBidding(false);
     }
   };
@@ -119,14 +121,15 @@ export default function AuctionDialog({
         .then(() => {
           closeBidModal();
           updateAuctions();
+          notify("success", "Item claimed successfully");
           setFinalizingBid(false);
         })
         .catch((error) => {
-          console.log(error);
+          notify("error", "Could not claim item");
           setFinalizingBid(false);
         });
     } catch (error) {
-      console.log(JSON.parse(JSON.stringify(error))?.reason);
+      notify("error", "Could not claim item");
       setFinalizingBid(false);
     }
   };
@@ -139,14 +142,15 @@ export default function AuctionDialog({
         .then(() => {
           closeBidModal();
           updateAuctions();
+          notify("success", "Auction Ended successfully");
           setEndingAuction(false);
         })
         .catch((error) => {
-          console.log(error);
+          notify("error", "Could not end auction");
           setEndingAuction(false);
         });
     } catch (error) {
-      console.log(JSON.parse(JSON.stringify(error))?.reason);
+      notify("error", "Could not end auction");
       setEndingAuction(false);
     }
   };

@@ -1,5 +1,7 @@
 import { fromString } from "uint8arrays/from-string";
-import { CustomButton } from "@/components/CustomConnectBtn/CustomConnectBtn";
+import CustomConnectBtn, {
+  CustomButton,
+} from "@/components/CustomConnectBtn/CustomConnectBtn";
 import FileHandler from "@/components/FileHandler/FileHandler";
 import { Input, InputTextArea } from "@/components/Input/Input";
 import { Box, Grid } from "@mui/material";
@@ -7,8 +9,10 @@ import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
 import { create } from "ipfs-http-client";
 import abi from "@/utils/contract.json";
-import { useContractWrite } from "wagmi";
+import { useAccount, useContractWrite } from "wagmi";
 import { ethers } from "ethers";
+import Loader from "@/components/Loader";
+import { notify } from "@/functions";
 
 const projectId = process.env.NEXT_PUBLIC_INFURA_PROJECT_ID;
 const projectSecret = process.env.NEXT_PUBLIC_INFURA_PROJECT_SECRET;
@@ -31,39 +35,52 @@ function removeMimeTypeFromBase64(base64String: string) {
 }
 
 export default function Create() {
+  const { isConnected } = useAccount();
   const [imageUrl, setImageUrl] = useState<string>("");
   const [metadataCid, setMetadataCid] = useState<string>("");
+  const [creatingAuction, setCreatingAuction] = useState(false);
   const auctionForm = useFormik({
     initialValues: {
       title: "",
       reservePrice: 0,
       startTime: new Date().toISOString().slice(0, -8),
       endTime: "",
-      description:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem repellendus recusandae iste asperiores totam non modi, nihil illum enim quod exercitationem commodi, doloribus odit! Maiores dolorum ex in ea reiciendis labore totam ducimus asperiores nemo a quia blanditiis, expedita, voluptates sapiente natus temporibus, ipsa accusamus.",
+      description: "",
     },
 
     onSubmit: async (values) => {
-      let _reservePrice = values.reservePrice;
-      let _startTime = (new Date(values.startTime).getTime() / 1000).toString();
-      let _endTime = (new Date(values.endTime).getTime() / 1000).toString();
+      try {
+        setCreatingAuction(true);
+        if (
+          metadataCid &&
+          values.reservePrice &&
+          values.startTime &&
+          values.endTime
+        ) {
+          await createAuction();
+          return;
+        }
 
-      const buffer = fromString(removeMimeTypeFromBase64(imageUrl), "base64");
-      const added = await ipfs.add(buffer);
-      let imageCid = added.cid.toString();
+        const buffer = fromString(removeMimeTypeFromBase64(imageUrl), "base64");
+        const added = await ipfs.add(buffer);
+        let imageCid = added.cid.toString();
 
-      let metadata = {
-        title: values.title,
-        preview: "ipfs://" + imageCid,
-        description: values.description,
-      };
+        let metadata = {
+          title: values.title,
+          preview: "ipfs://" + imageCid,
+          description: values.description,
+        };
 
-      const metadataBuffer = fromString(JSON.stringify(metadata));
-      const metadataAdded = await ipfs.add(metadataBuffer);
-      let metadataCid = metadataAdded.cid.toString();
+        const metadataBuffer = fromString(JSON.stringify(metadata));
+        const metadataAdded = await ipfs.add(metadataBuffer);
+        let metadataCID = metadataAdded.cid.toString();
 
-      let metadataUrl = "ipfs://" + metadataCid;
-      setMetadataCid(metadataUrl);
+        let metadataUrl = "ipfs://" + metadataCID;
+        setMetadataCid(metadataUrl);
+      } catch (error) {
+        setCreatingAuction(false);
+        notify("error", "Could not create auction");
+      }
     },
   });
   const { writeAsync: createAuction } = useContractWrite({
@@ -73,44 +90,33 @@ export default function Create() {
     functionName: "createAuction",
     args: [
       metadataCid,
-      // ethers.utils.parseUnits(
-      //   auctionForm.values.reservePrice.toString(),
-      //   "ether"
-      // ),
+      ethers.utils.parseEther(auctionForm.values.reservePrice.toString()),
       (new Date(auctionForm.values.startTime).getTime() / 1000).toString(),
       (new Date(auctionForm.values.endTime).getTime() / 1000).toString(),
     ],
   });
 
-  useEffect(() => {
-    async function prepareAuction() {
-      console.log(
-        metadataCid,
-        auctionForm.values.reservePrice,
-        auctionForm.values.startTime,
-        auctionForm.values.endTime
-      );
-      try {
-        // (await createAuction())
-        //   .wait()
-        //   .then((hash) => {
-        //     console.log(hash);
-        //     auctionForm.resetForm();
-        //     setMetadataCid("");
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
-        console.log(
-          ethers.utils.parseUnits(
-            auctionForm.values.reservePrice.toString(),
-            "ether"
-          )
-        );
-      } catch (error) {
-        console.log(JSON.parse(JSON.stringify(error))?.reason);
-      }
+  async function prepareAuction() {
+    try {
+      (await createAuction())
+        .wait()
+        .then((hash) => {
+          auctionForm.resetForm();
+          setMetadataCid("");
+          setCreatingAuction(false);
+          notify("success", "Auction created successfully");
+        })
+        .catch((error) => {
+          setCreatingAuction(false);
+          notify("error", "Could not create auction");
+        });
+    } catch (error) {
+      setCreatingAuction(false);
+      notify("error", "Could not create auction");
     }
+  }
+
+  useEffect(() => {
     if (metadataCid) prepareAuction();
   }, [metadataCid]);
 
@@ -208,7 +214,6 @@ export default function Create() {
                     type="datetime-local"
                     label="End Time"
                     name="endTime"
-                    value={auctionForm.values.endTime}
                     onChange={auctionForm.handleChange}
                   />
                 </Grid>
@@ -222,16 +227,21 @@ export default function Create() {
                   onChange={auctionForm.handleChange}
                 />
               </Box>
-              <CustomButton
-                size="large"
-                fullWidth
-                sx={{
-                  mb: "1.5em",
-                }}
-                onClick={() => auctionForm.handleSubmit()}
-              >
-                Create Auction
-              </CustomButton>
+              {isConnected ? (
+                <CustomButton
+                  size="large"
+                  fullWidth
+                  sx={{
+                    mb: "1.5em",
+                  }}
+                  onClick={() => auctionForm.handleSubmit()}
+                  disabled={creatingAuction}
+                >
+                  {creatingAuction ? <Loader /> : "Create Auction"}
+                </CustomButton>
+              ) : (
+                <CustomConnectBtn />
+              )}
             </Box>
           </Grid>
         </Grid>

@@ -20,6 +20,7 @@ import { Valora, CeloWallet, CeloDance } from "@celo/rainbowkit-celo/wallets";
 import { Alfajores, Celo } from "@celo/rainbowkit-celo/chains";
 
 import Layout from "../components/Layout";
+import { Toaster } from "react-hot-toast";
 
 const { chains, provider } = configureChains(
   [Alfajores, Celo],
@@ -56,6 +57,15 @@ function App({ Component, pageProps }: AppProps) {
       <RainbowKitProvider chains={chains} coolMode={true}>
         <Layout>
           <Component {...pageProps} />
+
+          <Toaster
+            toastOptions={{
+              style: {
+                width: "auto",
+                maxWidth: "600px",
+              },
+            }}
+          />
         </Layout>
       </RainbowKitProvider>
     </WagmiConfig>
