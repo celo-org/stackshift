@@ -23,8 +23,7 @@ export default function Auction() {
     const file = e.target.files[0];
     try {
       const client = new Web3Storage({
-        token:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweGNiRGZhNDBBYjBEZTcwNTkwNURERDg4RTAwOWMzOTM3OGEzOWRhMmYiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NDk5MjExMTU1NDYsIm5hbWUiOiJXZWIzIn0._kphTIOj4s98lZpgrkcHCSxAmW7j15CNEYd5qbWULjs",
+        token: process.env.NEXT_PUBLIC_TOKEN,
       });
 
       const cid = await client.put(e.target.files, {
