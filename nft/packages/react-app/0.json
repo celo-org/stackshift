@@ -1,0 +1,15 @@
+{
+  "name": "Culture NFT",
+  "description": "level One NFT",
+  "image": "https://ipfs.io/ipfs/QmYm5tRXZ3Bk8r6Z7eQhq1wiVNMB1BBt1o2Doby2yKoqrS/0.jpg",
+  "attributes": [
+    {
+      "trait_type": "culture_room",
+      "value": true
+    },
+    {
+      "trait_type": "food_cut",
+      "value": false
+    }
+  ]
+}
