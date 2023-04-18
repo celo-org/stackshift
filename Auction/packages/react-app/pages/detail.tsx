@@ -1,13 +1,13 @@
 // @ts-nocheck
 import React from "react";
-import Image from "next/image";
+import img from "next/img";
 
 export default function detail() {
   return (
     <div>
       <div className="detail">
         <div className="detail1">
-          <Image src="./a1.png" />
+          <img src="./a1.png" />
         </div>
         <div className="detail2">
           <div className="dtf">

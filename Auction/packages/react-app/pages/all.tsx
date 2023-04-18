@@ -9,7 +9,7 @@ import Link from "next/link";
 import { Web3Storage } from "web3.storage/dist/bundle.esm.min.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Image from "next/image";
+import img from "next/img";
 
 export default function All() {
   const { data: signer } = useSigner();
@@ -48,14 +48,25 @@ export default function All() {
           {auc.map((item, index) => {
             return (
               <div key={index} className="card">
-                <Image className="" src={item.img} alt="hero" />
+                <img className="" src={item.img} alt="hero" />
                 <div className="textflex1">
                   <div className="text5">{item.name}</div>
-                  <div className="text6">Ends in 3 minutes</div>
+                  <div className="text6">
+                    {" "}
+                    Ends in{" "}
+                    {Math.round(
+                      (Number(ethers.BigNumber.from(item.end_time)) -
+                        Number(ethers.BigNumber.from(item.start_time))) /
+                        60 /
+                        60 /
+                        24
+                    )}{" "}
+                    days
+                  </div>
                 </div>
                 <div className="text7">
                   Current Bid -{" "}
-                  {Number(ethers.BigNumber.from(item.start_bid) / 10 ** 18)}
+                  {Number(ethers.BigNumber.from(item.winningBid) / 10 ** 18)}
                   celo
                 </div>
                 <div className="bidflex">

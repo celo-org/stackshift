@@ -55,7 +55,9 @@ export default function Home() {
       <section className="home-section2">
         <div className="home-section2-inner">
           <div className="text3">Live Auctions</div>
-          <div className="text4">View all auctions</div>
+          <Link href="/all">
+            <div className="text4">View all auctions</div>
+          </Link>
         </div>
         <div className="live">
           {auc.map((item, index) => {
@@ -64,11 +66,22 @@ export default function Home() {
                 <img className="" src={item.img} alt="hero" />
                 <div className="textflex1">
                   <div className="text5">{item.name}</div>
-                  <div className="text6">Ends in 3 minutes</div>
+                  <div className="text6">
+                    {" "}
+                    Ends in{" "}
+                    {Math.round(
+                      (Number(ethers.BigNumber.from(item.end_time)) -
+                        Number(ethers.BigNumber.from(item.start_time))) /
+                        60 /
+                        60 /
+                        24
+                    )}{" "}
+                    days
+                  </div>
                 </div>
                 <div className="text7">
                   Current Bid -{" "}
-                  {Number(ethers.BigNumber.from(item.start_bid) / 10 ** 18)}
+                  {Number(ethers.BigNumber.from(item.winningBid) / 10 ** 18)}
                   celo
                 </div>
                 <div className="bidflex">
@@ -106,11 +119,21 @@ export default function Home() {
                 <img className="" src={item.img} alt="hero" />
                 <div className="textflex1">
                   <div className="text5">{item.name}</div>
-                  <div className="text6">Ends in 3 minutes</div>
+                  <div className="text6">
+                    Ends in{" "}
+                    {Math.round(
+                      (Number(ethers.BigNumber.from(item.end_time)) -
+                        Number(ethers.BigNumber.from(item.start_time))) /
+                        60 /
+                        60 /
+                        24
+                    )}{" "}
+                    days
+                  </div>
                 </div>
                 <div className="text7">
                   Current Bid -{" "}
-                  {Number(ethers.BigNumber.from(item.start_bid) / 10 ** 18)}
+                  {Number(ethers.BigNumber.from(item.winningBid) / 10 ** 18)}
                   celo
                 </div>
                 <div className="bidflex">
