@@ -16,6 +16,7 @@ export default function Profile() {
   const [acl, setAcl] = useState([]);
   const { address } = useAccount();
   const [bal, setBalance] = useState(0);
+  const aidRef = useRef();
 
   const { data: signer } = useSigner();
   const [auc, setAuc] = useState([]);
@@ -42,6 +43,33 @@ export default function Profile() {
     const id2 = toast.loading("Transaction in progress..");
     try {
       const tx = await contract.bidWithdraw(id);
+      await tx.wait();
+
+      toast.update(id, {
+        render: "Transaction successfull",
+        type: "success",
+        isLoading: false,
+        autoClose: 1000,
+        closeButton: true,
+      });
+      setTimeout(() => window.location.reload(), 3000);
+    } catch (error) {
+      console.log(error);
+      toast.update(id2, {
+        render: `${error.reason}`,
+        type: "error",
+        isLoading: false,
+        autoClose: 1000,
+        closeButton: true,
+      });
+    }
+  };
+
+  const bidRefund = async (id) => {
+    const contract = await createAuctionContract();
+    const id2 = toast.loading("Transaction in progress..");
+    try {
+      const tx = await contract.bidRefund(id);
       await tx.wait();
 
       toast.update(id, {
@@ -113,9 +141,18 @@ export default function Profile() {
         <div className="text61">Balance - {bal}</div>
         <div className="text61">Withdraw Refunded Bid or Balance</div>
         <div>
-          <input className="winput" placeholder="Enter Auction Id" />
+          <input
+            ref={aidRef}
+            className="winput"
+            placeholder="Enter Auction Id"
+          />
         </div>
-        <button className="wbut">Withdraw</button>
+        <button
+          onClick={() => bidRefund(aidRef.current.value)}
+          className="wbut"
+        >
+          Withdraw
+        </button>
       </div>
       <div className="bbf">
         <button onClick={() => setState(true)} className="bb">
