@@ -26,7 +26,9 @@ const { chains, provider } = configureChains(
   [Alfajores, Celo],
   [
     jsonRpcProvider({
-      rpc: (chain) => ({ http: chain.rpcUrls.default.http[0] }),
+      rpc: () => ({
+        http: process.env.NEXT_PUBLIC_INFURA_RPC_URI as string,
+      }),
     }),
   ]
 );

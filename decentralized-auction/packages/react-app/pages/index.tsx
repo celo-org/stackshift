@@ -54,10 +54,12 @@ export default function Home() {
       }
     );
 
-    let aggregatedAuctionsPromise = Promise.all(aggregatedAuctions);
-    aggregatedAuctionsPromise.then((aggregatedAuctions) => {
-      setAggregatedAuctions(aggregatedAuctions);
-    });
+    if (aggregatedAuctions) {
+      let aggregatedAuctionsPromise = Promise.all(aggregatedAuctions);
+      aggregatedAuctionsPromise.then((aggregatedAuctions) => {
+        setAggregatedAuctions(aggregatedAuctions);
+      });
+    }
   }, [auctions]);
 
   return (
