@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
 contract SecondHandGoodsAuction {
@@ -125,5 +126,19 @@ contract SecondHandGoodsAuction {
 
         auction.itemReceived = true;
         emit ItemReceived(_auctionId);
+    }
+
+    function getAllAuctions() public view returns (Auction[] memory) {
+        Auction[] memory allAuctions = new Auction[](auctionId);
+        for (uint256 i = 0; i < auctionId; i++) {
+            allAuctions[i] = auctions[i + 1];
+        }
+        return allAuctions;
+    }
+
+    function getAuction(
+        uint256 _auctionId
+    ) public view returns (Auction memory) {
+        return auctions[_auctionId];
     }
 }

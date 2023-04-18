@@ -3,7 +3,6 @@ import CustomConnectBtn from "./CustomConnectBtn/CustomConnectBtn";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import styled from "@emotion/styled";
 
 export default function Header() {
   return (
@@ -18,9 +17,8 @@ export default function Header() {
 
       <Box display={"flex"} alignItems={"center"} gap={4}>
         <Box display={"flex"} alignItems={"center"}>
-          <NavLink title="Ongoing" route="/" />
+          <NavLink title="Auctions" route="/" />
           <NavLink title="Create" route="/create" />
-          <NavLink title="My Auctions" route="/my-auctions" />
         </Box>
         <CustomConnectBtn />
       </Box>

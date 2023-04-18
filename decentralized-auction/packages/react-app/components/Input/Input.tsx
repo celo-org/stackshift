@@ -20,7 +20,7 @@ const InputContainer = styled.div<{ mtOff?: boolean; error?: boolean }>`
     font-size: 1em;
 
     &:disabled {
-      background: #1e1e1e;
+      background: #dcdcdc;
       color: #000000;
       opacity: 0.5;
       cursor: not-allowed;

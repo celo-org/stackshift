@@ -29,7 +29,7 @@ const BidInfo = styled.div`
   }
 
   button {
-    background-color: #13122b;
+    background-color: #005ce6;
     color: #fff;
     border: none;
     border-radius: 10px;
@@ -40,23 +40,37 @@ const BidInfo = styled.div`
   }
 `;
 
-const Countdown = styled.div`
+const Countdown = styled.div<{ ended: boolean }>`
   display: flex;
   align-items: center;
   gap: 0.5em;
   font-size: 0.9em;
-  background-color: #13122b95;
+  background-color: ${({ ended }) => (ended ? "#ff000095" : "#005ce695")};
   width: fit-content;
   padding: 0.5em 1em;
   border-radius: 50px;
   color: #ffffff;
 `;
 
-export default function AuctionCard() {
+export default function AuctionCard({
+  title,
+  preview,
+  endtime,
+  highestBid,
+  triggerBidModal,
+  ended,
+}: {
+  title: string;
+  preview: string;
+  endtime: string;
+  highestBid: number;
+  triggerBidModal: () => void;
+  ended: boolean;
+}) {
   return (
     <Box
       sx={{
-        backgroundImage: "url(/lapi.jpeg)",
+        backgroundImage: `url(${preview})`,
         backgroundSize: "contain",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
@@ -65,7 +79,7 @@ export default function AuctionCard() {
         padding: "1em",
       }}
     >
-      <CountDownTimer />
+      <CountDownTimer dateTime={endtime} ended={ended} />
       <Box
         sx={{
           height: "250px",
@@ -75,20 +89,34 @@ export default function AuctionCard() {
           verticalAlign: "top",
         }}
       >
-        <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</span>
+        <Box
+          sx={{
+            backgroundColor: "#ffffff75",
+            padding: "0.5em 1em",
+            borderRadius: "10px",
+          }}
+        >
+          <span>{title}</span>
+        </Box>
       </Box>
       <BidInfo>
         <div>
           <span>Current Bid</span>
-          <span>30 CELO</span>
+          <span>{(highestBid / 10 ** 18).toFixed(2)} CELO</span>
         </div>
-        <button>Place a bid</button>
+        <button onClick={triggerBidModal}>Place a bid</button>
       </BidInfo>
     </Box>
   );
 }
 
-const CountDownTimer = () => {
+const CountDownTimer = ({
+  dateTime,
+  ended,
+}: {
+  dateTime: string;
+  ended: boolean;
+}) => {
   const [state, setState] = useState<{
     days: string;
     hours: string;
@@ -105,7 +133,7 @@ const CountDownTimer = () => {
 
   useEffect(() => {
     let countdown = () => {
-      let date = +new Date("05/02/2023");
+      let date = +new Date(parseInt(dateTime) * 1000);
       let difference = date - +new Date();
       if (difference < 1) {
         setState((prevState) => ({ ...prevState, timeUp: true }));
@@ -134,11 +162,17 @@ const CountDownTimer = () => {
   const { days, hours, minutes, seconds } = state;
 
   return (
-    <Countdown>
-      <span>{days}d</span>
-      <span>{hours}h</span>
-      <span>{minutes}m</span>
-      <span>{seconds}s</span>
+    <Countdown ended={ended}>
+      {ended ? (
+        <span>Ended</span>
+      ) : (
+        <>
+          <span>{days}d</span>
+          <span>{hours}h</span>
+          <span>{minutes}m</span>
+          <span>{seconds}s</span>
+        </>
+      )}
     </Countdown>
   );
 };

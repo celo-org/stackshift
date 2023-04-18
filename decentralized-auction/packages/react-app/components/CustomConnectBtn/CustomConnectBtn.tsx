@@ -9,12 +9,22 @@ import Options from "../Options/Options";
 import { Avatar, Button } from "@mui/material";
 import styled from "@emotion/styled";
 
-export const CustomButton = styled(Button)({
-  color: "#fff",
-  backgroundColor: "#005ce6",
-  textTransform: "capitalize",
-  fontFamily: "inherit !important",
-});
+export const CustomButton = styled(Button)<{ bgcolor?: string }>`
+  color: #fff;
+  background-color: ${(props) => (props.bgcolor ? props.bgcolor : "#005ce6")};
+  text-transform: capitalize;
+
+  &:hover {
+    background-color: ${(props) => (props.bgcolor ? props.bgcolor : "#005ce6")};
+  }
+
+  &:disabled {
+    background-color: ${(props) =>
+      props.bgcolor ? props.bgcolor + "45" : "#005ce645"};
+    color: #fff;
+    cursor: not-allowed;
+  }
+`;
 
 export default function CustomConnectBtn() {
   const { disconnectAsync } = useDisconnect();

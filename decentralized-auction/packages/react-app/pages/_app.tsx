@@ -1,5 +1,4 @@
 import "../styles/globals.scss";
-import { Work_Sans } from "next/font/google";
 import "@rainbow-me/rainbowkit/styles.css";
 import type { AppProps } from "next/app";
 import {
@@ -51,17 +50,13 @@ const wagmiClient = createClient({
   provider,
 });
 
-const workSans = Work_Sans({ subsets: ["latin"] });
-
 function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains} coolMode={true}>
-        <main className={workSans.className}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </main>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </RainbowKitProvider>
     </WagmiConfig>
   );

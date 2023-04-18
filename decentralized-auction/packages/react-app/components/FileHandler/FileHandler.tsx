@@ -3,8 +3,13 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 
-export default function FileHandler() {
-  const [imageUrl, setImageUrl] = useState<string>("");
+export default function FileHandler({
+  imageUrl,
+  setImageUrl,
+}: {
+  imageUrl: string;
+  setImageUrl: (url: string) => void;
+}) {
   const [fileUpload, setFileUpload] = useState<File | null>(null);
 
   const onDrop = useCallback(async <T extends File>(acceptedFiles: T[]) => {
