@@ -5,26 +5,24 @@ async function main() {
   // We get the contract to deploy
   const JustinNFT = await hre.ethers.getContractFactory("JustinNFT");
   const justinNFT = await JustinNFT.attach(
-    "0x6D801bF793248ecf9bC20d465246e9305311aDD5"
+    "0x9Edd3fb21e1BC3dBE3c5BCf8AB8044c706AAEA9C"
   );
 
   const wrappedContract = WrapperBuilder.wrap(JustinNFT).usingDataService(
     {
       dataServiceId: "redstone-custom-urls-demo",
       uniqueSignersCount: 2,
-      dataFeeds: ["0x51aef3f04920d8cb"],
+      dataFeeds: ["0xf2384121b725bca1"],
     },
     ["https://d1zm8lxy9v2ddd.cloudfront.net"]
   );
 
   // Interact with the contract (getting oracle value securely)
-  const res = await wrappedContract.updateMembership(0);
+  const res = await wrappedContract.buyProduct('0x5484a1D712b6135d528beE0AF308C026fa819a51', 0);
 
-  await res.wait();
+  //await res.wait();
 
-  const tokenUri = await justinNFT.tokenURI(0);
-
-  console.table({ tokenUri });
+  console.table({ res });
 }
 
 // We recommend this pattern to be able to use async/await everywhere

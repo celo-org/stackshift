@@ -4,11 +4,13 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "redstone-evm-connector/lib/contracts/message-based/PriceAware.sol";
 
 contract JustinNFT is
     ERC721,
     ERC721Enumerable,
-    ERC721URIStorage
+    ERC721URIStorage,
+    PriceAware
 {
 
     struct Product {
@@ -61,13 +63,21 @@ contract JustinNFT is
             super._beforeTokenTransfer(from, to, tokenId, batchSize);
         }
 
+      function isSignerAuthorized(address _receviedSigner) public override virtual view returns (bool) {
+        // For redstone-custom-urls-demo price feed (it has 2 authorised signers)
+        return _receviedSigner == 0x11fFFc9970c41B9bFB9Aa35Be838d39bce918CfF
+          || _receviedSigner == 0xdBcC2C6c892C8d3e3Fe4D325fEc810B7376A5Ed6;
+      }
+
+
     function buyProduct(address _nftAddress, uint256 _productIndex) public payable {
 
         Product memory product = products[_productIndex];
 
         require(product.price == msg.value, "Incorrect product amount");
 
-        uint256 point = purchaseCounts[msg.sender];
+        //uint256 point = purchaseCounts[msg.sender];
+        uint256 point = getPriceFromMsg(bytes32("0xf2384121b725bca1"));
 
         if (userMinted[msg.sender]) {
 

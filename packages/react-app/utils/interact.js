@@ -3,7 +3,7 @@ import axios  from 'axios'
 import { priceToWei } from './helpers'
 import JustinNFT from '../../hardhat/artifacts/contracts/JustinNFT.sol/JustinNFT.json'
 
-export const contractAddress = '0x58C02ABaa78f09E84B395b24E453869aBDc361c4'
+export const contractAddress = '0x5484a1D712b6135d528beE0AF308C026fa819a51'
 
 export async function getContract() {
 
@@ -64,6 +64,7 @@ export const getNFT = async () => {
     let NFT = undefined
     const contract = await getContract()
     const tokenId = await contract.getTokenId()
+    return console.log('tt ', tokenId)
     if (tokenId) {
       const tokenURI = await contract.tokenURI(tokenId)
       NFT = await getNFTMeta(tokenURI)
