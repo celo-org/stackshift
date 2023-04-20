@@ -1,0 +1,37 @@
+{
+  "name": "nft",
+  "version": "1.0.0",
+  "description": "Custom Celo Composer project.",
+  "private": true,
+  "author": "Celo",
+  "license": "MIT",
+  "scripts": {
+    "react-app:dev": "yarn workspace @nft /react-app dev",
+    "react-app:build": "yarn workspace @nft /react-app build",
+    "react-app:start": "yarn workspace @nft /react-app start",
+    "react-app:lint": "yarn workspace @nft /react-app lint",
+    "hardhat:test": "yarn workspace @nft /hardhat test",
+    "hardhat:test-local": "yarn workspace @nft /hardhat test-local",
+    "hardhat:accounts": "yarn workspace @nft /hardhat accounts",
+    "hardhat:devchain": "yarn workspace @nft /hardhat devchain",
+    "hardhat:deploy": "yarn workspace @nft /hardhat deploy",
+    "hardhat:deploy-reset-watch": "yarn workspace @nft /hardhat deploy-reset-watch",
+    "hardhat:watch": "yarn workspace @nft /hardhat watch",
+    "hardhat:fork-mainnet": "yarn workspace @nft /hardhat fork-mainnet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/celo-org/celo-composer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/celo-org/celo-composer/issues"
+  },
+  "homepage": "https://github.com/celo-org/celo-composer/blob/main/README.md",
+  "workspaces": [
+    "packages/*"
+  ],
+  "keywords": [
+    "celo-composer",
+    "celo"
+  ]
+}
