@@ -9,6 +9,7 @@ import {
   Navbar,
   Row,
   Col,
+  Spinner,
 } from "react-bootstrap";
 import axios from "axios";
 
@@ -126,7 +127,7 @@ export default function NFTs() {
   return (
     <div style={{ backgroundColor: "white" }}>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">NFT Minter</Navbar.Brand>
+        <Navbar.Brand href="/">Culture NFT Minter</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
@@ -143,7 +144,7 @@ export default function NFTs() {
                 </Nav.Link>
               </>
             )}
-            <Nav.Link href="/NFTs">View NFTs</Nav.Link>
+            <Nav.Link href="/NFTs"> List NFTs</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

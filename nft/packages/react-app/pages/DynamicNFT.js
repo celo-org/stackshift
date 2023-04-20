@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useCelo } from "@celo/react-celo";
 import { ethers } from "ethers";
 import contractAbi from "../NFT.json";
-import { Button, Card, Container, Nav, Navbar } from "react-bootstrap";
+import { Button, Card, Container, Nav, Navbar, Spinner } from "react-bootstrap";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -10,6 +10,7 @@ const contractAddress = "0x654B63E70E84Baa8fbeD965127B4f04BB634c993";
 
 export const DynamicNFT = () => {
   const { kit, address, connect, disconnect } = useCelo();
+  const [spin, setSpin] = React.useState(false);
 
   const [walletAddress, setWalletAddress] = React.useState(null);
 
@@ -39,8 +40,9 @@ export const DynamicNFT = () => {
       // Replace with Your metadata
       const metadata =
         "https://ipfs.io/ipfs/QmVDz6EJ7U4WC2iNXbAS5yGmTQwyqYumi39aKuiXCLbEmV/0.json";
-
-      const result = await contract.safeMint(metadata, { from: walletAddress });
+      setSpin(true);
+      const result = await contract.safeMint({ from: walletAddress });
+      setSpin(false);
       console.log(result);
     } catch (error) {
       console.error(error);
@@ -129,7 +131,7 @@ export const DynamicNFT = () => {
   return (
     <div style={{ backgroundColor: "white" }}>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">NFT Minter</Navbar.Brand>
+        <Navbar.Brand href="/">Culture NFT Minter</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
@@ -142,7 +144,7 @@ export const DynamicNFT = () => {
                 Disconnect
               </Nav.Link>
             )}
-            <Nav.Link href="NFTs">View NFTs</Nav.Link>
+            <Nav.Link href="NFTs">List NFTs</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
