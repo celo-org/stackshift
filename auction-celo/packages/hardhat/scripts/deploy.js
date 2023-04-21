@@ -21,12 +21,26 @@ async function main() {
 
   //   console.log("Greeter deployed to:", greeter.address);
 
+  // const ERC721 = await hre.ethers.getContractFactory("ERC721");
+  // const erc721 = await ERC721.deploy();
+
+  // await erc721.deployed();
+
+  // console.log("contract erc721 deployed to:", erc721.address);
+  const erc721Address = "0x102ffcBb0377005bE2e1E3891159CFD24C0d76F3";
   const AuctionToken = await hre.ethers.getContractFactory("AuctionToken");
   const auction = await AuctionToken.deploy();
 
   await auction.deployed();
 
   console.log("Auction deployed to:", auction.address);
+
+  const ProductAuction = await hre.ethers.getContractFactory("ProductAuction");
+  const productAuction = await ProductAuction.deploy(erc721Address, 88, 1);
+
+  await productAuction.deployed();
+
+  console.log("Product Auction:", productAuction.address);
 
   // const AuctionnToken = await hre.ethers.getContractFactory("AuctionnToken");
   // const autionn = await AuctionnToken.deploy();

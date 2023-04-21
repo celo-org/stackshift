@@ -1,11 +1,11 @@
 import Web3 from "web3";
 import { providers, Contract, ethers } from "ethers";
-import abi from "./packages/hardhat/artifacts/contracts/AuctionToken.sol/AuctionToken.json";
+import abi from "./abi.json";
 require("dotenv").config();
 
 export async function getContract() {
   console.log("Auntion COntracts");
-  const contractAddress = "0x24A7CE47F5db30F2F73fEcB828ff7De1c07d3da0";
+  const contractAddress = "0x09038FAF2178FF96Ce7fcE6e6eb253EF83D9dcb0";
   const contractABI = abi;
   let auctionTokenContract;
   try {

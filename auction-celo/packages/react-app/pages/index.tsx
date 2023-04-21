@@ -1,5 +1,5 @@
-import Auction from "./AuctionPage";
+import ProductAuction from "./ProductAuction";
 
 export default function Home() {
-  return <Auction />;
+  return <ProductAuction />;
 }
