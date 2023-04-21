@@ -28,12 +28,6 @@ async function main() {
 
   // console.log("contract erc721 deployed to:", erc721.address);
   const erc721Address = "0x102ffcBb0377005bE2e1E3891159CFD24C0d76F3";
-  const AuctionToken = await hre.ethers.getContractFactory("AuctionToken");
-  const auction = await AuctionToken.deploy();
-
-  await auction.deployed();
-
-  console.log("Auction deployed to:", auction.address);
 
   const ProductAuction = await hre.ethers.getContractFactory("ProductAuction");
   const productAuction = await ProductAuction.deploy(erc721Address, 88, 1);
