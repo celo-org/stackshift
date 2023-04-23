@@ -1,5 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const axios= require("axios");
+
 dotenv.config();
 
 const app = express()
@@ -17,11 +19,10 @@ const requestOptions = {
 };
 
 app.get('/prices', async (req, res) => {
-        const resp = await fetch("https://api.apilayer.com/fixer/convert?to=kes&from=usd&amount=1", requestOptions);
-        const json = await resp.json();
-        console.log("resp", json);
+        const resp = await axios.get("https://api.apilayer.com/fixer/convert?to=kes&from=usd&amount=1", requestOptions);
+        console.log("resp",resp.data);
 
-        res.send(json);
+        res.send(resp.data);
 })
 
 const port = 3040;
