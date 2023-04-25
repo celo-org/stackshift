@@ -1,9 +1,10 @@
 import { providers, Contract } from 'ethers'
 import axios  from 'axios'
+import { WrapperBuilder } from 'redstone-evm-connector'
 import { priceToWei } from './helpers'
 import JustinNFT from '../../hardhat/artifacts/contracts/JustinNFT.sol/JustinNFT.json'
 
-export const contractAddress = '0x5484a1D712b6135d528beE0AF308C026fa819a51'
+export const contractAddress = '0xAe30F2C23509C09e51ed6ED5f3d8608bfDCf9B4c'
 
 export async function getContract() {
 
@@ -36,11 +37,19 @@ export const buyProduct = async (index, price) => {
 
   try {
     const contract = await getContract()
-    let res = await contract.buyProduct(contractAddress, index, {value: priceToWei(price)})
+
+    const wrappedContract = WrapperBuilder
+      .wrapLite(contract)
+      .usingPriceFeed('redstone-custom-urls-demo', { asset: '0xf2384121b725bca1' })
+
+    // await wrappedContract.authorizeProvider();
+
+    let res = await wrappedContract.buyProduct(contractAddress, index, {value: priceToWei(price)})
+
+    // let res = await contract.buyProduct(contractAddress, index, {value: priceToWei(price)})
     res = await res.wait()
     console.log('bidd ', res)
     return res
-
   } catch (e) {
     console.log(e)
     console.log('e here', e)
@@ -61,14 +70,14 @@ export const getProducts = async () => {
 export const getNFT = async () => {
 
   try {
-    let NFT = undefined
+    // let NFT = undefined
     const contract = await getContract()
     const tokenId = await contract.getTokenId()
-    return console.log('tt ', tokenId)
-    if (tokenId) {
+    // return console.log('tt ', tokenId)
+    // if (tokenId) {
       const tokenURI = await contract.tokenURI(tokenId)
-      NFT = await getNFTMeta(tokenURI)
-    }
+      let NFT = await getNFTMeta(tokenURI)
+    // }
     return NFT
 
   } catch (e) {

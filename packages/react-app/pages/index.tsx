@@ -63,8 +63,7 @@ export default function Home () {
               />
               <h2 className="font-bold mb-2">{product.name}</h2>
               <p>{formatPrice(product.price)} CELO</p>
-              <button onClick={() => buyProductHandler(i, product.price)} type="button"
-                      className="mt-3 bg-slate-300 w-28 rounded">
+              <button onClick={() => buyProductHandler(i, product.price)} type="button" className="bg-slate-300 w-28 rounded">
                 Buy
               </button>
             </div>
