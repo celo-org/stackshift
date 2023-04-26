@@ -138,8 +138,8 @@ export default function Profile() {
   return (
     <div>
       <div className="card2">
-        <div className="text61">Balance - {bal}</div>
-        <div className="text61">Withdraw Refunded Bid or Balance</div>
+        <div className="text61">Wallet Balance - {bal}</div>
+        <div className="text61">Withdraw Auction Balance</div>
         <div>
           <input
             ref={aidRef}
