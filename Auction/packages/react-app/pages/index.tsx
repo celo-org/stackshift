@@ -26,7 +26,20 @@ export default function Home() {
     try {
       const auctions = await contract.fetchAuctions();
       console.log(auctions);
-      setAuc(auctions);
+
+      const newA = [...auctions];
+      newA.reverse();
+
+      console.log(newA);
+
+      //auctions.reverse();
+
+      /* auctions.sort(
+        (a, b) =>
+          Number(ethers.BigNumber.from(a.start_time)) -
+          Number(ethers.BigNumber.from(b.start_time))
+      ); */
+      setAuc(newA);
     } catch (error) {
       console.log(error);
     }
