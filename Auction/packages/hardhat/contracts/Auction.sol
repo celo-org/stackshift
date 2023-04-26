@@ -9,6 +9,7 @@ contract AuctionContract {
 
     struct Auction {
         string name;
+        string desc;
         uint256 start_bid;
         address creator;
         address winner;
@@ -38,6 +39,7 @@ contract AuctionContract {
 
     function createAuction(
         string calldata name,
+        string calldata desc,
         uint start_bid,
         uint start_time,
         uint end_time,
@@ -52,6 +54,7 @@ contract AuctionContract {
 
         AuctionData[counter] = Auction(
             name,
+            desc,
             start_bid,
             msg.sender,
             address(0),
@@ -59,7 +62,7 @@ contract AuctionContract {
             end_time,
             reserve_price,
             img,
-            0,
+            start_bid,
             counter,
             auctionType,
             bidders
@@ -164,7 +167,7 @@ contract AuctionContract {
             "Auction has ended"
         );
         require(msg.value > 0, "Bid must be greater than zero");
-        uint tbid = msg.value + AuctionBid[auctionId][msg.sender].bid_amount;
+        uint tbid = initialBid + AuctionBid[auctionId][msg.sender].bid_amount;
         require(
             tbid > AuctionData[auctionId].winningBid,
             "Bid must be greate then winning Bid"
@@ -192,11 +195,12 @@ contract AuctionContract {
     }
 
     function bidWithdraw(uint auctionId) public {
-        AuctionBid[auctionId][msg.sender].balance = AuctionBid[auctionId][
-            msg.sender
-        ].bid_amount;
+        AuctionBid[auctionId][msg.sender].balance =
+            AuctionBid[auctionId][msg.sender].balance +
+            AuctionBid[auctionId][msg.sender].bid_amount;
 
         AuctionBid[auctionId][msg.sender].bid_amount = 0;
+        AuctionBid[auctionId][msg.sender].autoAmount = 0;
         AuctionBid[auctionId][msg.sender].auctionId = auctionId;
 
         address winner;
@@ -219,6 +223,7 @@ contract AuctionContract {
 
     function bidRefund(uint auctionId) public {
         uint balance = AuctionBid[auctionId][msg.sender].balance;
+        AuctionBid[auctionId][msg.sender].balance = 0;
         (bool success, ) = payable(msg.sender).call{value: balance}("");
         require(success, "Failed to send Ether");
     }
