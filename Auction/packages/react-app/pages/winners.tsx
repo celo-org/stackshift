@@ -29,12 +29,12 @@ export default function Winners() {
     const contract = await createAuctionContract();
     try {
       const auctions = await contract.fetchAuctions();
-      console.log(auctions);
       const filtered = auctions.filter(
         (item) => new Date().getTime() / 1000 > item.end_time
       );
       console.log("fil", filtered);
-      setAuc(filtered);
+      const newA = [...filtered].reverse();
+      setAuc(newA);
     } catch (error) {
       console.log(error);
     }

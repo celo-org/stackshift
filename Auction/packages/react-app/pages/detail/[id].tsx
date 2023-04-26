@@ -101,12 +101,11 @@ export default function Detail1() {
                   )}{" "}
                   days
                 </span>
-              ) : Math.round(
-                  (Number(auc.end_time) - new Date().getTime() / 1000) /
-                    60 /
-                    60 /
-                    24
-                ) > 0 ? (
+              ) : (Number(auc.end_time) - new Date().getTime() / 1000) /
+                  60 /
+                  60 /
+                  24 >
+                0 ? (
                 <span>
                   {" "}
                   Ends in{" "}

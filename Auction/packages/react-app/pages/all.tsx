@@ -28,8 +28,9 @@ export default function All() {
     const contract = await createAuctionContract();
     try {
       const auctions = await contract.fetchAuctions();
+      const newA = [...auctions].reverse();
       console.log(auctions);
-      setAuc(auctions);
+      setAuc(newA);
     } catch (error) {
       console.log(error);
     }
@@ -70,13 +71,12 @@ export default function All() {
                         )}{" "}
                         days
                       </span>
-                    ) : Math.round(
-                        (Number(ethers.BigNumber.from(item.end_time)) -
-                          new Date().getTime() / 1000) /
-                          60 /
-                          60 /
-                          24
-                      ) > 0 ? (
+                    ) : (Number(ethers.BigNumber.from(item.end_time)) -
+                        new Date().getTime() / 1000) /
+                        60 /
+                        60 /
+                        24 >
+                      0 ? (
                       <span>
                         {" "}
                         Ends in{" "}

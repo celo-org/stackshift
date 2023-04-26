@@ -224,11 +224,10 @@ export default function Profile() {
                       10 ** 18}
                   </div>
                   <div className="text7">
-                    Your Auction Id -{" "}
-                    {Number(ethers.BigNumber.from(item.auctionId))}
+                    Auction Id - {Number(ethers.BigNumber.from(item.auctionId))}
                   </div>
                   <div className="text7">
-                    Your Bid Amount -{" "}
+                    Bid Amount -{" "}
                     {Number(ethers.BigNumber.from(item.bid_amount)) / 10 ** 18}
                   </div>
                   <div className="text7">

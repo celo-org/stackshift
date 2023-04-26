@@ -30,15 +30,6 @@ export default function Home() {
       const newA = [...auctions];
       newA.reverse();
 
-      console.log(newA);
-
-      //auctions.reverse();
-
-      /* auctions.sort(
-        (a, b) =>
-          Number(ethers.BigNumber.from(a.start_time)) -
-          Number(ethers.BigNumber.from(b.start_time))
-      ); */
       setAuc(newA);
     } catch (error) {
       console.log(error);
@@ -95,13 +86,12 @@ export default function Home() {
                         )}{" "}
                         days
                       </span>
-                    ) : Math.round(
-                        (Number(ethers.BigNumber.from(item.end_time)) -
-                          new Date().getTime() / 1000) /
-                          60 /
-                          60 /
-                          24
-                      ) > 0 ? (
+                    ) : (Number(ethers.BigNumber.from(item.end_time)) -
+                        new Date().getTime() / 1000) /
+                        60 /
+                        60 /
+                        24 >
+                      0 ? (
                       <span>
                         {" "}
                         Ends in{" "}
@@ -156,7 +146,7 @@ export default function Home() {
               <div key={index} className="card">
                 <img className="" src={item.img} alt="hero" />
                 <div className="textflex1">
-                  <div className="text5">{item.name}</div>
+                  <div className="text5">{item.name} </div>
                   <div className="text6">
                     {Math.round(
                       (Number(ethers.BigNumber.from(item.end_time)) -
@@ -176,13 +166,12 @@ export default function Home() {
                         )}{" "}
                         days
                       </span>
-                    ) : Math.round(
-                        (Number(ethers.BigNumber.from(item.end_time)) -
-                          new Date().getTime() / 1000) /
-                          60 /
-                          60 /
-                          24
-                      ) > 0 ? (
+                    ) : (Number(ethers.BigNumber.from(item.end_time)) -
+                        new Date().getTime() / 1000) /
+                        60 /
+                        60 /
+                        24 >
+                      0 ? (
                       <span>
                         {" "}
                         Ends in{" "}
