@@ -1,0 +1,428 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.home-section1 {
+  background: #1609af;
+  display: flex;
+}
+
+.text1 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 76px;
+  color: #ffffff;
+}
+
+.text2 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  color: #ffffff;
+}
+
+.box1 {
+  width: 40%;
+  margin-top: 200px;
+  margin-left: 100px;
+}
+
+.hero {
+  width: 60%;
+}
+
+.home-section2 {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 64px;
+}
+
+.home-section2-inner {
+  display: flex;
+  justify-content: space-between;
+}
+
+.text3 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 64px;
+  color: #1609af;
+}
+
+.text4 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+
+  text-decoration-line: underline;
+  padding-top: 40px;
+  color: #1609af;
+}
+
+.text5 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 32px;
+  color: #130f26;
+}
+
+.text6 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  color: #635f5f;
+  padding-top: 10px;
+}
+
+.textflex1 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card {
+  width: 400px;
+  margin-bottom: 50px;
+  margin-right: 30px;
+}
+
+.text7 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  color: #635f5f;
+}
+
+.bidbut1 {
+  width: 150px;
+  height: 64px;
+  border: none;
+  background: #1609af;
+  border-radius: 200px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+
+  /* or 25px */
+
+  color: #ffffff;
+}
+
+.bidbut2 {
+  width: 150px;
+  height: 64px;
+  border: 1px solid #bdbdbd;
+  border-radius: 200px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  color: #1609af;
+}
+
+.bidflex {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.live {
+  margin-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.home-section3 {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+}
+
+.home-section4 {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.text8 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 96px;
+
+  color: #1609af;
+}
+
+.text9 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 140%;
+  width: 80%;
+  color: #1609af;
+}
+
+.boximg {
+  width: 50%;
+}
+
+.foot {
+  background-color: #1609af;
+  color: white;
+}
+
+.auction {
+  border: 1px solid #bdbdbd;
+  border-radius: 4px;
+  width: 70%;
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 60px;
+  margin-bottom: 50px;
+}
+
+.text10 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 56px;
+  color: #1609af;
+}
+.formflex {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
+.label {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  color: #130f26;
+}
+
+.input {
+  background: rgba(22, 9, 175, 0.02);
+  border-radius: 8px;
+  width: 100%;
+  height: 64px;
+  display: block;
+  padding-left: 10px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #3c3c3c;
+  border: 1px solid blue;
+  padding-right: 10px;
+}
+
+.textarea {
+  height: 250px;
+  width: 100%;
+  padding-left: 10px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: #3c3c3c;
+  border: 1px solid blue;
+  padding-right: 10px;
+}
+
+.formbox {
+  width: 50%;
+}
+
+.aubut {
+  width: 100%;
+  height: 64px;
+  left: 961px;
+  top: 853px;
+  border: none;
+  background: #1609af;
+  border-radius: 200px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  margin-bottom: 30px;
+  color: #ffffff;
+}
+
+.input-box {
+  margin-bottom: 30px;
+}
+
+.detail {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 94px;
+}
+
+.detail1,
+.detail2 {
+  width: 50%;
+}
+
+.detail2 {
+  border: 1px solid #bdbdbd;
+  /* Shadow */
+
+  filter: drop-shadow(4px 4px 200px rgba(22, 9, 175, 0.24));
+  border-radius: 4px;
+  padding-left: 48px;
+  padding-top: 30px;
+  padding-right: 48px;
+  padding-bottom: 30px;
+}
+
+.detail-text1 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 56px;
+  color: #1609af;
+}
+
+.detail-text2 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  color: #635f5f;
+  padding-top: 30px;
+}
+
+.detail-text3 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: #130f26;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.detail-text4 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  color: #635f5f;
+}
+
+.detail-text5 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 32px;
+
+  color: #1609af;
+}
+
+.detail-input {
+  background: rgba(22, 9, 175, 0.02);
+  border-radius: 8px;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  padding-left: 15px;
+  color: #3c3c3c;
+  height: 64px;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.detail-text6 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  color: #1c1c1c;
+  padding-bottom: 30px;
+}
+.detailbut {
+  width: 391px;
+  height: 64px;
+  border: none;
+  background: #1609af;
+  border-radius: 200px;
+
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.profile-section1 {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.text31 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 24px;
+  color: #1609af;
+}
+
+.card2 {
+  margin-left: 100px;
+  width: 50%;
+  background-color: #1609af;
+  color: white;
+  border-radius: 10px;
+  padding: 30px;
+  margin-top: 40px;
+}
+
+.wbut {
+  width: 100%;
+  height: 50px;
+  background-color: #130f26;
+  margin-top: 30px;
+}
+
+.winput {
+  height: 64px;
+  width: 100%;
+  border: none;
+  color: black;
+  margin-top: 20px;
+  padding-left: 10px;
+}
+
+.text61 {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  color: white;
+  padding-top: 10px;
+}
