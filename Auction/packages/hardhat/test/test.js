@@ -12,6 +12,10 @@ describe("Auction test", function () {
     const auction = await Auction.deploy();
     await auction.deployed();
 
+    function sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
     return {
       auction,
       user1,
@@ -19,7 +23,9 @@ describe("Auction test", function () {
       user3,
       user4,
       user5,
+      owner,
       provider,
+      sleep,
     };
   }
 
@@ -330,4 +336,60 @@ describe("Auction test", function () {
     const bids = await auction.connect(user2).fetchMyBids();
     expect(bids.length).to.equal(2);
   });
+  /*  it("Auction owner should be able to withdraw fund", async function () {
+    const {
+      auction,
+      owner,
+      user1,
+      user2,
+      user3,
+      user4,
+      user5,
+      provider,
+      sleep,
+    } = await loadFixture(deloy);
+
+    await auction.createAuction(
+      "Art",
+      "Art",
+      ethers.utils.parseEther("10"),
+      Math.floor(new Date("2023-04-25 17:00:00").getTime() / 1000),
+      Math.floor(new Date("2023-04-26 16:40:00").getTime() / 1000),
+      ethers.utils.parseEther("20"),
+      "none",
+      0
+    );
+
+    await auction
+      .connect(user1)
+      .automaticBid(
+        0,
+        ethers.utils.parseEther("30"),
+        ethers.utils.parseEther("20"),
+        { value: ethers.utils.parseEther("100") }
+      );
+
+    await auction.connect(user2).bid(0, {
+      value: ethers.utils.parseEther("40"),
+    });
+
+    await auction.connect(user3).bid(0, {
+      value: ethers.utils.parseEther("60"),
+    });
+
+    await auction.connect(user4).bid(0, {
+      value: ethers.utils.parseEther("85"),
+    });
+
+    //await sleep(60000);
+
+    const intialBalance = await provider.getBalance(owner.address);
+    await auction.getAuctionFund(0);
+    const newBalance = await provider.getBalance(owner.address);
+    const balance = newBalance - intialBalance;
+    console.log(balance);
+    //assert.equal(Math.round(balance / 10 ** 18), 15);
+
+    //assert.equal((await auction.getWinner(0)).winner, user1.address);
+  }); */
 });

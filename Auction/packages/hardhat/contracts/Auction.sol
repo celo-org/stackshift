@@ -33,6 +33,7 @@ contract AuctionContract {
     }
 
     mapping(uint256 => Auction) public AuctionData;
+    mapping(uint256 => mapping(address => bool)) public AuctionPaid;
     mapping(uint256 => mapping(address => Bidders)) public AuctionBid;
     mapping(uint256 => address[]) public automaticBidders;
     mapping(uint256 => address) public auctionToBidder;
@@ -225,6 +226,25 @@ contract AuctionContract {
         uint balance = AuctionBid[auctionId][msg.sender].balance;
         AuctionBid[auctionId][msg.sender].balance = 0;
         (bool success, ) = payable(msg.sender).call{value: balance}("");
+        require(success, "Failed to send Ether");
+    }
+
+    function getAuctionFund(uint auctionId) public {
+        require(
+            msg.sender == AuctionData[auctionId].creator,
+            "You are not the auction owner"
+        );
+        require(
+            block.timestamp > AuctionData[auctionId].end_time,
+            "Auction has not ended"
+        );
+        require(
+            AuctionPaid[auctionId][msg.sender] == false,
+            "Pay has been withdrawed"
+        );
+        uint amount = AuctionData[auctionId].winningBid;
+        AuctionPaid[auctionId][msg.sender] = true;
+        (bool success, ) = payable(msg.sender).call{value: amount}("");
         require(success, "Failed to send Ether");
     }
 
