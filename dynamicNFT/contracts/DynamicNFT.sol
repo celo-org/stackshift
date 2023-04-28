@@ -1,80 +1,53 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract DynamicNFT is ERC1155, Ownable {
-    
-    struct TokenData {
-        uint256 maxSupply;
-        uint256 currentSupply;
-        uint256 blockLimit;
-        uint256 mintingFee;
-        uint256 maxMinters;
-        address[] minters;
-        mapping(address => bool) isMinter;
-    }
+    uint256 public constant MAX_SUPPLY = 10000;
+    uint256 public totalSupply;
+    uint256 public mintPrice;
+    uint256 public blockNumber;
+    uint256 public minterCount;
 
-    mapping(uint256 => TokenData) private tokenData;
     mapping(uint256 => string) private tokenURI;
 
-    constructor(string memory uri) ERC1155(uri) {}
+    event Mint(address indexed minter, uint256 amount);
 
-    function mint(uint256 tokenId) public payable {
-        TokenData storage data = tokenData[tokenId];
-        require(data.currentSupply < data.maxSupply, "Token at max supply");
-        require(data.isMinter[msg.sender], "You are not authorised to mint this token");
-        require(data.mintingFee == msg.value, "Invalid minting fee");
-        require(getMintersLength(tokenId) <= data.maxMinters, "Max minters reached");
-        require(block.number <= data.blockLimit, "Minting window closed");
-        _mint(msg.sender, tokenId, 1, "");
-        data.currentSupply++;
-        
+    constructor(uint256 _mintPrice) ERC1155("https://gateway.pinata.cloud/ipfs/QmcHxvtNb8Eg9XZnprFeudokeGGb2P7J8w4FDhHDR35DbY/lagos.json") {
+        mintPrice = _mintPrice;
+        blockNumber = block.number;
     }
 
-    function setTokenMaxSupply(uint256 tokenId, uint256 maxSupply) public onlyOwner {
-        tokenData[tokenId].maxSupply = maxSupply;
-    }
+    function mint(uint256 amount) public payable {
+        require(totalSupply + amount <= MAX_SUPPLY, "Minting would exceed max supply");
+        require(msg.value == amount * mintPrice, "Insufficient ether to mint tokens");
 
-    function setTokenBlockLimit(uint256 tokenId, uint256 blockLimit) public onlyOwner {
-        tokenData[tokenId].blockLimit = blockLimit;
-    }
-
-    function setTokenMaxMinters(uint256 tokenId, uint256 maxMinters) public onlyOwner {
-        tokenData[tokenId].maxMinters = maxMinters;
-    }
-
-    function setTokenMintingFee(uint256 tokenId, uint256 mintingFee) public onlyOwner {
-        tokenData[tokenId].mintingFee = mintingFee;
-    }
-
-    function addMinter(uint256 tokenId, address minter) public onlyOwner {
-        TokenData storage data = tokenData[tokenId];
-        require(!data.isMinter[minter], "Minter already exists");
-        data.minters.push(minter);
-        data.isMinter[minter] = true;
-    }
-
-    function removeMinter(uint256 tokenId, address minter) public onlyOwner {
-        TokenData storage data = tokenData[tokenId];
-        require(data.isMinter[minter], "Minter does not exist");
-        for (uint256 i = 0; i < data.minters.length; i++) {
-            if (data.minters[i] == minter) {
-                data.minters[i] = data.minters[data.minters.length - 1];
-                data.minters.pop();
-                break;
-            }
+        for (uint256 i = 0; i < amount; i++) {
+            uint256 tokenId = totalSupply + 1;
+            _mint(msg.sender, tokenId, 1, "");
+            totalSupply++;
         }
-        data.isMinter[minter] = false;
+
+        emit Mint(msg.sender, amount);
     }
 
-    function getMinters(uint256 tokenId) public view returns (address[] memory) {
-        return tokenData[tokenId].minters;
-    }
+    function mintTo(uint256 numOfNfts, address toAddress)
+        external
+        onlyOwner
+    {
+        require(
+            totalSupply + numOfNfts <= MAX_SUPPLY,
+            "Minting would exceed max supply"
+        );
+        require(numOfNfts > 0, "Must mint at least one NFT");
 
-    function getMintersLength(uint256 tokenId) public view returns (uint256) {
-        return tokenData[tokenId].minters.length;
+        for (uint256 i = 0; i < numOfNfts; i++) {
+            uint256 tokenId = totalSupply + 1;
+            _mint(toAddress, tokenId, 1, "");
+            tokenId += 1;
+        }
     }
 
     function setTokenURI(uint256 tokenId, string memory tokenUri) public onlyOwner {
