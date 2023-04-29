@@ -177,12 +177,14 @@ export default function Home() {
           </div>
         </div>
       ) : (
-        <button
-          className="text-white bg-green-500 rounded-md p-2"
-          onClick={connect}
-        >
-          Connect Wallet
-        </button>
+        <div className="flex flex-col justify-center items-center h-screen">
+          <button
+            className="text-white bg-green-500 rounded-md p-2"
+            onClick={connect}
+          >
+            Connect Wallet
+          </button>
+        </div>
       )}
       {openTokenURI ? (
         <AddTokenURI
