@@ -41,11 +41,9 @@ export default function Home() {
   const mintNft = async (e) => {
     e.preventDefault();
     const tokenCost = parseInt(numOfNft) * 1;
-    console.log(numOfNft, tokenCost.toString());
     const response = await contract.methods
       .mint(numOfNft)
       .send({ from: address, value: tokenCost.toString() });
-    console.log(response);
   };
 
   const mintNftTo = async (e) => {
