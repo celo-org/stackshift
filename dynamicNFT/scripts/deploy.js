@@ -4,7 +4,7 @@ async function main() {
 
   const dynamicNFTContract = await ethers.getContractFactory("DynamicNFT");
 
-  const deployedDynamicNFTContract = await dynamicNFTContract.deploy();
+  const deployedDynamicNFTContract = await dynamicNFTContract.deploy(1);
 
   await deployedDynamicNFTContract.deployed();
 

@@ -10,6 +10,7 @@ contract DynamicNFT is ERC1155, Ownable {
     uint256 public mintPrice;
     uint256 public blockNumber;
     uint256 public minterCount;
+    address public contractOwner;
 
     mapping(uint256 => string) private tokenURI;
 
@@ -18,6 +19,7 @@ contract DynamicNFT is ERC1155, Ownable {
     constructor(uint256 _mintPrice) ERC1155("https://gateway.pinata.cloud/ipfs/QmcHxvtNb8Eg9XZnprFeudokeGGb2P7J8w4FDhHDR35DbY/lagos.json") {
         mintPrice = _mintPrice;
         blockNumber = block.number;
+        contractOwner = msg.sender;
     }
 
     function mint(uint256 amount) public payable {
