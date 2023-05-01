@@ -24,17 +24,12 @@ This eight-week program is designed to help developers become familiar with the 
 - Do not copy and paste existing content. Plagiarism is a serious issue and will not be tolerated. If the tutorial is inspired by some existing content (for example forking an Ethereum tutorial to convert it for use on Avalanche), reference it and link to it.
 Add potential errors and troubleshooting. Of course, the tutorial shouldn't list all possible errors but make an effort to catch the important or most common ones.
 - Include any walkthrough videos or video content in the PR by uploading it to Google Drive if needed.
-- Display sample outputs to help learners know what to expect, in the form of Terminal snippets or screenshots. Trim long outputs.
-- Take an error-driven approach where you bump into errors on purpose to teach learners how to debug them. For example, if you need to fund an account to be able to deploy a contract, first try and deploy without funding, observe the error that is returned, then fix the error (by funding the account) and try again.
-- Funding of accounts from faucets needs to be explained clearly as to which account is being funded, from where and why. Do not assume learners can accomplish this on their own!
-
 
 
 ## Submitting your weekly task
 
 ### Submission Creation Process
 - Create and Move the [Trello Card](https://trello.com/invite/b/3WDYSUka/ATTI84bc9379df8a44f59c997c94c38155aeEBC57A9B/stackshift-submissions) for your tutorial from Todo to In progress
-- create a link in the [Trello card](https://trello.com/invite/b/3WDYSUka/ATTI84bc9379df8a44f59c997c94c38155aeEBC57A9B/stackshift-submissions) to access the Google Doc where you’ll write your tutorial content
 - Once you have completed your submission, move your Trello Card from In progress to Review and please wait as we review your tutorial and address any comments from your reviewer.
 - Only one submission will be accepted per week. I.E submitting a task for week3 while still in week2 will not be accepted and the submitted task will be disallowed.
 - Unfinished tasks from the previous week can be rolled over to the next week but must be completed before snapshot for the month. Any submission for month-one after snapshot of month-one will not be compensated except when explicitly stated by the Devrel team. 
@@ -47,7 +42,6 @@ Add potential errors and troubleshooting. Of course, the tutorial shouldn't list
 
 ### Best Practices
 - Before creating a PR, make sure to pull the code from main branch - git pull upstream main.
-- Please run the prettier in your markdown file before creating a PR. You can use the prettier extension in VS Code or you can use the prettier online tool - Prettier Online.
 - To use prettier in VSCode, you can press Cmd/Ctrl + shift + p and search for Format Document with and select Prettier - Code formatter.
 - Before creating a PR, make sure your code is well formatted and there are no errors in the console.
 
