@@ -3,9 +3,8 @@
 // @ts-nocheck
 import React, { useState, useEffect, useRef } from "react";
 import { useSigner, useAccount } from "wagmi";
-import { fetchBalance } from "@wagmi/core";
 import { ethers } from "ethers";
-import nftABI from "../../hardhat/artifacts/contracts/NFT.sol/RNFT.json";
+import nftABI from "../abis/nft.json";
 import { nftAddress } from "../utils/constant";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
