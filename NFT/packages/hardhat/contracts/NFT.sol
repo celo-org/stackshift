@@ -18,6 +18,7 @@ contract RNFT is ERC721URIStorage, Ownable {
 
     event Minted(uint256 indexed tokenId, address indexed addr);
     mapping(address => bool) NFTHolders;
+    mapping(address => uint) TimeStore;
 
     constructor(string memory baseURI) ERC721("RandomNFT", "RNFT") {
         _baseTokenURI = baseURI;
@@ -25,6 +26,7 @@ contract RNFT is ERC721URIStorage, Ownable {
 
     function mint() public {
         require(NFTHolders[msg.sender] == false, "You have minted an NFT");
+        TimeStore[msg.sender] = block.number;
         uint256 newTokenId = tokenIds.current();
         _mint(msg.sender, newTokenId);
         NFTHolders[msg.sender] = true;
@@ -44,7 +46,7 @@ contract RNFT is ERC721URIStorage, Ownable {
         uint256 tokenId
     ) public view virtual override returns (string memory) {
         string memory t;
-        if ((block.timestamp + tokenId) % 2 == 0) {
+        if ((TimeStore[msg.sender] + tokenId) % 2 == 0) {
             t = string(abi.encodePacked(Strings.toString(0), ".json"));
         } else {
             t = string(abi.encodePacked(Strings.toString(1), ".json"));
