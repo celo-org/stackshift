@@ -25,6 +25,8 @@ describe("Test 1", function () {
     console.log(await nft.tokenURI(4));
     console.log(await nft.tokenURI(5));
 
+    console.log(await nft.tokenURI(await nft.Tokens(user1.address)));
+
     function sleep(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));
     }

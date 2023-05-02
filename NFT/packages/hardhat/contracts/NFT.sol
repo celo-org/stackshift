@@ -19,6 +19,7 @@ contract RNFT is ERC721URIStorage, Ownable {
     event Minted(uint256 indexed tokenId, address indexed addr);
     mapping(address => bool) NFTHolders;
     mapping(address => uint) TimeStore;
+    mapping(address => uint) public Tokens;
 
     constructor(string memory baseURI) ERC721("RandomNFT", "RNFT") {
         _baseTokenURI = baseURI;
@@ -29,6 +30,7 @@ contract RNFT is ERC721URIStorage, Ownable {
         TimeStore[msg.sender] = block.number;
         uint256 newTokenId = tokenIds.current();
         _mint(msg.sender, newTokenId);
+        Tokens[msg.sender] = newTokenId;
         NFTHolders[msg.sender] = true;
         tokenIds.increment();
         emit Minted(newTokenId, msg.sender);
