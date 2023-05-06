@@ -1,0 +1,124 @@
+.Home {
+  background-color: #1e2535;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  width: 80%;
+  margin: auto;
+  border-radius: 12px;
+  padding: 2em 0;
+
+  &Coin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &Form {
+    padding: 2em;
+
+    label {
+      display: block;
+      margin-bottom: 0.25em;
+      margin-top: 1em;
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      margin-bottom: 1em;
+      padding: 0.75em;
+      font-size: 1em;
+      outline: none;
+      border: 2px solid #283449;
+      background-color: transparent;
+      color: #fff;
+      border-radius: 7px;
+
+      &:disabled {
+        background-color: #283449;
+        user-select: none;
+      }
+    }
+
+    &Wager {
+      label {
+        margin-top: 0;
+      }
+    }
+
+    &Amount {
+      display: flex;
+      gap: 1em;
+      align-items: center;
+      width: 100%;
+
+      div {
+        width: 100%;
+      }
+    }
+
+    &CoinSide {
+      margin-top: 2em;
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      border: 2px solid #283449;
+      border-radius: 7px;
+      padding: 0.5em;
+
+      button {
+        width: 100%;
+        font-size: 1em;
+        height: 40px;
+        cursor: pointer;
+        border-radius: 7px;
+        outline: none;
+        border: none;
+        background-color: transparent;
+        color: #3f4d66;
+        transition: background-color 0.35s linear;
+
+        &:disabled {
+          background-color: #3f4d66;
+          color: #fff;
+        }
+      }
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      font-size: 1em;
+      margin: 2em 0 0;
+      height: 50px;
+      cursor: pointer;
+      border-radius: 5px;
+      outline: none;
+      border: none;
+      background-color: #fcfe72;
+      color: #1e2535;
+
+      &:disabled {
+        background-color: #68758c;
+        color: hsla(0, 0%, 100%, 0.5);
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+
+    &Coin {
+      min-height: 300px;
+    }
+  }
+}
+
+.History {
+  width: 80%;
+  margin: auto auto 3em;
+
+  h2 {
+    margin: 2.5em 0 0.5em;
+  }
+}
