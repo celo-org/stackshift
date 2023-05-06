@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { Disclosure } from "@headlessui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
 
@@ -29,7 +28,9 @@ export default function Header() {
       </div>
       <div>
         <ConnectButton
-          showBalance={{ smallScreen: true, largeScreen: false }}
+          chainStatus={"icon"}
+          showBalance={true}
+          accountStatus={"avatar"}
         />
       </div>
     </Nav>

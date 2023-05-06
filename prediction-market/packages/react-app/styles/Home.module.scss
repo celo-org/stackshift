@@ -50,6 +50,11 @@
       display: flex;
       gap: 1em;
       align-items: center;
+      width: 100%;
+
+      div {
+        width: 100%;
+      }
     }
 
     &CoinSide {
@@ -95,16 +100,25 @@
       &:disabled {
         background-color: #68758c;
         color: hsla(0, 0%, 100%, 0.5);
+        cursor: not-allowed;
       }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+
+    &Coin {
+      min-height: 300px;
     }
   }
 }
 
 .History {
   width: 80%;
-  margin: auto;
+  margin: auto auto 3em;
 
   h2 {
-    margin: 2.5em 0;
+    margin: 2.5em 0 0.5em;
   }
 }
