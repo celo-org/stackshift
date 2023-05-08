@@ -1,10 +1,34 @@
 const hre = require("hardhat");
 
-async function main() {
-  const Auction = await hre.ethers.getContractFactory("Auction");
-  const auction = await Auction.deploy("0xe865ff5D675F1dCaccD945f0b97Cb9D506596c90", 20, 500000000, 4, "0x6f40bB4d1E275e26C9B5419131e5CBAbF89CF535");
-  await auction.deployed();
-  console.log("Auction address deployed to:", auction.address);
-}
+const main = async () => {
+  
+  // const GamifiedOnChainNFT = await hre.ethers.getContractFactory("GamifiedOnChainNFT");
+  // const gamifiedOnChainNFT = await GamifiedOnChainNFT.deploy();
 
-main();
+  // await gamifiedOnChainNFT.deployed();
+
+  // console.log("The GamifiedOnChainNFT contract was deployed to: ", gamifiedOnChainNFT.address);
+
+  const contractAddress = "0xd684d703dbF259DC9F1e1bEF6dF905a7E85ACbc8";
+  const myOnChainNFT = await hre.ethers.getContractAt("GamifiedOnChainNFT", contractAddress);
+  
+  // const mintNFT = await myOnChainNFT.mint();
+
+  // console.log("NFT hash:", mintNFT.hash);
+
+  const playWithNFT = await myOnChainNFT.play(1);
+
+  console.log("Played hash:", playWithNFT.hash);
+};
+
+const runMain = async () => {
+  try {
+    await main();
+    process.exit(0);
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+};
+
+runMain();
