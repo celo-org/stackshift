@@ -115,6 +115,38 @@ export default function Home() {
     }
   };
 
+  const withdraw = async () => {
+    if (amountRef2.current.value === "") {
+      return toast.error("Please enter the amount");
+    }
+    const contract = await createPayContract();
+    const id = toast.loading("Transaction in progress..");
+    try {
+      const tx = await contract.withdraw(
+        ethers.utils.parseEther(amountRef2.current.value)
+      );
+
+      await tx.wait();
+
+      toast.update(id, {
+        render: "Transaction successfull",
+        type: "success",
+        isLoading: false,
+        autoClose: 1000,
+        closeButton: true,
+      });
+    } catch (error) {
+      console.log(error);
+      toast.update(id, {
+        render: `${error.reason}`,
+        type: "error",
+        isLoading: false,
+        autoClose: 1000,
+        closeButton: true,
+      });
+    }
+  };
+
   useEffect(() => {
     getHistory();
     getLast();
@@ -171,7 +203,9 @@ export default function Home() {
           className="input2"
           placeholder="Enter your amount"
         />
-        <button className="but2">Withdraw</button>
+        <button onClick={withdraw} className="but2">
+          Withdraw
+        </button>
       </div>
     </div>
   );
