@@ -1,3 +1,95 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.car {
+  width: 30%;
+  cursor: pointer;
+}
+
+.carL {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.text1 {
+  font-size: 30px;
+  text-align: center;
+}
+
+.text2 {
+  font-size: 14px;
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.text3 {
+  font-size: 20px;
+  text-align: center;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.text4 {
+  font-size: 20px;
+  text-align: center;
+}
+
+.input {
+  height: 50px;
+  width: 400px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  padding-left: 10px;
+}
+
+.but {
+  width: 200px;
+  height: 50px;
+  border: none;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  background-color: blue;
+  margin-top: 30px;
+  border-radius: 10px;
+  color: white;
+}
+
+.wallet {
+  margin-top: 30px;
+}
+
+.but2 {
+  width: 200px;
+  height: 50px;
+  border: none;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  background-color: blue;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  color: white;
+}
+
+.input2 {
+  height: 50px;
+  width: 400px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  padding-left: 10px;
+  margin-top: 30px;
+}
