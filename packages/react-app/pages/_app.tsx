@@ -1,3 +1,5 @@
+import { ApolloProvider } from "@apollo/client";
+import client from "../apollo-client";
 import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import type { AppProps } from "next/app";
@@ -53,9 +55,11 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains} coolMode={true}>
-        <Layout>
-          <Component {...pageProps}  />
-        </Layout>
+        <ApolloProvider client={client}>
+          <Layout>
+            <Component {...pageProps}  />
+          </Layout>
+        </ApolloProvider>
       </RainbowKitProvider>
     </WagmiConfig>
   )

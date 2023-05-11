@@ -9,6 +9,7 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@apollo/client": "^3.7.14",
         "@celo/contractkit": "^4.0.0",
         "@celo/rainbowkit-celo": "^0.11.0",
         "@celo/react-celo": "^5.0.3",
