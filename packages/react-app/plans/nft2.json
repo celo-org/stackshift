@@ -1,7 +1,7 @@
 {
-  "description": "It is easier to wake someone who is sleeping, than wake someone  who pretends to be sleeping",
-  "image": "https://ipfs.io/ipfs/Qmf8T3F42iMLbgchxrUgxGbNaZMJhcz1udMyis6SkXm9Ef/nft2.png",
-  "name": "Meteor",
+  "description": "Very human of you to be yourself in the world",
+  "image": "https://ipfs.io/ipfs/QmRTVJ7ynQU12KWPsP1oxbFBEjUaHoJdsNgWJUsbjtsXiZ/nft2.jpg",
+  "name": "Chain",
   "attributes": [
     {
       "trait_type": "private_forum_access",
@@ -13,19 +13,7 @@
     },
     {
       "trait_type": "annual_conference_pass",
-      "value": true
-    },
-    {
-      "trait_type": "club_swags",
-      "value": true
-    },
-    {
-      "trait_type": "personal_chaufer",
-      "value": true
-    },
-    {
-      "trait_type": "free_boat_rides",
-      "value": true
+      "value": false
     }
   ]
 }

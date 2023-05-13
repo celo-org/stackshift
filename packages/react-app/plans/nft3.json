@@ -1,7 +1,7 @@
 {
-  "description": "The only way to do great work is to love what you do.",
-  "image": "https://ipfs.io/ipfs/Qmf8T3F42iMLbgchxrUgxGbNaZMJhcz1udMyis6SkXm9Ef/nft3.png",
-  "name": "Horizon",
+  "description": "Green world with a touch of kindness",
+  "image": "https://ipfs.io/ipfs/QmRTVJ7ynQU12KWPsP1oxbFBEjUaHoJdsNgWJUsbjtsXiZ/nft3.jpg",
+  "name": "Chain",
   "attributes": [
     {
       "trait_type": "private_forum_access",
@@ -13,19 +13,7 @@
     },
     {
       "trait_type": "annual_conference_pass",
-      "value": false
-    },
-    {
-      "trait_type": "club_swags",
-      "value": false
-    },
-    {
-      "trait_type": "personal_chaufer",
-      "value": false
-    },
-    {
-      "trait_type": "free_boat_rides",
-      "value": false
+      "value": true
     }
   ]
 }

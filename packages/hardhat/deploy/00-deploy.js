@@ -20,7 +20,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   //   log: true,
   // });
 
-  await deploy("JustinNFT", {
+  await deploy("GreenProduct", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
     //args: [ "Hello", ethers.utils.parseEther("1.5") ],
@@ -58,4 +58,4 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   */
 };
 
-module.exports.tags = ["JustinNFT"];
+module.exports.tags = ["GreenProduct"];

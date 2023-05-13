@@ -1,6 +1,6 @@
 {
   "description": "Beginning of great things starts with a step",
-  "image": "https://ipfs.io/ipfs/Qmf8T3F42iMLbgchxrUgxGbNaZMJhcz1udMyis6SkXm9Ef/nft1.png",
+  "image": "https://ipfs.io/ipfs/QmRTVJ7ynQU12KWPsP1oxbFBEjUaHoJdsNgWJUsbjtsXiZ/nft1.jpg",
   "name": "Chain",
   "attributes": [
     {
@@ -9,22 +9,10 @@
     },
     {
       "trait_type": "discount_on_all_products",
-      "value": true
-    },
-    {
-      "trait_type": "annual_conference_pass",
-      "value": true
-    },
-    {
-      "trait_type": "club_swags",
-      "value": true
-    },
-    {
-      "trait_type": "personal_chaufer",
       "value": false
     },
     {
-      "trait_type": "free_boat_rides",
+      "trait_type": "annual_conference_pass",
       "value": false
     }
   ]

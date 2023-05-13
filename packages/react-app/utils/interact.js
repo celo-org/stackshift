@@ -1,10 +1,9 @@
 import { providers, Contract } from 'ethers'
 import axios  from 'axios'
-import { WrapperBuilder } from 'redstone-evm-connector'
 import { priceToWei } from './helpers'
-import JustinNFT from '../../hardhat/artifacts/contracts/JustinNFT.sol/JustinNFT.json'
+import GreenProduct from '../../hardhat/artifacts/contracts/GreenProduct.sol/GreenProduct.json'
 
-export const contractAddress = '0xAe30F2C23509C09e51ed6ED5f3d8608bfDCf9B4c'
+export const contractAddress = '0x7a36edA0b1541aD29134F582d0d0AC0d20bc587b'
 
 export async function getContract() {
 
@@ -15,7 +14,7 @@ export async function getContract() {
 
     const provider = new providers.Web3Provider(ethereum)
     const signer = provider.getSigner()
-    auctionContract = new Contract(contractAddress, JustinNFT.abi, signer)
+    auctionContract = new Contract(contractAddress, GreenProduct.abi, signer)
 
   } catch (error) {
     console.log("ERROR:", error)
@@ -38,15 +37,7 @@ export const buyProduct = async (index, price) => {
   try {
     const contract = await getContract()
 
-    const wrappedContract = WrapperBuilder
-      .wrapLite(contract)
-      .usingPriceFeed('redstone-custom-urls-demo', { asset: '0xf2384121b725bca1' })
-
-    // await wrappedContract.authorizeProvider();
-
-    let res = await wrappedContract.buyProduct(contractAddress, index, {value: priceToWei(price)})
-
-    // let res = await contract.buyProduct(contractAddress, index, {value: priceToWei(price)})
+    let res = await contract.buyProduct(contractAddress, index, {value: priceToWei(price)})
     res = await res.wait()
     console.log('bidd ', res)
     return res
