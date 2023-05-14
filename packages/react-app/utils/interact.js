@@ -3,7 +3,7 @@ import axios  from 'axios'
 import { priceToWei } from './helpers'
 import GreenProduct from '../../hardhat/artifacts/contracts/GreenProduct.sol/GreenProduct.json'
 
-export const contractAddress = '0x9E41cC9feB57858FAecC421a1e8a8e650CC3E6aF'
+export const contractAddress = '0x9EE2414650f9563d207CE7715e5fd1028B9c6b7D'
 
 export async function getContract() {
 

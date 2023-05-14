@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 const CARBON_OFFSETS = gql`
   query CarbonOffsets {
-    tco2Tokens(first: 12) {
+    tco2Tokens(first: 3) {
       name
       symbol
       score

@@ -4,12 +4,16 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
 contract GreenProduct is
     ERC721,
     ERC721Enumerable,
     ERC721URIStorage
 {
+
+    using Counters for Counters.Counter;
+    Counters.Counter private _tokenIds;
 
     struct Product {
         string name;
@@ -23,9 +27,9 @@ contract GreenProduct is
 
 
     constructor() ERC721("GreenProduct", "GP") {
-        products.push(Product("Green Pick", "gucci.jpg", 30000000000000000));
-        products.push(Product("Deforester", "zara.jpg", 40000000000000000));
-        products.push(Product("Go Green", "nike.jpg", 50000000000000000));
+        products.push(Product("Energy Saver", "energysaver.jpg", 30000000000000000));
+        products.push(Product("Deforester", "reforest.jpg", 40000000000000000));
+        products.push(Product("Neva Waste", "nevawaste.jpg", 50000000000000000));
     }
 
     function _baseURI() internal pure override returns (string memory) {
@@ -84,11 +88,12 @@ contract GreenProduct is
 
         } else {
 
-            uint256 tokenId = 0;
+            uint256 tokenId = _tokenIds.current();
             string memory uri = "nft1.json";
             _safeMint(msg.sender, tokenId);
             _setTokenURI(tokenId, uri);
             userMinted[msg.sender] = true;
+            _tokenIds.increment();
         }
 
     }

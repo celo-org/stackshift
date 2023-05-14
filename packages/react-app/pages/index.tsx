@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import ToucanClient from 'toucan-sdk'
 import Image from 'next/image'
-import { getProducts, getNFT, buyProduct, formatPrice, addressToLowerCase } from '../utils'
+import { getProducts, getNFT, buyProduct, formatPrice, addressToLowerCase, hasNCT } from '../utils'
 import { useProvider, useSigner, useAccount } from 'wagmi'
 import CarbonOffsets from '../components/CarbonOffset'
 import {parseEther} from "ethers/lib/utils";
@@ -9,7 +9,6 @@ import {parseEther} from "ethers/lib/utils";
 export default function Home(): JSX.Element {
 
   const { address } = useAccount()
-  const [tco2Address, setTco2Address] = useState('')
   const [products, setProducts] = useState(undefined)
   const [NFT, setNFT] = useState(undefined)
 
@@ -20,18 +19,17 @@ export default function Home(): JSX.Element {
   signer && toucan.setSigner(signer)
 
   const redeemPoolToken = async (): Promise<void> => {
-    try {
-      const redeemedTokenAddress = await toucan.redeemAuto2('NCT', parseEther('1'))
-      return redeemedTokenAddress[0].address
-    } catch (e) {
-      console.log(e)
-    }
+
+  const redeemedTokenAddress = await toucan.redeemAuto2('NCT', parseEther('1'))
+  return redeemedTokenAddress[0].address
+
   }
 
 
   const retireTco2Token = async (): Promise<void> => {
     try {
       const tco2Address = await redeemPoolToken()
+
       return await toucan.retire(parseEther('1'), tco2Address)
     } catch (e) {
       console.log(e)
@@ -43,8 +41,13 @@ export default function Home(): JSX.Element {
   }
 
   const supportAndBuy = async(index, price) => {
-    const res = await retireTco2Token()
-    res && (await buyProductHandler(index, price))
+
+    const userHasNCT = await hasNCT(address)
+    if (userHasNCT) {
+      const res = await retireTco2Token()
+      return res && (await buyProductHandler(index, price))
+    }
+    alert('Purchase NCT token first')
   }
 
 
