@@ -15,4 +15,4 @@ export const priceToWei = price => price ? ethers.utils.parseUnits(price.toStrin
 
 export const formatPrice = (price) => price ? ethers.utils.formatEther(String(price)) : ''
 
-export const toCheckSum  = (kit, address) => kit.connection.web3.utils.toChecksumAddress(address)
+export const addressToLowerCase  = address => address?.toLocaleLowerCase()

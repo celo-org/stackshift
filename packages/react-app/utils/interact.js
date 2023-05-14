@@ -3,7 +3,7 @@ import axios  from 'axios'
 import { priceToWei } from './helpers'
 import GreenProduct from '../../hardhat/artifacts/contracts/GreenProduct.sol/GreenProduct.json'
 
-export const contractAddress = '0x7a36edA0b1541aD29134F582d0d0AC0d20bc587b'
+export const contractAddress = '0x9E41cC9feB57858FAecC421a1e8a8e650CC3E6aF'
 
 export async function getContract() {
 
@@ -32,12 +32,12 @@ export const createNFT = async (NFTURI, price) => {
   }
 }
 
-export const buyProduct = async (index, price) => {
+export const buyProduct = async (index, price, retireCount) => {
 
   try {
     const contract = await getContract()
 
-    let res = await contract.buyProduct(contractAddress, index, {value: priceToWei(price)})
+    let res = await contract.buyProduct(contractAddress, index, retireCount, {value: priceToWei(price)})
     res = await res.wait()
     console.log('bidd ', res)
     return res
