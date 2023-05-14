@@ -15,26 +15,14 @@ contract GreenProduct is
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    struct Product {
-        string name;
-        string imagePath;
-        uint256 price;
-    }
-
-    Product[] public products;
-
     mapping(address => bool) public userMinted;
 
 
-    constructor() ERC721("GreenProduct", "GP") {
-        products.push(Product("Energy Saver", "energysaver.jpg", 30000000000000000));
-        products.push(Product("Deforester", "reforest.jpg", 40000000000000000));
-        products.push(Product("Neva Waste", "nevawaste.jpg", 50000000000000000));
-    }
+    constructor() ERC721("GreenProduct", "GP") {}
 
     function _baseURI() internal pure override returns (string memory) {
         return
-            "https://ipfs.io/ipfs/QmUPHAUomY9XsddpVey8NEmNVLrXhViW8onXemCuvFP99L/";
+            "https://ipfs.io/ipfs/QmPc2Yp3YeS8JWnrq7eHJp5LBnDPdyM3A2TJFiGPFKhnfH/";
     }
 
     // The following functions are overrides required by Solidity.
@@ -63,11 +51,7 @@ contract GreenProduct is
             super._beforeTokenTransfer(from, to, tokenId, batchSize);
         }
 
-    function buyProduct(address _nftAddress, uint256 _productIndex, uint256 _retireCounts) public payable {
-
-        Product memory product = products[_productIndex];
-
-        require(product.price == msg.value, "Incorrect product amount");
+    function issueNFT(address _nftAddress, uint256 _retireCounts) public {
 
         if (userMinted[msg.sender]) {
 
@@ -98,9 +82,6 @@ contract GreenProduct is
 
     }
 
-    function getProducts() public view returns(Product[] memory) {
-        return products;
-    }
 
     function getTokenId() public view returns (uint256) {
 

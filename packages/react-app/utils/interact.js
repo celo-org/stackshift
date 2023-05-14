@@ -1,9 +1,8 @@
 import { providers, Contract } from 'ethers'
 import axios  from 'axios'
-import { priceToWei } from './helpers'
 import GreenProduct from '../../hardhat/artifacts/contracts/GreenProduct.sol/GreenProduct.json'
 
-export const contractAddress = '0x9EE2414650f9563d207CE7715e5fd1028B9c6b7D'
+export const contractAddress = '0x0976833ca8F68b7453e59Ae3bb3bf871a174D09e'
 
 export async function getContract() {
 
@@ -32,27 +31,13 @@ export const createNFT = async (NFTURI, price) => {
   }
 }
 
-export const buyProduct = async (index, price, retireCount) => {
+export const issueNFT = async (retireCount) => {
 
   try {
     const contract = await getContract()
 
-    let res = await contract.buyProduct(contractAddress, index, retireCount, {value: priceToWei(price)})
-    res = await res.wait()
-    console.log('bidd ', res)
-    return res
-  } catch (e) {
-    console.log(e)
-    console.log('e here', e)
-  }
-}
-
-export const getProducts = async () => {
-
-  try {
-    const contract = await getContract()
-    return await contract.getProducts()
-
+    let res = await contract.issueNFT(contractAddress, retireCount)
+    return await res.wait()
   } catch (e) {
     console.log(e)
   }
@@ -61,15 +46,11 @@ export const getProducts = async () => {
 export const getNFT = async () => {
 
   try {
-    // let NFT = undefined
+
     const contract = await getContract()
     const tokenId = await contract.getTokenId()
-    // return console.log('tt ', tokenId)
-    // if (tokenId) {
-      const tokenURI = await contract.tokenURI(tokenId)
-      let NFT = await getNFTMeta(tokenURI)
-    // }
-    return NFT
+    const tokenURI = await contract.tokenURI(tokenId)
+    return await getNFTMeta(tokenURI)
 
   } catch (e) {
     console.log(e)
