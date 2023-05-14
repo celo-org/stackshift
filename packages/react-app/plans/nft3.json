@@ -1,0 +1,19 @@
+{
+  "description": "Green world with a touch of kindness",
+  "image": "https://ipfs.io/ipfs/QmRTVJ7ynQU12KWPsP1oxbFBEjUaHoJdsNgWJUsbjtsXiZ/nft3.jpg",
+  "name": "NevaWaste",
+  "attributes": [
+    {
+      "trait_type": "private_forum_access",
+      "value": true
+    },
+    {
+      "trait_type": "discount_on_all_products",
+      "value": true
+    },
+    {
+      "trait_type": "annual_conference_pass",
+      "value": true
+    }
+  ]
+}

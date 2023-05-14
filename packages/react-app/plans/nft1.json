@@ -1,0 +1,19 @@
+{
+  "description": "Beginning of great things starts with a step",
+  "image": "https://ipfs.io/ipfs/QmRTVJ7ynQU12KWPsP1oxbFBEjUaHoJdsNgWJUsbjtsXiZ/nft1.jpg",
+  "name": "Helping Hand",
+  "attributes": [
+    {
+      "trait_type": "private_forum_access",
+      "value": true
+    },
+    {
+      "trait_type": "discount_on_all_products",
+      "value": false
+    },
+    {
+      "trait_type": "annual_conference_pass",
+      "value": false
+    }
+  ]
+}
