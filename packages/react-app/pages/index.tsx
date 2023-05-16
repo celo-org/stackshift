@@ -1,9 +1,10 @@
-import Card from "@/components/Card";
+import ProjectCard from "@/components/ProjectCard";
+
 
 export default function Home() {
   return (
     <div>
-      <Card />
+      <ProjectCard /> 
     </div>
   );
 }

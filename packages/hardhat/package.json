@@ -43,6 +43,7 @@
         "@ethersproject/providers": "^5.7.2",
         "@redstone-finance/evm-connector": "^0.0.22",
         "ganache": "^7.5.0",
+        "react-icons": "^4.8.0",
         "source-map-support": "^0.5.21",
         "typescript": "^4.8.4",
         "web3": "^1.8.0",
