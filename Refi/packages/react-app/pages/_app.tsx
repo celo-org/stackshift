@@ -1,61 +1,69 @@
-import "../styles/globals.css";
-import "@rainbow-me/rainbowkit/styles.css";
-import type { AppProps } from "next/app";
+import '../styles/globals.css';
+import '@rainbow-me/rainbowkit/styles.css';
+import type { AppProps } from 'next/app';
 import {
   connectorsForWallets,
   RainbowKitProvider
-} from "@rainbow-me/rainbowkit";
-import { 
-  metaMaskWallet, 
-  omniWallet, 
-  walletConnectWallet 
-} from "@rainbow-me/rainbowkit/wallets";
-import { configureChains, createClient, WagmiConfig } from "wagmi";
-import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
+} from '@rainbow-me/rainbowkit';
+import {
+  metaMaskWallet,
+  omniWallet,
+  walletConnectWallet
+} from '@rainbow-me/rainbowkit/wallets';
+import { configureChains, createClient, WagmiConfig } from 'wagmi';
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
+import { ApolloProvider } from '@apollo/client';
+import client from '../apollo-client';
 
 // Import known recommended wallets
-import { Valora, CeloWallet, CeloDance } from "@celo/rainbowkit-celo/wallets";
+import { Valora, CeloWallet, CeloDance } from '@celo/rainbowkit-celo/wallets';
 
 // Import CELO chain information
-import { Alfajores, Celo } from "@celo/rainbowkit-celo/chains";
+import { Alfajores, Celo } from '@celo/rainbowkit-celo/chains';
 
-import Layout from "../components/Layout";
+import Layout from '../components/Layout';
 
 const { chains, provider } = configureChains(
   [Alfajores, Celo],
-  [jsonRpcProvider({ rpc: (chain) => ({ http: chain.rpcUrls.default.http[0] }) })]  
+  [
+    jsonRpcProvider({
+      rpc: (chain) => ({ http: chain.rpcUrls.default.http[0] })
+    })
+  ]
 );
 
 const connectors = connectorsForWallets([
   {
-    groupName: "Recommended with CELO",
+    groupName: 'Recommended with CELO',
     wallets: [
       Valora({ chains }),
       CeloWallet({ chains }),
       CeloDance({ chains }),
       metaMaskWallet({ chains }),
       omniWallet({ chains }),
-      walletConnectWallet({ chains }),
-    ],
-  },
+      walletConnectWallet({ chains })
+    ]
+  }
 ]);
 
 const wagmiClient = createClient({
   autoConnect: true,
   connectors,
-  provider,
+  provider
 });
 
 function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains} coolMode={true}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <ApolloProvider client={client}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ApolloProvider>
       </RainbowKitProvider>
     </WagmiConfig>
-  )
+  );
 }
 
 export default App;
