@@ -1,3 +1,72 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  padding: 20px;
+}
+
+.logo {
+  font-family: "Pacifico", cursive;
+  font-size: 30px;
+}
+
+.datalist {
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+}
+
+.card {
+  width: 400px;
+  background-color: #1d2833;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  margin-right: 30px;
+}
+
+.img {
+  width: 100%;
+}
+
+.text1 {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 24px;
+  padding-top: 10px;
+}
+
+.text2 {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 14px;
+  padding-top: 10px;
+}
+
+.input {
+  height: 50px;
+  width: 100%;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 20px;
+  margin-top: 10px;
+  border-radius: 10px;
+  padding-left: 15px;
+  color: black;
+}
+
+.button {
+  width: 100%;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 20px;
+  background-color: #10171f;
+  height: 50px;
+}
