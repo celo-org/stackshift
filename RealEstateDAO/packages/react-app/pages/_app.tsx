@@ -1,17 +1,19 @@
 import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
+import "react-toastify/dist/ReactToastify.css";
 import type { AppProps } from "next/app";
 import {
   connectorsForWallets,
-  RainbowKitProvider
+  RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
-import { 
-  metaMaskWallet, 
-  omniWallet, 
-  walletConnectWallet 
+import {
+  metaMaskWallet,
+  omniWallet,
+  walletConnectWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
+import { ToastContainer } from "react-toastify";
 
 // Import known recommended wallets
 import { Valora, CeloWallet, CeloDance } from "@celo/rainbowkit-celo/wallets";
@@ -23,7 +25,11 @@ import Layout from "../components/Layout";
 
 const { chains, provider } = configureChains(
   [Alfajores, Celo],
-  [jsonRpcProvider({ rpc: (chain) => ({ http: chain.rpcUrls.default.http[0] }) })]  
+  [
+    jsonRpcProvider({
+      rpc: (chain) => ({ http: chain.rpcUrls.default.http[0] }),
+    }),
+  ]
 );
 
 const connectors = connectorsForWallets([
@@ -53,9 +59,10 @@ function App({ Component, pageProps }: AppProps) {
         <Layout>
           <Component {...pageProps} />
         </Layout>
+        <ToastContainer autoClose={15000} />
       </RainbowKitProvider>
     </WagmiConfig>
-  )
+  );
 }
 
 export default App;
