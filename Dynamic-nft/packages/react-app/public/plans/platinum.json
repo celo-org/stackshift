@@ -1,0 +1,30 @@
+{
+    "description": "Platinum Memebership",
+    "image": "https://gateway.pinata.cloud/ipfs/QmNwMoD7euKmDE2dugXNWuiPgy7RNB4WkEkU3VuFcFVcj3/platinum.gif",
+    "attributes": [
+      {
+        "trait_type": "private_forum_access",
+        "value": true
+      },
+      {
+        "trait_type": "discount_on_all_products",
+        "value": true
+      },
+      {
+        "trait_type": "annual_conference_pass",
+        "value": true
+      },
+      {
+        "trait_type": "club_swags",
+        "value": true
+      },
+      {
+        "trait_type": "personal_chaufer",
+        "value": true
+      },
+      {
+        "trait_type": "free_boat_rides",
+        "value": true
+      }
+    ]
+  }
