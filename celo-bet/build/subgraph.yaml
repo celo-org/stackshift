@@ -1,0 +1,33 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: CoinBet
+    network: celo-alfajores
+    source:
+      address: "0x5837440Bb467C30288289D5Cd42a4aB75b156384"
+      abi: CoinBet
+      startBlock: 17597781
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - BetPlaced
+        - BetResult
+        - OwnershipTransferred
+        - TrustedSignerChanged
+      abis:
+        - name: CoinBet
+          file: CoinBet/abis/CoinBet.json
+      eventHandlers:
+        - event: BetPlaced(indexed address,uint256,uint256,uint256)
+          handler: handleBetPlaced
+        - event: BetResult(indexed address,bool,uint256,uint256,uint256)
+          handler: handleBetResult
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: TrustedSignerChanged(indexed address)
+          handler: handleTrustedSignerChanged
+      file: CoinBet/CoinBet.wasm

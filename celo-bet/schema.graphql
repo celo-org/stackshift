@@ -1,0 +1,39 @@
+type BetPlaced @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  wager: BigInt! # uint256
+  choice: BigInt! # uint256
+  timestamp: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type BetResult @entity(immutable: true) {
+  id: Bytes!
+  user: Bytes! # address
+  win: Boolean! # bool
+  wager: BigInt! # uint256
+  payout: BigInt! # uint256
+  timestamp: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TrustedSignerChanged @entity(immutable: true) {
+  id: Bytes!
+  newSigner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
