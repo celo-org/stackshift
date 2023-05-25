@@ -96,9 +96,9 @@ export default function Home() {
               >
                 Get some tokens
               </a>{" "}
-              from the faucet <br />
-              2. Redeem your token for a tree or carbon credit <br />
-              3. We will plant a tree or offset carbon emissions on your behalf
+              from the faucet. <br />
+              2. Redeem your token for carbon credit. <br />
+              3. Retire your token to offset carbon emissions.
               <br />
             </Typography>
             <Button
