@@ -1,0 +1,27 @@
+specVersion: 0.0.2
+description: Gravatar contract subgraph for Celo
+repository: https://github.com/secretshardul/the-graph-celo
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Gravity
+    network: celo
+    source:
+      address: '0x56d04968f959ae609a32c8eadb8cd3db90490a7f' # Deployed contract address
+      abi: Gravity
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Gravatar
+      abis:
+        - name: Gravity
+          file: ./abis/Gravity.json
+      eventHandlers:
+        - event: NewGravatar(uint256,address,string,string)
+          handler: handleNewGravatar
+        - event: UpdatedGravatar(uint256,address,string,string)
+          handler: handleUpdatedGravatar
+      file: ./src/mapping.ts
