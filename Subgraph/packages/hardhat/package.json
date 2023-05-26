@@ -41,6 +41,7 @@
         "@ethersproject/abi": "^5.7.0",
         "@ethersproject/bytes": "^5.7.0",
         "@ethersproject/providers": "^5.7.2",
+        "@graphprotocol/graph-ts": "^0.30.0",
         "@redstone-finance/evm-connector": "^0.0.15",
         "ganache": "^7.5.0",
         "source-map-support": "^0.5.21",
