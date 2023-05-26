@@ -1,23 +1,25 @@
 {
-    "name": "stackshift-auction",
+    "name": "stackshift",
     "version": "1.0.0",
     "description": "Custom Celo Composer project.",
     "private": true,
     "author": "Celo",
     "license": "MIT",
     "scripts": {
-        "react-app:dev": "yarn workspace @stackshift-auction/react-app dev",
-        "react-app:build": "yarn workspace @stackshift-auction/react-app build",
-        "react-app:start": "yarn workspace @stackshift-auction/react-app start",
-        "react-app:lint": "yarn workspace @stackshift-auction/react-app lint",
-        "hardhat:test": "yarn workspace @stackshift-auction/hardhat test",
-        "hardhat:test-local": "yarn workspace @stackshift-auction/hardhat test-local",
-        "hardhat:accounts": "yarn workspace @stackshift-auction/hardhat accounts",
-        "hardhat:devchain": "yarn workspace @stackshift-auction/hardhat devchain",
-        "hardhat:deploy": "yarn workspace @stackshift-auction/hardhat deploy",
-        "hardhat:deploy-reset-watch": "yarn workspace @stackshift-auction/hardhat deploy-reset-watch",
-        "hardhat:watch": "yarn workspace @stackshift-auction/hardhat watch",
-        "hardhat:fork-mainnet": "yarn workspace @stackshift-auction/hardhat fork-mainnet"
+        "react-app:dev": "yarn workspace @stackshift/react-app dev",
+        "react-app:build": "yarn workspace @stackshift/react-app build",
+        "react-app:start": "yarn workspace @stackshift/react-app start",
+        "react-app:lint": "yarn workspace @stackshift/react-app lint",
+        "hardhat:test": "yarn workspace @stackshift/hardhat test",
+        "hardhat:test-local": "yarn workspace @stackshift/hardhat test-local",
+        "hardhat:accounts": "yarn workspace @stackshift/hardhat accounts",
+        "hardhat:devchain": "yarn workspace @stackshift/hardhat devchain",
+        "hardhat:deploy": "yarn workspace @stackshift/hardhat deploy",
+        "hardhat:deploy-reset-watch": "yarn workspace @stackshift/hardhat deploy-reset-watch",
+        "hardhat:watch": "yarn workspace @stackshift/hardhat watch",
+        "hardhat:fork-mainnet": "yarn workspace @stackshift/hardhat fork-mainnet",
+        "subgraphs:test": "yarn workspace @stackshift/subgraphs test",
+        "subgraphs:get-abi": "yarn workspace @stackshift/subgraphs get-abi"
     },
     "repository": {
         "type": "git",
@@ -33,8 +35,5 @@
     "keywords": [
         "celo-composer",
         "celo"
-    ],
-    "dependencies": {
-        "web3": "^1.9.0"
-    }
+    ]
 }

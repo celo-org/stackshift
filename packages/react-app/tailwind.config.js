@@ -1,8 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -17,7 +18,7 @@ module.exports = {
         "fig": "#1E002B",
         /** functional */
         "snow": "#FFFFFF",
-        "onyx": "#CCCCCC",
+        "onyx": "#000000",
         "success": "#329F3B",
         "error": "#E70532",
         "disabled": "#9B9B9B",
@@ -29,7 +30,5 @@ module.exports = {
       }
     },
   },
-  plugins: [
-    require('tw-elements/dist/plugin')
-  ],
+  plugins: [],
 }
