@@ -1,0 +1,37 @@
+{
+    "name": "Payment",
+    "version": "1.0.0",
+    "description": "Custom Celo Composer project.",
+    "private": true,
+    "author": "Celo",
+    "license": "MIT",
+    "scripts": {
+        "react-app:dev": "yarn workspace @Payment/react-app dev",
+        "react-app:build": "yarn workspace @Payment/react-app build",
+        "react-app:start": "yarn workspace @Payment/react-app start",
+        "react-app:lint": "yarn workspace @Payment/react-app lint",
+        "hardhat:test": "yarn workspace @Payment/hardhat test",
+        "hardhat:test-local": "yarn workspace @Payment/hardhat test-local",
+        "hardhat:accounts": "yarn workspace @Payment/hardhat accounts",
+        "hardhat:devchain": "yarn workspace @Payment/hardhat devchain",
+        "hardhat:deploy": "yarn workspace @Payment/hardhat deploy",
+        "hardhat:deploy-reset-watch": "yarn workspace @Payment/hardhat deploy-reset-watch",
+        "hardhat:watch": "yarn workspace @Payment/hardhat watch",
+        "hardhat:fork-mainnet": "yarn workspace @Payment/hardhat fork-mainnet"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/celo-org/celo-composer.git"
+    },
+    "bugs": {
+        "url": "https://github.com/celo-org/celo-composer/issues"
+    },
+    "homepage": "https://github.com/celo-org/celo-composer/blob/main/README.md",
+    "workspaces": [
+        "packages/*"
+    ],
+    "keywords": [
+        "celo-composer",
+        "celo"
+    ]
+}
