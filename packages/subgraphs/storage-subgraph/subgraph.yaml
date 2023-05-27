@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+specVersion: 0.0.4
 schema:
   file: ./schema.graphql
 dataSources:
@@ -10,13 +10,13 @@ dataSources:
       abi: Storage
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - newNumber
       abis:
         - name: Storage
-          file: ./abis/Storage.json
+          file: ../abis/alfajores/Storage.json
       eventHandlers:
         - event: newNumber(uint256,address)
           handler: handlenewNumber
