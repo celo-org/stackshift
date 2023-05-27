@@ -1,0 +1,15 @@
+{
+    "name": "@stackshift/subgraphs",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "get-abi": "node ./utils/index.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@graphprotocol/graph-ts": "^0.30.0"
+    }
+}
