@@ -1,0 +1,49 @@
+type Approval @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  approved: Bytes! # address
+  tokenId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ApprovalForAll @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  operator: Bytes! # address
+  approved: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TokenMetadataURIUpdated @entity(immutable: true) {
+  id: Bytes!
+  _tokenId: BigInt! # uint256
+  owner: Bytes! # address
+  _uri: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TokenURIUpdated @entity(immutable: true) {
+  id: Bytes!
+  _tokenId: BigInt! # uint256
+  owner: Bytes! # address
+  _uri: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Transfer @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  to: Bytes! # address
+  tokenId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
