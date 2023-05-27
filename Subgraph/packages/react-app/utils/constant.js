@@ -1,1 +1,1 @@
-export const graphAddress = "0x5B48cE6d5638063F7c6ADFdCf556577f7555f8C9";
+export const graphAddress = "0xFe0bF06082E7a441f44Cc884604B0FBC1B5aCBe4";

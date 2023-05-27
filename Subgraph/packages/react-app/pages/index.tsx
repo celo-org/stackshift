@@ -34,7 +34,7 @@ export default function Home() {
     const contract = await createGraphContract();
     const id = toast.loading("Transaction in progress..");
     try {
-      const tx = await contract.createGravatar(
+      const tx = await contract.createTask(
         nameRef.current.value,
         durationRef.current.value
       );
@@ -63,7 +63,7 @@ export default function Home() {
   const getTasks = async () => {
     const taskList = await subgraphQuery(GET_ALL());
     console.log(taskList);
-    setTaskList(taskList.gravatars);
+    setTaskList(taskList.tasks);
   };
 
   useEffect(() => {
@@ -110,8 +110,8 @@ export default function Home() {
             return (
               <tr>
                 <td>{item.owner}</td>
-                <td>{item.displayName}</td>
-                <td>{item.imageUrl}</td>
+                <td>{item.taskName}</td>
+                <td>{Number(ethers.BigNumber.from(item.duration))}</td>
               </tr>
             );
           })}

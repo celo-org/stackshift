@@ -1,10 +1,10 @@
 export function GET_ALL() {
   return `query {
-    gravatars(first: 20) {
-        id
-        owner
-        displayName
-        imageUrl
+    tasks(first: 5) {
+      id
+      owner
+      taskName
+      duration
       }
         }`;
 }
