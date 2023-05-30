@@ -1,9 +1,0 @@
-type EventListed @entity(immutable: true) {
-  id: Bytes!
-  EventApp_id: BigInt! # uint256
-  owner: Bytes! # address
-  regFee: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
