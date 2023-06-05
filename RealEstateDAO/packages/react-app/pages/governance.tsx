@@ -95,7 +95,7 @@ export default function Governance() {
                       ethers.BigNumber.from(item.proposalId)
                     )}`}
                   >
-                    <div style={{ marginBottom: "20px" }}>
+                    <div className="bod" style={{ marginBottom: "20px" }}>
                       <div className="home-text8">
                         {item.title}{" "}
                         {Number(ethers.BigNumber.from(item.proposalId))}

@@ -42,7 +42,6 @@ export default function Vote() {
     const contract = await createDAOContract();
     try {
       const proposal = await contract.proposals(id);
-      console.log(proposal);
       setDeadline(Number(ethers.BigNumber.from(proposal?.deadline)));
       setYes(Number(ethers.BigNumber.from(proposal?.yesVotes)));
       setNo(Number(ethers.BigNumber.from(proposal?.noVotes)));
@@ -112,50 +111,74 @@ export default function Vote() {
     <div>
       <main className="voting">
         <div className="pbox1">
-          <div className="home-text10">Proposal Details</div>
-
-          <div className="pbox">
-            <div className="home-text11">Proposal Name - {proposal?.title}</div>
-            <div className="home-text11">
-              Proposal Description - {proposal?.description}{" "}
+          <div className="pbox2">
+            <div
+              style={{ color: "black", marginBottom: "20px" }}
+              className="home-text10"
+            >
+              Proposal Details
             </div>
+            <div style={{ color: "black" }} className="home-text11">
+              Proposal Name
+            </div>
+            <div className="home-text111" style={{ color: "black" }}>
+              {proposal?.title}
+            </div>
+            <div style={{ color: "black" }} className="home-text11">
+              Proposal Description
+            </div>
+            <div className="home-text111" style={{ color: "black" }}>
+              {proposal?.description}
+            </div>
+          </div>
 
+          <div
+            style={{ marginTop: "30px", marginBottom: "30px" }}
+            className="pbox2"
+          >
             {mortgage.length > 0 ? (
               <div>
-                <div style={{ marginBottom: "30px" }} className="home-text10">
+                <div
+                  style={{ marginBottom: "30px", color: "black" }}
+                  className="home-text10"
+                >
                   Mortgage Details
                 </div>
 
-                <div className="home-text11">
-                  Recipient Name - {mortgage.name}
-                </div>
+                <div className="home-text11">Recipient Name</div>
+                <div className="home-text111">{mortgage.name}</div>
                 <div className="home-text11">
                   Recipient Monthly Income -{" "}
                   {Number(ethers.BigNumber.from(mortgage.income)) / 10 ** 18}
                   {""} celo
                 </div>
+                <div className="home-text111">{mortgage.name}</div>
+
                 <div className="home-text11">
                   Recipient Proof of Monthly Income
                   <img src={mortgage.incomeImage} alt="incomeImg" />
                 </div>
-                <div className="home-text11">
-                  Minimum Monthly Repayment -{" "}
+                <div className="home-text11">Minimum Monthly Repayment </div>
+                <div className="home-text111">
+                  {" "}
                   {Number(ethers.BigNumber.from(mortgage.minRepay)) / 10 ** 18}
                   {""} celo
                 </div>
                 <div className="home-text11">
-                  DAO member address (Guarantor) - {mortgage.daoAdress}
+                  DAO member address (Guarantor)
                 </div>
+                <div className="home-text111">{mortgage.daoAdress}</div>
                 <div className="home-text11">
-                  Description of Mortgage Property - {mortgage.mortDesc}
+                  Description of Mortgage Property
                 </div>
+                <div className="home-text111">{mortgage.mortDesc}</div>
                 <div className="home-text11">
                   Proof of Mortgage Property
                   <img src={mortgage.mortImage} alt="incomeImg" />
                 </div>
 
-                <div className="home-text11">
-                  Amount Requested -{" "}
+                <div className="home-text11">Amount Requested</div>
+                <div className="home-text111">
                   {Number(ethers.BigNumber.from(mortgage.mortAmount)) /
                     10 ** 18}
                   {""} celo
@@ -166,31 +189,41 @@ export default function Vote() {
         </div>
 
         <div className="pbox1">
-          <div className="home-text10">Cast your Vote</div>
-          <div className="home-text11">
-            Status -{" "}
-            {deadline - Math.floor(new Date().getTime() / 1000) >= 0
-              ? "ACTIVE"
-              : "DEADLINE_EXCEEDED"}
+          <div className="pbox3">
+            <div
+              style={{ textAlign: "center", paddingBottom: "10px" }}
+              className="home-text10"
+            >
+              Cast your Vote
+            </div>
+            <div
+              style={{ textAlign: "center", paddingBottom: "10px" }}
+              className="home-text11"
+            >
+              Status -{" "}
+              {deadline - Math.floor(new Date().getTime() / 1000) >= 0
+                ? "ACTIVE"
+                : "DEADLINE_EXCEEDED"}
+            </div>
+
+            <div style={{ marginTop: "30px" }}>
+              <div onClick={() => mark(1)} ref={vRef1} className="vbut">
+                Yes
+              </div>
+              <div onClick={() => mark(2)} ref={vRef2} className="vbut">
+                No
+              </div>
+              <div onClick={() => mark(3)} ref={vRef3} className="vbut">
+                Abstain
+              </div>
+
+              <button onClick={voteProposal} className="vbut2">
+                Vote
+              </button>
+            </div>
           </div>
 
-          <div style={{ marginTop: "30px" }}>
-            <div onClick={() => mark(1)} ref={vRef1} className="vbut">
-              Yes
-            </div>
-            <div onClick={() => mark(2)} ref={vRef2} className="vbut">
-              No
-            </div>
-            <div onClick={() => mark(3)} ref={vRef3} className="vbut">
-              Abstain
-            </div>
-
-            <button onClick={voteProposal} className="vbut2">
-              Vote
-            </button>
-          </div>
-
-          <div style={{ marginTop: "30px" }}>
+          <div className="pbox3" style={{ marginTop: "30px" }}>
             <div className="home-text10">Results</div>
 
             <div style={{ marginTop: "30px" }}>

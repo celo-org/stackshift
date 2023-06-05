@@ -257,6 +257,15 @@
   font-family: "Ubuntu", sans-serif;
   font-size: 20px;
   padding-bottom: 20px;
+  font-weight: bold;
+  color: black;
+}
+
+.home-text111 {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 18px;
+  padding-bottom: 20px;
+  color: black;
 }
 
 .pbox {
@@ -267,6 +276,21 @@
   width: 45%;
 }
 
+.pbox2 {
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.pbox3 {
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  color: black;
+}
+
 .vbut {
   height: 50px;
   border-radius: 20px;
@@ -275,7 +299,7 @@
   margin-left: auto;
   margin-right: auto;
   background-color: transparent;
-  border: 1px solid white;
+  border: 1px solid black;
   text-align: center;
   font-family: "Ubuntu", sans-serif;
   font-size: 20px;
@@ -295,8 +319,9 @@
   text-align: center;
   font-family: "Ubuntu", sans-serif;
   font-size: 20px;
-  padding-top: 10px;
+  padding-top: 2px;
   display: block;
+  color: white;
 }
 
 .tarea {
@@ -350,4 +375,15 @@
 
 .mark {
   border-color: blue;
+}
+
+.bod {
+  border: 1px solid black;
+  margin-right: 30px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.bod:hover {
+  border: 1px solid white;
 }
