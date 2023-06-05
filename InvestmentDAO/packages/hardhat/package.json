@@ -1,5 +1,5 @@
 {
-    "name": "@doa-app/hardhat",
+    "name": "@TokenGatedDao/hardhat",
     "version": "1.0.0",
     "license": "MIT",
     "scripts": {
@@ -28,7 +28,7 @@
         "ethereumjs-util": "^7.1.5",
         "ethereumjs-wallet": "^1.0.2",
         "ethers": "^5.7.2",
-        "hardhat": "^2.12.1",
+        "hardhat": "^2.14.0",
         "hardhat-celo": "^0.0.3",
         "hardhat-deploy": "^0.11.19",
         "hardhat-gas-reporter": "^1.0.8",

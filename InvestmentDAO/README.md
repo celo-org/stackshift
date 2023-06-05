@@ -4,7 +4,6 @@
 DAOalyzer is a data visualization platform that aggregates and displays key metrics of investment activity within an investment DAO. The platform will be designed to provide value to both existing and potential investors in the DAO, and enable them to make informed decisions about their investments.
 
 ‌
-
 Features:
 
 Real-time visualization: The platform will display investment data and key performance metrics in real-time. This will include data on assets invested, performance of those assets, investment strategies employed, and more.
@@ -40,4 +39,3 @@ npm install
 ```js
 npm run dev
 ```
-

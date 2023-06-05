@@ -14,18 +14,15 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
 
-
-
-  const res = await deploy("Token", {
-    // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
+  await deploy("TokenGatedDao", {
     from: deployer,
-    //args: [ "Hello", ethers.utils.parseEther("1.5") ],
     log: true,
   });
 
-  await deploy("DaoAnalyzer", {
+  await deploy("Token", {
+    // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
-    args: [res.address],
+    args: [ "Hello"],
     log: true,
   });
 
@@ -61,4 +58,4 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
   */
 };
 
-module.exports.tags = ["DaoAnalyzer", "Token"];
+module.exports.tags = ["TokenGatedDao", "Token"];

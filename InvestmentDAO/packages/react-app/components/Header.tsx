@@ -1,16 +1,11 @@
-import { useRouter } from 'next/router'
-import Link from 'next/link';
-import { Disclosure } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
-// import CreateAccountModal from '@/components/CreateAccountModal'
+import { Disclosure } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import Image from "next/image";
 
-export default function DashboardHeader() {
-
-  const router = useRouter()
-
+export default function Header() {
     return (
-      <Disclosure as="nav" className="border-b border-black">
+      <Disclosure as="nav" className="bg-prosperity border-b border-black">
         {({ open }) => (
           <>
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -28,27 +23,19 @@ export default function DashboardHeader() {
                 </div>
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0 items-center">
-                    <Link href="/" className="font-semibold">DAOAnalyzer</Link>
+                    <Image className="block h-8 w-auto sm:block lg:block" src="/logo.svg" width="24" height="24" alt="Celo Logo" />
                   </div>
                   <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                    <Link
-                      href="/my-transactions"
-                      className={`inline-flex items-center ${router.pathname === '/my-transactions' ? 'border-b-2 border-black' : ''} px-1 pt-1 text-sm font-medium`}
+                    <a
+                      href="#"
+                      className="inline-flex items-center border-b-2 border-black px-1 pt-1 text-sm font-medium text-gray-900"
                     >
-                      My Transactions
-                    </Link>
-                    <Link
-                      href="/my-jobs"
-                      className={`inline-flex items-center ${router.pathname === '/my-jobs' ? 'border-b-2 border-black' : ''} px-1 pt-1 text-sm font-medium`}
-                    >
-                      My Jobs
-                    </Link>
+                      Home
+                    </a>
+                    
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
-                {/*<CreateAccountModal />*/}
-
                 <ConnectButton showBalance={{smallScreen: true, largeScreen: false}} />
                 </div>
               </div>

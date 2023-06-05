@@ -26,13 +26,8 @@ module.exports = {
         "citrus": "#FF9A51",
         "lotus": "#FFA3EB",
         "lavender": "#B490FF"
-      },
-      backgroundColor: {
-        customGradient: 'linear-gradient(180deg, red 0%, #1E03F5 100%)'
       }
     },
   },
-  plugins: [
-    require('tw-elements/dist/plugin')
-  ],
+  plugins: [require("tw-elements/dist/plugin")],
 }

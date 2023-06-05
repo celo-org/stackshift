@@ -1,37 +1,36 @@
-import '../styles/globals.css';
-import '@rainbow-me/rainbowkit/styles.css';
-import type { AppProps } from 'next/app';
-import { useRouter } from 'next/router'
-
+import "tw-elements/dist/css/tw-elements.min.css";
+import "../styles/globals.css";
+import "@rainbow-me/rainbowkit/styles.css";
+import type { AppProps } from "next/app";
 import {
   connectorsForWallets,
   RainbowKitProvider
-} from '@rainbow-me/rainbowkit'
+} from "@rainbow-me/rainbowkit";
 import { 
   metaMaskWallet, 
   omniWallet, 
   walletConnectWallet 
-} from '@rainbow-me/rainbowkit/wallets'
-import { configureChains, createClient, WagmiConfig } from 'wagmi'
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
+} from "@rainbow-me/rainbowkit/wallets";
+import { configureChains, createClient, WagmiConfig } from "wagmi";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 
 // Import known recommended wallets
-import { Valora, CeloWallet, CeloDance } from '@celo/rainbowkit-celo/wallets'
+import { Valora, CeloWallet, CeloDance } from "@celo/rainbowkit-celo/wallets";
 
 // Import CELO chain information
-import { Alfajores, Celo } from '@celo/rainbowkit-celo/chains'
+import { Alfajores, Celo } from "@celo/rainbowkit-celo/chains";
 
-import GuestLayout from '../components/GuestLayout'
-import DashboardLayout from '../components/DashboardLayout'
+import Layout from "../components/Layout";
+import { useEffect } from "react";
 
 const { chains, provider } = configureChains(
   [Alfajores, Celo],
   [jsonRpcProvider({ rpc: (chain) => ({ http: chain.rpcUrls.default.http[0] }) })]  
-)
+);
 
 const connectors = connectorsForWallets([
   {
-    groupName: 'Recommended with CELO',
+    groupName: "Recommended with CELO",
     wallets: [
       Valora({ chains }),
       CeloWallet({ chains }),
@@ -41,30 +40,30 @@ const connectors = connectorsForWallets([
       walletConnectWallet({ chains }),
     ],
   },
-])
+]);
 
 const wagmiClient = createClient({
   autoConnect: true,
   connectors,
   provider,
-})
+});
 
 function App({ Component, pageProps }: AppProps) {
-
-  const router = useRouter()
-  const dapp = router.pathname.includes('app')
-
-  const Layout = dapp ? DashboardLayout : GuestLayout
-
+  useEffect(() => {
+     const importTE = async () => {
+    (await import("tw-elements")).default;
+    };
+    importTE()
+  },[])
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains} coolMode={true}>
         <Layout>
-          <Component {...pageProps}  />
+          <Component {...pageProps} />
         </Layout>
       </RainbowKitProvider>
     </WagmiConfig>
   )
 }
 
-export default App
+export default App;
