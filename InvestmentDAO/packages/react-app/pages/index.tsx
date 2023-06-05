@@ -127,7 +127,8 @@ export default function Home() {
           
         </div>
         <TableList data={proposals.data} />
-          </div>
+      </div>
     </div>
+
   )
 }

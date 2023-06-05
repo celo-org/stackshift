@@ -29,5 +29,5 @@ module.exports = {
       }
     },
   },
-  plugins: [require("tw-elements/dist/plugin")],
+  plugins: [require("≥D xt xzw-elements/dist/plugin")vcv, ],
 }
