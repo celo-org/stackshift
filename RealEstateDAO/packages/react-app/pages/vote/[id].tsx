@@ -148,12 +148,11 @@ export default function Vote() {
 
                 <div className="home-text11">Recipient Name</div>
                 <div className="home-text111">{mortgage.name}</div>
-                <div className="home-text11">
-                  Recipient Monthly Income -{" "}
+                <div className="home-text11">Recipient Monthly Income </div>
+                <div className="home-text111">
                   {Number(ethers.BigNumber.from(mortgage.income)) / 10 ** 18}
                   {""} celo
                 </div>
-                <div className="home-text111">{mortgage.name}</div>
 
                 <div className="home-text11">
                   Recipient Proof of Monthly Income
