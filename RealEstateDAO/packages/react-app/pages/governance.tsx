@@ -48,8 +48,15 @@ export default function Governance() {
     const contract = await createDAOContract();
     try {
       const proposals = await contract.getProposals();
-      console.log(proposals);
-      setProposals(proposals);
+      const newArr = [...proposals];
+      const result = newArr.sort((a, b) => {
+        return (
+          Number(ethers.BigNumber.from(b.deadline)) -
+          Number(ethers.BigNumber.from(a.deadline))
+        );
+      });
+      console.log(result);
+      setProposals(result);
     } catch (error) {
       console.log(error);
     }
