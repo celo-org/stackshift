@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import {usePrepareContractWrite,useContractWrite, useWaitForTransaction, useContractRead, useAccount } from 'wagmi'
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from '@/Constants'
 import Link from 'next/link'
@@ -45,6 +45,7 @@ export default function TableList(param: IParam) {
       return convertEnded(item.endTime._hex)
     }
   }
+
   return (
     <div> 
       {param.data && param.data.length === 0 ?
@@ -83,8 +84,10 @@ export default function TableList(param: IParam) {
                           <td>
                             <div className={` ${dateToTimeStamp() < hexToNumber(item.startTime._hex) ? 'bg-slate-200' : dateToTimeStamp() <= hexToNumber(item.endTime._hex) ? "bg-green-200" : dateToTimeStamp() > hexToNumber(item.endTime._hex) ? "bg-red-200" : null}  rounded p-4`}>
                               {dateToTimeStamp() < hexToNumber(item.startTime._hex) ? 'Pending' : dateToTimeStamp() < hexToNumber(item.endTime._hex) ? "Active" : dateToTimeStamp() > hexToNumber(item.endTime._hex) ? "Closed" : null
-                              }</div>
+                              }
+                            </div>
                           </td>
+                          {/* <td><button className='text-lg p-2 bg-red-200'>Remove</button></td> */}
                         </tr>
                       )}
                     </tbody>

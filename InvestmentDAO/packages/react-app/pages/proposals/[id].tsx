@@ -69,9 +69,23 @@ export default function Proposal() {
     } else {
       write?.()
     }
-
   }
+  const removeProposal = usePrepareContractWrite({
+    address: CONTRACT_ADDRESS,
+    abi: CONTRACT_ABI.abi,
+    functionName: 'removeProposal',
+    args: [id],
+  })
 
+  const removeResponse = useContractWrite(removeProposal.config)
+  const removeState = useWaitForTransaction({
+      hash: data?.hash,
+  })
+
+  const removeData = () => {
+    removeResponse.write?.()
+    router.push("./")
+  }
   // Get voters
   const voters : any = useContractRead({
     address: CONTRACT_ADDRESS,
@@ -139,12 +153,13 @@ export default function Proposal() {
             </div>                    
             )}
           </div>
-          {balance &&  hexToNumber(balance._hex) <= 0 ? <p className='text-red-400 my-4'>You need MT token to vote!</p> : null}
+          {balance &&  hexToNumber(balance._hex) < 50 ? <p className='text-red-400 my-4'>Insufficient token balance.You need 50 MT token to vote!</p> : null}
           <button
             onClick={handleSubmit}
-            className={`${voteStatus || dateToTimeStamp() < parseInt(startTime) || dateToTimeStamp() > parseInt(endTime) || balance && hexToNumber(balance._hex) <= 0
+            className={`${voteStatus || dateToTimeStamp() < parseInt(startTime) || dateToTimeStamp() > parseInt(endTime) || balance && hexToNumber(balance._hex) < 50
               ? "bg-slate-200 " : "bg-green-500 "} rounded w-full p-4`}
-            disabled={voteStatus ||dateToTimeStamp() < parseInt(startTime) || dateToTimeStamp() > parseInt(endTime) ? true : false}>Vote</button>
+            disabled={voteStatus || dateToTimeStamp() < parseInt(startTime) || dateToTimeStamp() > parseInt(endTime) ? true : false}>Vote</button>
+          <button className='text-lg p-2 bg-red-500 mt-4 w-full' onClick={removeData}>Remove</button>
         </div>
 
           <div className='border-2 p-4 rounded'>

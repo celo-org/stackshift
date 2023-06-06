@@ -47,7 +47,7 @@ contract InvestmentDAO {
     event ProposalCreated(uint256 proposalId, string title, string description, uint256 startTime, uint256 endTime);
     event Voted(uint256 proposalId, address voter, uint256 choice, uint256 yesVotes, uint256 noVotes);
     
-       bool internal locked;
+    bool internal locked;
 
     modifier noReentrant() {
         require(!locked, "No re-entrancy");
@@ -59,7 +59,7 @@ contract InvestmentDAO {
     constructor(address _tokenAddress) {
         token = IERC20(_tokenAddress);
         owner = payable(msg.sender);
-        // membersMap[owner].memberAddress = payable(msg.sender);
+        membersMap[owner].memberAddress = payable(msg.sender);
         // members.push(Member(msg.sender, token.balanceOf(msg.sender)));
     }
 
@@ -95,7 +95,7 @@ contract InvestmentDAO {
     }
 
     function createProposal(string calldata _title, string calldata _description, uint256 _startTime, uint256 _endTime) external onlyMember {
-        require(token.balanceOf(msg.sender) > 0, "You must hold tokens to create a proposal");
+        require(token.balanceOf(msg.sender) > 100 ether, "You must hold up to 100 tokens to create a proposal");
         require(_startTime > block.timestamp, "Proposal start time must be in the future");
         require(_endTime > _startTime, "Proposal end time must be after start time");
         require(membersMap[msg.sender].memberAddress == msg.sender, "You are not yet a member of this community");
@@ -107,7 +107,7 @@ contract InvestmentDAO {
     function vote(uint256 _proposalIndex, uint256 _choice) external onlyMember votingOngoing(proposals[_proposalIndex].startTime, proposals[_proposalIndex].endTime){
         require(_proposalIndex < proposalCount, "Invalid proposal index");
         require(!hasVoted[msg.sender][_proposalIndex], "You have already voted for this proposal");
-        require(token.balanceOf(msg.sender) > 0, "You must hold tokens to vote");
+        require(token.balanceOf(msg.sender) > 50 ether, "You must hold up to 50 tokens to vote");
         require(membersMap[msg.sender].memberAddress == msg.sender, "You are not yet a member of this community");
 
         if (_choice == 1) {
@@ -144,7 +144,7 @@ contract InvestmentDAO {
         );
     }
 
-    function endVoting(uint256 _proposalIndex) external noReentrant { 
+    function executeProposal(uint256 _proposalIndex) external noReentrant { 
         require(_proposalIndex < proposalCount, "Invalid proposal index");
         require(proposals[_proposalIndex].creator == msg.sender, "Only the creator of the proposal can end the voting");
 
@@ -159,6 +159,31 @@ contract InvestmentDAO {
             // Reject the proposal if it has more no votes
             // ...
         }
+    }
+
+    function stakeToken(uint256 amount) external noReentrant {
+        require(membersMap[msg.sender].memberAddress == msg.sender, "You are not yet a member of this DAO");
+        require(token.balanceOf(msg.sender) > 0 ether, "Insufficient token balance");
+        payable(address(this)).transfer(amount);
+    }
+
+    function removeProposal(uint256 proposalId) external returns (Proposal memory) {
+        require(proposalId < proposalCount, "Invalid proposal index");
+        require(proposals[proposalId].creator == msg.sender, "Only the creator of the proposal can remove the proposal");
+        require(proposals.length > 0 ether, "Proposal is empty");
+
+        // Remove and return the last item from the array
+        Proposal storage lastItem = proposals[proposals.length - 1];
+        proposals.pop();
+
+        return lastItem;         
+        // Update the proposalCount by decrementing it
+    }
+
+    function fundAccount(address _receiver) external noReentrant {
+        require(token.balanceOf(address(this)) > 100, "Insufficient token balance");
+        require(token.balanceOf(_receiver) >= 200, "You already have enough token");
+        payable(_receiver).transfer(100 ether);
     }
 
     function getAllProposals() public view returns(Proposal[] memory){

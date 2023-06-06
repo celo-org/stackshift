@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePrepareContractWrite, useContractWrite, useWaitForTransaction, useAccount, useContractRead } from 'wagmi'
 import { CONTRACT_ABI, CONTRACT_ADDRESS, OWNER,TOKEN_ADDRESS, TOKEN_ABI } from '@/Constants'
 import CreateProposalModal from "@/components/CreateProposalModal";
@@ -10,6 +10,7 @@ export default function Home() {
   const [showModal, setShowModal] = useState(false)
   const [showFaucetModal, setFaucetModal] = useState(false)
   const { address } = useAccount()
+  const [joined, setJoined] = useState(false)
 
   const { config } = usePrepareContractWrite({
     address: CONTRACT_ADDRESS,
@@ -31,7 +32,10 @@ export default function Home() {
     args: [address]
   })
 
-  const alreadyJoined = memberStatus.data && memberStatus.data
+  useEffect(() => {
+  // const alreadyJoined = memberStatus.data && memberStatus.data
+    setJoined(memberStatus.data)
+  },[memberStatus.data])
 
   const proposals : any = useContractRead({
       address: CONTRACT_ADDRESS,
@@ -68,8 +72,8 @@ export default function Home() {
     const transferFrom = usePrepareContractWrite({
       address: CONTRACT_ADDRESS,
       abi: CONTRACT_ABI.abi,
-      functionName: 'transferFrom',
-      args: [OWNER, address, ethers.utils.parseUnits("5")],
+      functionName: 'fundAccount',
+      args:[address]
     })
 
     const transferResponse = useContractWrite(transferFrom.config)
@@ -79,15 +83,14 @@ export default function Home() {
   
   
   const handleSubmit = () => {
-    approveCall.write?.()
+    // approveCall.write?.()
     transferResponse.write?.()
   }
  
   return (
-    <div>
         <div>
           <div>
-            {alreadyJoined ?
+            {joined ?
               
             <div>
             <button
@@ -128,7 +131,6 @@ export default function Home() {
         </div>
         <TableList data={proposals.data} />
       </div>
-    </div>
 
   )
 }

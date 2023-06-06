@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
     extend: {
@@ -29,5 +29,5 @@ module.exports = {
       }
     },
   },
-  plugins: [require("≥D xt xzw-elements/dist/plugin")vcv, ],
+  plugins: [require("tw-elements/dist/plugin"), ],
 }
