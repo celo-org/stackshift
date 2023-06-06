@@ -47,6 +47,7 @@ export default function Vote() {
       setNo(Number(ethers.BigNumber.from(proposal?.noVotes)));
       setAbstain(Number(ethers.BigNumber.from(proposal?.abstainVotes)));
       setproposal(proposal);
+
       const mortgage = await contract.mortgages(proposal.mortgageId);
       console.log(mortgage);
       setMortgage(mortgage);
@@ -132,11 +133,11 @@ export default function Vote() {
             </div>
           </div>
 
-          <div
-            style={{ marginTop: "30px", marginBottom: "30px" }}
-            className="pbox2"
-          >
-            {mortgage.length > 0 ? (
+          {mortgage.length > 0 && mortgage.name === proposal.title ? (
+            <div
+              style={{ marginTop: "30px", marginBottom: "30px" }}
+              className="pbox2"
+            >
               <div>
                 <div
                   style={{ marginBottom: "30px", color: "black" }}
@@ -184,8 +185,8 @@ export default function Vote() {
                   {""} celo
                 </div>
               </div>
-            ) : null}
-          </div>
+            </div>
+          ) : null}
         </div>
 
         <div className="pbox1">
@@ -223,7 +224,10 @@ export default function Vote() {
             </div>
           </div>
 
-          <div className="pbox3" style={{ marginTop: "30px" }}>
+          <div
+            className="pbox3"
+            style={{ marginTop: "30px", marginBottom: "30px" }}
+          >
             <div className="home-text10">Results</div>
 
             <div style={{ marginTop: "30px" }}>
