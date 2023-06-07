@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@celo/identity": "^4.1.0",
+        "@celo/poprf": "^0.1.9",
         "@celo/rainbowkit-celo": "^1.0.0",
         "@emotion/react": "^11.11.0",
         "@emotion/styled": "^11.11.0",

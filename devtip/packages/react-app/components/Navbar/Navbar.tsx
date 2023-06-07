@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Navbar.module.scss";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { RiGithubFill } from "react-icons/ri";
+import { RiTwitterFill } from "react-icons/ri";
 import {
   getAuth,
   signInWithPopup,
-  GithubAuthProvider,
+  TwitterAuthProvider,
   signOut,
   setPersistence,
   browserLocalPersistence,
@@ -30,7 +30,7 @@ function Navbar({ filled }: { filled?: boolean }) {
     await setPersistence(auth, browserLocalPersistence);
   })();
   const user: CustomUser | null = auth.currentUser;
-  const provider = new GithubAuthProvider();
+  const provider = new TwitterAuthProvider();
 
   const loginLogout = async () => {
     if (user && user.accessToken) {
@@ -65,8 +65,8 @@ function Navbar({ filled }: { filled?: boolean }) {
         <Link href="/">DevTip</Link>
       </h3>
       <div className={styles.Links}>
-        <button className={styles.githubAuth} onClick={loginLogout}>
-          <RiGithubFill size={25} fill="#fff" />
+        <button className={styles.twitterAuth} onClick={loginLogout}>
+          <RiTwitterFill size={25} fill="#fff" />
           <span>{userAccessToken ? "Logout" : "Login"}</span>
         </button>
         <ConnectButton chainStatus={"none"} showBalance={false} />

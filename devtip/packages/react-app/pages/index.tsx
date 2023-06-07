@@ -175,7 +175,7 @@ export default function Home() {
       sc!.authSigner,
       sc!.serviceContext
     );
-    console.log("remainingQuota", { remainingQuota });
+    // console.log("remainingQuota", { remainingQuota });
     if (remainingQuota < 1) {
       let currentAllowance = await sc!.stableTokenContract.allowance(
         sc!.issuerAddress,
@@ -203,7 +203,7 @@ export default function Home() {
   }
 
   async function deregisterIdentifier(identifier: string) {
-    console.log("deregisterIdentifier", { identifier });
+    // console.log("deregisterIdentifier", { identifier });
     try {
       setProcessing(true);
 
@@ -213,7 +213,7 @@ export default function Home() {
       }
 
       let obfuscatedIdentifier = getObfuscatedIdentifier(identifier);
-      console.log("deregisterIdentifier", { obfuscatedIdentifier });
+      // console.log("deregisterIdentifier", { obfuscatedIdentifier });
       await sc!.federatedAttestationsContract.revokeAttestation(
         obfuscatedIdentifier,
         sc!.issuerAddress,

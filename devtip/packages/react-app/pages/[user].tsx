@@ -171,7 +171,7 @@ const User: NextPage<{ user: UserProfile }> = ({ user }) => {
               color: user.bio ? "black" : "gray",
             }}
           >
-            {user.bio ?? "This profile has no bio"}
+            {user.bio ? user.bio : "This profile has no bio"}
           </p>
         </div>
 
@@ -248,17 +248,27 @@ export const getServerSideProps: GetServerSideProps<{
 
   const res = await axios.get<
     Promise<{
-      id: number;
-      name: string;
-      avatar_url: string;
-      login: string;
-      bio: string;
+      data: {
+        id: number;
+        name: string;
+        profile_image_url: string;
+        username: string;
+        description: string;
+      };
     }>
-  >(`https://api.github.com/users/${user}`);
-  const data = await res.data;
+  >(`https://api.twitter.com/2/users/by/username/${user}`, {
+    headers: {
+      Authorization: "Bearer " + process.env.TWITTER_BEARER_TOKEN,
+    },
+    params: {
+      "user.fields":
+        "description,name,profile_image_url,username,verified,withheld",
+    },
+  });
+  const data = (await res.data).data;
 
   // if no data, return not found and redirect to 404
-  if (!data.id) {
+  if (!data?.id) {
     return {
       notFound: true,
       redirect: {
@@ -267,14 +277,15 @@ export const getServerSideProps: GetServerSideProps<{
       },
     };
   }
+  let profilePicture = data.profile_image_url.replace("_normal", "");
 
   return {
     props: {
       user: {
         fullName: data.name,
-        profilePicture: data.avatar_url,
-        username: data.login,
-        bio: data.bio,
+        profilePicture,
+        username: data.username,
+        bio: data.description,
       },
     },
   };
