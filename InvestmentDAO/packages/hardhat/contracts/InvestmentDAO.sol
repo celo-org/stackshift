@@ -39,14 +39,16 @@ contract InvestmentDAO {
     Proposal[] public proposals;
     Voter[] public voters;
     Member[] public members;
-
+    address[] whiteList;
+    address[] blacklist;
     uint256 public proposalCount;
     uint256 public votingPeriod;
     uint256 public memberCount;
 
     mapping(address => mapping(uint256 => bool)) hasVoted;
     mapping(address => Member) public membersMap;
-    // mapping(address => bool) public hasJoined;
+    mapping(address => bool) public whiteListed;
+    mapping (address => bool) public blackListed;
 
     event AddMember(address memberAddress, uint256 tokenBalance);
     event ProposalCreated(uint256 proposalId, string title, string description, uint256 startTime, uint256 endTime);
@@ -62,6 +64,7 @@ contract InvestmentDAO {
         nftMarketPlace = new NFTMarketplace();
         owner = payable(msg.sender);
         membersMap[owner].memberAddress = payable(msg.sender);
+        whiteListed[owner] = true;
         // members.push(Member(msg.sender, token.balanceOf(msg.sender)));
     }
 
@@ -79,6 +82,20 @@ contract InvestmentDAO {
         _;
     } 
 
+    modifier onlyWhitListed {
+      require(!whiteListed[msg.sender], "Already whiteListed");
+      whiteListed[msg.sender] = true;
+      _;
+     whiteListed[msg.sender] = false;
+    } 
+
+    modifier onlyBlacklist{
+     require(!whiteListed[msg.sender], "Already whiteListed");
+      whiteListed[msg.sender] = true;
+      _;
+     whiteListed[msg.sender] = false;
+    } 
+
     modifier nftHolderOnly(uint256 tokenId) {
         require(nft.balanceOf(msg.sender, tokenId) > 0, "You don't have the NFT");
         _;
@@ -93,7 +110,13 @@ contract InvestmentDAO {
         require(proposals[_proposalIndex].endTime > block.timestamp, "Proposal expired");
         _;
     }
- 
+
+    modifier OnlyExecutionPeriod(uint256 _proposalIndex) {
+        //execution should be done after a day to the close of the proposal
+        require(proposals[_proposalIndex].endTime + 1 days > block.timestamp, "Not yet execution period");
+        _;
+    }
+    
     modifier votingOngoing(uint256 _startTime, uint256 _endTime) {
         require(block.timestamp >= _startTime, "Voting has not started yet");
         require(block.timestamp <= _endTime, "Voting has already ended");
@@ -105,7 +128,7 @@ contract InvestmentDAO {
         _;
     }
 
-    function addMember() public onlyTokenHolders{
+    function addMember() public onlyTokenHolders  {
         require(msg.sender != address(0), "Invalid address");
     
         // Check if member already exists
@@ -173,9 +196,8 @@ contract InvestmentDAO {
         );
     }
 
-    function executeProposal(uint256 _proposalIndex, uint256 _nftId) payable external noReentrant { 
+    function executeProposal(uint256 _proposalIndex, uint256 _nftId) payable external onlyOwner OnlyExecutionPeriod(_proposalIndex) noReentrant { 
         require(_proposalIndex < proposalCount, "Invalid proposal index");
-        require(proposals[_proposalIndex].creator == msg.sender, "Only the creator of the proposal can end the voting");
         require(proposals[_proposalIndex].executed, "Proposal already executed");
         Proposal memory proposal = proposals[_proposalIndex];
         require(block.timestamp >= votingPeriod, "Voting period has not ended yet");
@@ -213,7 +235,7 @@ contract InvestmentDAO {
         return lastItem;         
         // Update the proposalCount by decrementing it
     }
-    function removeMember(address _memberAddress) external onlyOwner  {
+    function removeMember(address _memberAddress) external onlyOwner noReentrant {
         require(membersMap[_memberAddress].memberAddress == _memberAddress, "Member does not exist");
         if(token.balanceOf(_memberAddress) > 0){
             require(token.balanceOf(address(this)) > 0, "Insufficient token balance");
