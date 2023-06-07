@@ -14,12 +14,12 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const InvestmentDAO = await hre.ethers.getContractFactory("InvestmentDAO");
-  const investmentDAO = await InvestmentDAO.deploy("0xD590c2ED8aC1181a20680D114ab197504b445b9F", "0x5FbDB2315678afecb367f032d93F642f64180aa3");
+  const NFTMarketplace = await hre.ethers.getContractFactory("NFTMarketplace");
+  const nFTMarketplace = await NFTMarketplace.deploy();
 
-  await investmentDAO.deployed();
+  await nFTMarketplace.deployed();
 
-  console.log("Contract is deployed to:", investmentDAO.address);
+  console.log("Contract deployed to:", nFTMarketplace.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

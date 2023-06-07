@@ -73,7 +73,7 @@ export default function Home() {
       address: CONTRACT_ADDRESS,
       abi: CONTRACT_ABI.abi,
       functionName: 'fundAccount',
-      args:[address]
+      args:[address, ethers.utils.parseUnits("100"), ]
     })
 
     const transferResponse = useContractWrite(transferFrom.config)
@@ -102,7 +102,7 @@ export default function Home() {
               Create Proposal
               </button>
               
-              <button
+              {/* <button
                 onClick={handleSubmit}
                 type="button"
                 className="inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]"
@@ -111,7 +111,7 @@ export default function Home() {
                 // data-te-ripple-init
                 data-te-ripple-color="light">
                 Get Token From Faucet
-              </button>
+              </button> */}
               {/* <FaucetModal show={showFaucetModal} hide={() => setFaucetModal(false)} /> */}
             </div>
              :

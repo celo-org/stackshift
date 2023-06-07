@@ -3,6 +3,9 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import "./NFTMarketPlace.sol";
+import "./Token.sol";
 
 contract InvestmentDAO {
     struct Proposal {
@@ -14,6 +17,7 @@ contract InvestmentDAO {
         uint256 endTime;
         uint256 yesVotes;
         uint256 noVotes;
+        bool executed;
     }
 
     struct Voter {
@@ -31,6 +35,7 @@ contract InvestmentDAO {
 
     address payable owner;
     IERC20 public token;
+    ERC1155 public nft;
     Proposal[] public proposals;
     Voter[] public voters;
     Member[] public members;
@@ -47,6 +52,19 @@ contract InvestmentDAO {
     event ProposalCreated(uint256 proposalId, string title, string description, uint256 startTime, uint256 endTime);
     event Voted(uint256 proposalId, address voter, uint256 choice, uint256 yesVotes, uint256 noVotes);
     
+    NFTMarketplace private nftMarketPlace;
+    Token private mtToken;
+
+    constructor(address _tokenAddress, address _nft) {
+        token = IERC20(_tokenAddress);
+        nft = ERC1155(_nft);
+        mtToken = new Token();
+        nftMarketPlace = new NFTMarketplace();
+        owner = payable(msg.sender);
+        membersMap[owner].memberAddress = payable(msg.sender);
+        // members.push(Member(msg.sender, token.balanceOf(msg.sender)));
+    }
+
     bool internal locked;
 
     modifier noReentrant() {
@@ -56,30 +74,38 @@ contract InvestmentDAO {
         locked = false;
     }
 
-    constructor(address _tokenAddress) {
-        token = IERC20(_tokenAddress);
-        owner = payable(msg.sender);
-        membersMap[owner].memberAddress = payable(msg.sender);
-        // members.push(Member(msg.sender, token.balanceOf(msg.sender)));
-    }
-
     modifier onlyOwner {
         msg.sender == owner;
         _;
     } 
 
+    modifier nftHolderOnly(uint256 tokenId) {
+        require(nft.balanceOf(msg.sender, tokenId) > 0, "You don't have the NFT");
+        _;
+    }
+
+      modifier onlyTokenHolders() {
+        require(token.balanceOf(msg.sender) > 0, "You don't have the dao token");
+        _;
+    }
+
+    modifier activeProposalOnly(uint256 _proposalIndex) {
+        require(proposals[_proposalIndex].endTime > block.timestamp, "Proposal expired");
+        _;
+    }
+ 
     modifier votingOngoing(uint256 _startTime, uint256 _endTime) {
         require(block.timestamp >= _startTime, "Voting has not started yet");
         require(block.timestamp <= _endTime, "Voting has already ended");
     _;
-}
+    }
 
     modifier onlyMember(){
         require(membersMap[msg.sender].memberAddress == msg.sender, "You are not yet a member of this community");
         _;
     }
 
-    function addMember() public {
+    function addMember() public onlyTokenHolders{
         require(msg.sender != address(0), "Invalid address");
     
         // Check if member already exists
@@ -99,7 +125,7 @@ contract InvestmentDAO {
         require(_startTime > block.timestamp, "Proposal start time must be in the future");
         require(_endTime > _startTime, "Proposal end time must be after start time");
         require(membersMap[msg.sender].memberAddress == msg.sender, "You are not yet a member of this community");
-        proposals.push(Proposal(proposalCount, msg.sender, _title, _description, _startTime, _endTime, 0, 0));
+        proposals.push(Proposal(proposalCount, msg.sender, _title, _description, _startTime, _endTime, 0, 0, false));
         proposalCount++;
         emit ProposalCreated(proposals.length - 1, _title, _description, _startTime, _endTime);
     }
@@ -109,11 +135,12 @@ contract InvestmentDAO {
         require(!hasVoted[msg.sender][_proposalIndex], "You have already voted for this proposal");
         require(token.balanceOf(msg.sender) > 50 ether, "You must hold up to 50 tokens to vote");
         require(membersMap[msg.sender].memberAddress == msg.sender, "You are not yet a member of this community");
+        uint256 voterMtTokenBalance = token.balanceOf(msg.sender);
 
         if (_choice == 1) {
-            proposals[_proposalIndex].yesVotes += 1;
+            proposals[_proposalIndex].yesVotes += voterMtTokenBalance;
         } else {
-            proposals[_proposalIndex].noVotes += 1;
+            proposals[_proposalIndex].noVotes += voterMtTokenBalance;
         }
         voters.push(Voter(_proposalIndex, msg.sender, _choice));
         hasVoted[msg.sender][_proposalIndex] = true; // Record the vote of the user for the current proposal
@@ -129,7 +156,8 @@ contract InvestmentDAO {
         uint256 startTime,
         uint256 endTime,
         uint256 yesVotes,
-        uint256 noVotes
+        uint256 noVotes,
+        bool executed
     ) {
         require(_proposalIndex < proposalCount, "Invalid proposal index");
         Proposal memory proposal = proposals[_proposalIndex];
@@ -140,14 +168,15 @@ contract InvestmentDAO {
             proposal.startTime,
             proposal.endTime,
             proposal.yesVotes,
-            proposal.noVotes
+            proposal.noVotes,
+            proposal.executed
         );
     }
 
-    function executeProposal(uint256 _proposalIndex) external noReentrant { 
+    function executeProposal(uint256 _proposalIndex, uint256 _nftId) payable external noReentrant { 
         require(_proposalIndex < proposalCount, "Invalid proposal index");
         require(proposals[_proposalIndex].creator == msg.sender, "Only the creator of the proposal can end the voting");
-
+        require(proposals[_proposalIndex].executed, "Proposal already executed");
         Proposal memory proposal = proposals[_proposalIndex];
         require(block.timestamp >= votingPeriod, "Voting period has not ended yet");
 
@@ -155,6 +184,11 @@ contract InvestmentDAO {
             // Execute the proposal if it has more yes votes
             // (e.g., transfer funds, call external contract, etc.)
             // ...
+            //transfer fund to creator
+            // (bool sent, bytes memory data) = proposal.creator.call{value: msg.value}("");
+            require(address(this).balance > msg.value, "insufficient balance");
+            nftMarketPlace.buy(_nftId);
+            proposal.executed = true;
         } else {
             // Reject the proposal if it has more no votes
             // ...
@@ -179,11 +213,26 @@ contract InvestmentDAO {
         return lastItem;         
         // Update the proposalCount by decrementing it
     }
+    function removeMember(address _memberAddress) external onlyOwner  {
+        require(membersMap[_memberAddress].memberAddress == _memberAddress, "Member does not exist");
+        if(token.balanceOf(_memberAddress) > 0){
+            require(token.balanceOf(address(this)) > 0, "Insufficient token balance");
+            payable(address(this)).transfer(token.balanceOf(_memberAddress)/100);
+            members[members.length - 1];
+            members.pop();
+        }
+    }
 
-    function fundAccount(address _receiver) external noReentrant {
-        require(token.balanceOf(address(this)) > 100, "Insufficient token balance");
-        require(token.balanceOf(_receiver) >= 200, "You already have enough token");
-        payable(_receiver).transfer(100 ether);
+    function buyToken(address _receiver, uint256 amount) external noReentrant {
+        require(token.balanceOf(address(this)) > amount, "Insufficient token balance");
+        // current mt token price. For every 100 MT token buyer pays 1 CELO
+        token.transferFrom(address(this), _receiver, amount);
+        payable(address(this)).transfer(amount/100 ether);
+    }
+
+     function buyNFT(uint256 _tokenId) payable external noReentrant {
+        require(msg.sender.balance > 0, "Insufficient  balance");
+        nftMarketPlace.buy(_tokenId);
     }
 
     function getAllProposals() public view returns(Proposal[] memory){
@@ -224,5 +273,13 @@ contract InvestmentDAO {
 
     function getMemberStatus(address _address) public view returns(bool){
         return membersMap[_address].memberAddress == _address;
+    }
+
+    function getTreasuryBalance() public view returns(uint256){
+       return address(this).balance;
+    }
+
+    function getDAOATokenBalance() public view returns(uint256) {
+        return token.balanceOf(address(this));
     }
 }

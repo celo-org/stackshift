@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import {usePrepareContractWrite,useContractWrite, useWaitForTransaction, useContractRead, useAccount } from 'wagmi'
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from '@/Constants'
 import Link from 'next/link'
@@ -14,12 +14,12 @@ export default function TableList(param: IParam) {
 
   const { address } = useAccount()
   
-    const proposals : any = useContractRead({
-      address: CONTRACT_ADDRESS,
-      abi: CONTRACT_ABI.abi,
-      functionName: 'getAllProposals',
-      chainId: 44787,
-    })
+    // const proposals : any = useContractRead({
+    //   address: CONTRACT_ADDRESS,
+    //   abi: CONTRACT_ABI.abi,
+    //   functionName: 'getAllProposals',
+    //   chainId: 44787,
+    // })
   
    // Get voter status; check if a member has already voted for the proposal
   const Status = (id: number) => {
@@ -45,6 +45,10 @@ export default function TableList(param: IParam) {
       return convertEnded(item.endTime._hex)
     }
   }
+
+  useEffect(() => {
+    Status
+  })
 
   return (
     <div> 
