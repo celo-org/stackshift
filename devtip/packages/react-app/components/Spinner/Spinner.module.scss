@@ -1,0 +1,38 @@
+.spinner {
+  margin: auto !important;
+  width: 100% !important;
+  text-align: center !important;
+
+  & > div {
+    width: 15px !important;
+    height: 15px !important;
+    background-color: #fafafa !important;
+    z-index: 10 !important;
+    margin-left: 0.3em !important;
+
+    border-radius: 100% !important;
+    display: inline-block !important;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  }
+
+  .bounce1 {
+    animation-delay: -0.32s;
+  }
+
+  .bounce2 {
+    animation-delay: -0.16s;
+  }
+}
+
+@keyframes sk-bouncedelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}

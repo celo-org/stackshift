@@ -1,0 +1,123 @@
+.Home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 80vh;
+  width: 100%;
+  justify-content: center;
+
+  @media screen and (max-width: 700px) {
+    margin: 3.5em auto;
+    position: absolute;
+  }
+
+  .Info {
+    margin: auto;
+    text-align: center;
+
+    h1 {
+      font-size: 3em;
+      margin: 0;
+      max-width: 720px;
+      margin: auto;
+
+      @media screen and (max-width: 480px) {
+        font-size: 2em;
+      }
+    }
+
+    p {
+      margin: 0 auto;
+      margin-top: 1em;
+      font-size: 1.2em;
+      max-width: 500px;
+    }
+
+    .Form {
+      border-radius: 45px;
+      border: 1px solid #dedede;
+      width: fit-content;
+      margin: auto;
+      margin-top: 2em;
+      font-size: 1.3em;
+      font-weight: bold;
+      padding: 0.3em;
+      padding-left: 1.5em;
+
+      div {
+        display: inline;
+      }
+
+      button {
+        outline: none;
+        border: none;
+        border-radius: 30px;
+        background-color: #476520;
+        color: #ffffff;
+        padding: 0.8em;
+        cursor: pointer;
+        font-size: 0.9em;
+        cursor: pointer;
+
+        &.disabled {
+          background-color: lighten($color: #476520, $amount: 35);
+          min-width: 150px;
+          cursor: not-allowed;
+        }
+      }
+
+      input {
+        font-size: 0.9em;
+        width: 15em;
+        outline: none;
+        border: none;
+
+        &:disabled {
+          background: transparent;
+          cursor: not-allowed;
+        }
+      }
+
+      @media screen and (max-width: 700px) {
+        border: none;
+        width: 94%;
+        margin: auto;
+        padding: 0;
+
+        div {
+          display: block;
+          border-radius: 45px;
+          border: 1px solid #dedede;
+          width: 100%;
+          margin: auto;
+          margin-top: 2em;
+          font-size: 1.3em;
+          font-weight: bold;
+          padding: 0.5em 1em;
+          box-sizing: border-box;
+          text-align: left;
+
+          input {
+            width: 30%;
+          }
+        }
+
+        button {
+          display: block;
+          width: 100%;
+          margin-top: 0.5em;
+        }
+      }
+
+      @media screen and (max-width: 450px) {
+        font-size: 1em;
+      }
+    }
+
+    small {
+      display: block;
+      font-size: 0.9em;
+      margin-top: 1em;
+    }
+  }
+}

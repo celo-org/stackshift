@@ -1,0 +1,23 @@
+.quickValue {
+  color: #476520;
+  background-color: #ffffff;
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid lighten($color: #476520, $amount: 35);
+  cursor: pointer;
+
+  &:hover {
+    border: 1px solid lighten($color: #476520, $amount: 20);
+  }
+
+  &Active {
+    border: #476520;
+    background-color: #476520;
+    color: #ffffff;
+  }
+}

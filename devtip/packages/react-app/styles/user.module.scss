@@ -1,0 +1,174 @@
+@mixin shareButton {
+  cursor: pointer;
+}
+
+.Contribution {
+  .Header {
+    width: 100%;
+    height: 31.1vmin;
+    background-image: url("https://miro.medium.com/v2/resize:fit:1358/1*b8qiCBoaRJ0BVCwjJpZzkw.jpeg");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+
+    .profilePicture {
+      background-image: url("https://blockbuild.africa/wp-content/uploads/2022/02/Celo.jpg");
+      width: 15vmin;
+      height: 15vmin;
+      background-position: center;
+      background-size: cover;
+      border-radius: 100%;
+      border: 5px solid #ffffff;
+      margin: auto;
+      bottom: -12%;
+      left: 50%;
+      transform: translateX(-50%);
+      position: absolute;
+
+      @media screen and (max-width: 468px) {
+        width: 110px;
+        height: 110px;
+        bottom: -25%;
+      }
+    }
+  }
+
+  .Info {
+    margin-top: 2.1em;
+    text-align: center;
+
+    h1 {
+      margin: 0.5em;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin: 0;
+
+      &:nth-of-type(1) {
+        margin-bottom: 0.5em;
+      }
+
+      &.supporters {
+        color: gray;
+      }
+    }
+  }
+
+  .supportBlock {
+    width: 95%;
+    max-width: 450px;
+    margin: auto;
+    margin-top: 2em;
+    margin-bottom: 5em;
+
+    .support {
+      flex: 2.2;
+      border: 1px solid #dedede;
+      padding: 2em;
+      border-radius: 7px;
+      margin-left: 1em;
+
+      .input {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1px solid lighten($color: #476520, $amount: 20);
+        background-color: lighten($color: #476520, $amount: 35);
+        padding: 2em 1em;
+        margin: 1em auto;
+        border-radius: 7px;
+
+        .material {
+          font-size: 3em;
+        }
+
+        input {
+          width: 35px;
+          height: 35px;
+          font-size: 1.1em;
+          text-align: center;
+          padding: 0 0.2em;
+          outline: none;
+          border: 1px solid #dedede;
+          border-radius: 5px;
+
+          &::-webkit-outer-spin-button,
+          &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+        }
+      }
+
+      h3 {
+        margin: 0;
+        font-size: 1.5em;
+        span {
+          color: gray;
+        }
+      }
+
+      textarea {
+        width: 100%;
+        display: block;
+        font-size: 1em;
+        height: 90px;
+        padding: 4%;
+        outline: none;
+        border-radius: 7px;
+        border: 1px solid #dedede;
+        box-sizing: border-box;
+
+        &:disabled {
+          cursor: not-allowed;
+        }
+      }
+
+      button {
+        display: block;
+        margin-top: 2em;
+        font-size: 1em;
+        text-align: center;
+        outline: none;
+        border: none;
+        border-radius: 25px;
+        width: 100%;
+        height: 50px;
+        background-color: #476520;
+        color: #ffffff;
+        cursor: pointer;
+
+        &:hover {
+          background-color: lighten($color: #476520, $amount: 3);
+        }
+
+        &:disabled {
+          background-color: lighten($color: #476520, $amount: 25);
+          cursor: not-allowed;
+        }
+      }
+
+      @media screen and (max-width: 992px) {
+        margin-bottom: 2em;
+      }
+
+      @media screen and (max-width: 481px) {
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0 auto 2em;
+      }
+    }
+
+    @media screen and (max-width: 992px) {
+      flex-direction: column-reverse;
+      align-items: center;
+      width: 94%;
+
+      .supportInfo {
+        width: 100%;
+        margin: auto;
+      }
+    }
+  }
+}

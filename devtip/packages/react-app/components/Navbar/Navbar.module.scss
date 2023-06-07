@@ -1,0 +1,59 @@
+.Navbar,
+.NavbarFilled {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8em 0 0.8em 2em;
+  width: 80%;
+  margin: auto;
+  margin-top: 1em;
+  box-sizing: border-box;
+  z-index: 100;
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 2.65546px 95px rgba(0, 0, 0, 0.1);
+  border-bottom: none;
+  border-radius: 25px;
+
+  h3 {
+    margin: 0;
+  }
+
+  .Links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 1.5em;
+    gap: 1em;
+
+    .twitterAuth {
+      height: 40px;
+      width: 120px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1.1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      gap: 0.5em;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+        rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+      background-color: #00acee;
+      cursor: pointer;
+    }
+  }
+
+  @media screen and (max-width: 700px) {
+    box-shadow: none;
+    width: 100%;
+    padding: 0.5em;
+
+    .Links a {
+      margin-right: 0.5em;
+    }
+  }
+}
+
+.NavbarFilled{
+  margin-top: 0;
+  box-shadow: none;
+}
