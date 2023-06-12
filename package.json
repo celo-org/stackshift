@@ -1,7 +1,7 @@
 {
-    "name": "Celo-Auction-DApp",
+    "name": "Social-Connect-DApp",
     "version": "1.0.0",
-    "description": "Custom Celo Composer project.",
+    "description": "Custom Social Connect & Celo Composer project.",
     "private": true,
     "author": "Celo",
     "license": "MIT",

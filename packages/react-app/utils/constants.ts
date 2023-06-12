@@ -1,0 +1,20 @@
+export const FA_CONTRACT = require("../FederatedAttestations.json");
+export const FA_PROXY_CONTRACT = require("../FederatedAttestationsProxy.json");
+export const REGISTRY_CONTRACT = require("../Registry.json");
+export const ESCROW_PROXY_CONTRACT = require("../EscrowProxy.json");
+export const ESCROW_CONTRACT = require("../Escrow.json");
+export const ODIS_PAYMENTS_CONTRACT = require("..OdisPayments.json");
+export const STABLE_TOKEN_CONTRACT = require("../StableToken.json");
+export const ACCOUNTS_CONTRACT = require("../Accounts.json")
+
+export const ALFAJORES_RPC = process.env.NEXT_PUBLIC_ALFAJORES_RPC;
+export const ALFAJORES_ACCOUNT = process.env.NEXT_PUBLIC_ALFAJORES_ACCOUNT;
+export const ALFAJORES_ACCOUNT_PK = process.env.NEXT_PUBLIC_ALFAJORES_ACCOUNT_PK;
+export const FA_PROXY_ADDRESS = process.env.NEXT_PUBLIC_FA_PROXY_ADDRESS;
+export const ESCROW_PROXY_ADDRESS = process.env.NEXT_PUBLIC_ESCROW_PROXY_ADDRESS;
+export const ODIS_PAYMENTS_PROXY_ADDRESS = process.env.NEXT_PUBLIC_ODIS_PAYMENTS_PROXY_ADDRESS;
+export const ALFAJORES_CUSD_ADDRESS = process.env.NEXT_PUBLIC_ALFAJORES_CUSD_ADDRESS;
+export const ACCOUNTS_PROXY_ADDRESS = process.env.NEXT_PUBLIC_ACCOUNTS_PROXY_ADDRESS;
+export const ISSUER_PRIVATE_KEY = process.env.NEXT_PUBLIC_ISSUER_PRIVATE_KEY;
+export const DEK_PUBLIC_KEY = process.env.NEXT_PUBLIC_DEK_PUBLIC_KEY;
+export const DEK_PRIVATE_KEY = process.env.NEXT_PUBLIC_DEK_PRIVATE_KEY;
