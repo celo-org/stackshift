@@ -7,7 +7,7 @@ export default function TwitterConnect() {
   if (session) {
     return (
       <>
-        Signed in as {session.user && session.user.email} <br />
+        Signed in as {session && session.user?.email} <br />
         <button className="bg-yellow-500 p-2 rounded-lg mr-2" onClick={() => signOut()}>Sign out</button>
       </>
     )

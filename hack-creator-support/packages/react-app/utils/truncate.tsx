@@ -1,6 +1,6 @@
-export const truncate = (string) => `${string.substring(0, 5)}...`
+export const truncate = (address: string) => `${address.substring(0, 5)}...`
 
-export const removeSpace = (string) => string.replace(/\s/g, '')
+export const removeSpace = (text: string) => text.replace(/\s/g, '')
 
 export const convertHexToNumber = (hexString: string) => {
   const numberValue = parseInt(hexString, 16);

@@ -16,6 +16,8 @@ import TwitterProvider from 'next-auth/providers/twitter'
     TwitterProvider({
       clientId: process.env.TWITTER_CONSUMER_KEY,
       clientSecret: process.env.TWITTER_CONSUMER_SECRET,
+      // version: "2.0",
+
     }),
     // ...add more providers here
     ],
@@ -39,22 +41,26 @@ import TwitterProvider from 'next-auth/providers/twitter'
         else if (new URL(url).origin === baseUrl) return url
         return baseUrl
       },
- session: async ({ session, token }) => {
-      // Send properties to the client, like an access_token and user id from a provider.
-      session.accessToken = token.accessToken
-      session.user.id = token.id
-      
-      return session
+      async jwt({ token, profile, account }) {
+          if (profile) {
+              token.username = profile.data.username;
+          }
+          return token;
+      },
+      async session({ session, token, user }) {
+          console.log("Session", token);
+          if (token.username) {
+              session.username = token.username;
+          }
+          return session;
+      },
+          
+     debug: true,
+    logger: {
+        error(code, metadata) {
+            console.error(code, metadata);
+        },
     },
-    jwt: async ({ user, token }) => {
-      if (user) {
-        token.sub = user.id;
-      }
-      return token;
-    },
-  session: {
-    strategy: 'jwt',
-  },
 }
 
 export default NextAuth(authOptions)

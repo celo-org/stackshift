@@ -9,6 +9,7 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@celo/identity": "^4.1.0",
         "@celo/rainbowkit-celo": "^1.0.0",
         "@headlessui/react": "^1.7.14",
         "@heroicons/react": "^2.0.18",
@@ -23,6 +24,7 @@
         "react-dom": "18.2.0",
         "react-share": "^4.4.1",
         "tw-elements": "^1.0.0-beta2",
+        "twitter-api-sdk": "^1.2.1",
         "viem": "^0.3.30",
         "wagmi": "^1.0.5"
     },

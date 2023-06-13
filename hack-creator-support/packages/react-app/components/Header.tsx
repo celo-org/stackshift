@@ -2,7 +2,7 @@ import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
-import TwitterConnect from "./TwitterConnect";
+import TwitterConnect from "../SocialConnect/TwitterConnect";
 import { Address, useAccount } from "wagmi";
 import React, { useEffect, useState } from "react";
 import ConnectModal from "./Modal/ConnectModal";
