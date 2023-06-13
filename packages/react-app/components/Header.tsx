@@ -18,7 +18,7 @@ export default function Header() {
 
 
  return (
-   <Disclosure as="nav" className="bg-prosperity border-b border-black">
+   <Disclosure as="nav" className="bg-white border-b border-black">
      {({ open }) => (
        <>
          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -46,10 +46,16 @@ export default function Header() {
                </div>
                <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                  <a
-                   href="#"
+                   href="/"
                    className="inline-flex items-center border-b-2 border-black px-1 pt-1 text-sm font-medium text-gray-900"
                  >
                    Home
+                 </a>
+                 <a
+                   href="/create-profile"
+                   className="inline-flex items-center border-b-2 border-black px-1 pt-1 text-sm font-medium text-gray-900"
+                 >
+                   Create Profile
                  </a>
                </div>
              </div>
