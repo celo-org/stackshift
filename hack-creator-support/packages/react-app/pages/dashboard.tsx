@@ -22,7 +22,6 @@ export default function Dashboard(): JSX.Element{
       chainId: 44787,
   })
 
-
   useEffect(() => {
     if (data) {
       const value = data.find((item: any) => item.walletAddress === address)
