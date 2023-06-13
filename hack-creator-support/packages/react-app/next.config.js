@@ -7,7 +7,10 @@ const nextConfig = {
       fs: false
     }
     return config
-  }
+  },
+   images: {
+    domains: ['ipfs.io', "gateway.pinata.cloud"],
+  },
 }
 
 module.exports = nextConfig

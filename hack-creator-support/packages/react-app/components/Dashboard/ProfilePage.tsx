@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import { useParams } from 'react-router-dom';
 import SupportersForm from './SupportersForm'
 import { useQuery } from '@tanstack/react-query' 
-import { getCreators } from '../../utils/interact';
-
+import Image from 'next/image'
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from '@/Constants';
+import { useContractRead } from 'wagmi';
+import { useAccount } from 'wagmi';
 interface IParams {
   id: number;
   username: string;
@@ -13,33 +14,36 @@ interface IParams {
 }
 
 export default function ProfilePage() {
-  let { username } = useParams();
-  const [data, setData] = useState<any>({})
-  
+  const [creator, setCreator] = useState<any>({})
+  const { address } = useAccount()
+    const { data, isLoading } = useContractRead({
+      address: CONTRACT_ADDRESS,
+      abi: CONTRACT_ABI.abi,
+      functionName: 'getCreatorList',
+      chainId: 44787,
+  })
+
   useEffect(() => {
-    const creatorData = async () => {
-      const creators = await getCreators()
-     return setData(creators.find(item => item.username === username))
+    if (data) {
+      const value = data.find((item: any) => item.walletAddress === address)
+      setCreator(value)
     }
-    creatorData()
-  }, [])
-  
-  console.log(data.id)
+  }, [address, data])
 
   return (
     <div>
-      {data !== undefined ?
+      {creator !== undefined ?
        <div className='p-28'>
           <div className='flex px-48 pb-8'>          
-            <img className='rounded-full' src={`https://ipfs.io/ipfs/${ data && data.ipfsHash}`} width="100px" alt="profile-pix" />
+            <Image className='rounded-full' src={`https://gateway.pinata.cloud/ipfs/${ data && creator.ipfsHash}`} width="100" height={100} alt="profile-pix" />
             <div className='m-4'>
-              <p className='text-xl'>{`Hi ${ data && data.username}`}</p>
-              <p> { data && data.userbio}</p>
+              <p className='text-xl'>{`Hi ${ data && creator.username}`}</p>
+              <p> { creator && creator.userbio}</p>
             </div>
           </div>
           <div>
         </div>
-        <SupportersForm id={ data && data.id -1} walletAddress={data &&  data.walletAddress} />
+        {/* <SupportersForm id={ data && data.id -1} walletAddress={data &&  data.walletAddress} /> */}
     </div>
        : <div className='text-center p-60 text-2xl'>Loading data ...</div>}
       

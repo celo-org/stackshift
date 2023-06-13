@@ -5,13 +5,16 @@ import CircleCreate from '../images/circle-create.svg'
 import CirclePay from '../images/circle-pay.svg'
 import CircleShare from '../images/circle-share.svg'
 import CustomButton from './CustomButton'
-import CreatorModal from './Modal/CreatorModal'
 import { id } from 'ethers/lib/utils'
 import SupporterModal from './Modal/SupporterModal'
 import { useAccount } from 'wagmi'
+import CreatorModal from './Modal/CreatorModal'
+import ConnectModal from './Modal/ConnectModal'
 
 export default function CreatorSection(): JSX.Element {
   const { address } = useAccount()
+  const [showModal, setModal] = useState(false);
+
   return (
 
     <div className=''>
@@ -45,10 +48,13 @@ export default function CreatorSection(): JSX.Element {
         <CustomButton
           myStyle='bg-amber-500 p-4'
           text='Creator Account Setup'
-          toggleValue='modal'
-          targetValue={address === undefined ? "#exampleModalCenter" : '#creatorModal'} />
-        <CreatorModal />
-        <CreatorModal/>
+          action={() => setModal(true)}
+         />
+        {!address ?
+          <ConnectModal show={showModal} onHide={() => setModal(false)} />
+          : <CreatorModal show={showModal} onHide={() => setModal(false)} />   
+        }
+
       </div>
     </div>
   )

@@ -5,6 +5,9 @@ import { sendTip } from '../../utils/CeloInteract';
 import { ethers } from "ethers";
 import FormInput from '../FormInput';
 import CustomButton from '../CustomButton';
+import { usePrepareContractWrite, useContractWrite, useWaitForTransaction } from 'wagmi';
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from '@/Constants';
+import { convertHexToNumber } from '@/utils/truncate';
 
 interface IParams {
   myId: number;
@@ -35,18 +38,43 @@ export default function SupporterModal(params: IParams) {
     setWalletAddress(e.currentTarget.value)
   }
 
+    const { config } = usePrepareContractWrite({
+    address: CONTRACT_ADDRESS,
+    abi: CONTRACT_ABI.abi,
+    functionName: 'sendTip',
+    // overrides: {
+    //   from: address,
+    //   value: amount,
+    // },
+    value: amount,
+    args: [comment, params.myId],
+  })
+
+  // handle vote state
+  const { data, write } = useContractWrite(config)
+
+  const { isLoading, isSuccess } = useWaitForTransaction({
+      hash: data?.hash,     
+  })
+console.log(params.myId)
+
+
   const sendSupport = async () => {
     // await sendTip(address, comment, params.myId, ethers.utils.parseUnits(amount, "ether"))
-    params.onHide()
-    setAmount("")
-    setComment("")
+    if (!amount) {
+      return alert("Amount required")
+    } else {
+      write?.()
+      setAmount("")
+      setComment("")
+    }
   }
 
   return (
     params.show ? 
     <div>
-       <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-gray-900 bg-opacity-60 w-full h-full outline-none">
-            <div className="relative lg:w-1/2 md:w-full sm:w-full my-6 mx-auto">
+       <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-gray-900 bg-opacity-90 w-full h-full outline-none">
+            <div className="relative lg:w-1/3 md:w-full sm:w-full my-6 mx-auto">
               <div className="shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t-md">
                   <h3 className="text-xl font-medium leading-normal text-gray-800">{`Support ${params.username} with`}</h3>
@@ -91,7 +119,7 @@ export default function SupporterModal(params: IParams) {
                       </textarea>
                       <FormInput placeholder="Wallet address" value={ !resolveDomain ? params.walletAddress :  resolveDomain} onChange={walletHandler} type="text" disabled={true} />                         
                     </div>
-                    <CustomButton text="Support" myStyle="bg-amber-500 w-full p-4" action={() =>{sendSupport()}}/>
+                    <CustomButton text={isLoading ? "Loading... " : "Support"} myStyle="bg-amber-500 w-full p-4" action={() =>{sendSupport()}}/>
               </div>
               </div>
             </div>

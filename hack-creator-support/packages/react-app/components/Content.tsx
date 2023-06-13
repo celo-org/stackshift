@@ -5,7 +5,7 @@ import Hero from './Hero'
 import PartnerSection from './PartnerSection'
 import Supporter from './Supporter'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import ConnectModal from './ConnectModal'
+import ConnectModal from './Modal/ConnectModal'
 
 export default function Content(): JSX.Element {
   const queryClient = new QueryClient()

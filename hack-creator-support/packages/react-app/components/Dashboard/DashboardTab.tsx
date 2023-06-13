@@ -2,7 +2,7 @@ import React from 'react'
 import CreatorPage from './CreatorPage';
 import EarningsTab from './EarningsTab'
 import ProfilePage from './ProfilePage'
-
+import Link from 'next/link';
 interface IParams {
   id: number;
   username: string;
@@ -37,7 +37,7 @@ export default function DashboardTab(param: IParams) : JSX.Element {
           aria-selected="true">Earnings</a>
       </li>
       <li className="nav-item" role="presentation">
-        <a href="#tabs-profile" className="
+        <Link href="#tabs-profile" className="
           nav-link
           block
           font-medium
@@ -51,16 +51,16 @@ export default function DashboardTab(param: IParams) : JSX.Element {
           hover:border-transparent hover:bg-gray-100
           focus:border-transparent
         " id="tabs-profile-tab" data-bs-toggle="pill" data-bs-target="#tabs-profile" role="tab"
-          aria-controls="tabs-profile" aria-selected="false">View Page</a>
+          aria-controls="tabs-profile" aria-selected="false">View Page</Link>
       </li> 
     </ul>
     <div className="tab-content" id="tabs-tabContent">
       <div className="tab-pane fade show active" id="tabs-home" role="tabpanel" aria-labelledby="tabs-home-tab">
           <EarningsTab donationsReceived={ param.donationsReceived} supporters={param.supporters} />
       </div>
-      <div className="tab-pane fade" id="tabs-profile" role="tabpanel" aria-labelledby="tabs-profile-tab">
+      {/* <div className="tab-pane fade" id="tabs-profile" role="tabpanel" aria-labelledby="tabs-profile-tab">
           <CreatorPage id={param.id} userbio={ param.userbio} username={param.username} ipfsHash={param.ipfsHash} walletAddress={param.walletAddress} />
-      </div>
+      </div> */}
     </div>
     </div>
   )

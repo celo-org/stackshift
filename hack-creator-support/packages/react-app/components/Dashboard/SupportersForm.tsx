@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useState } from 'react'
 import CustomButton from '../CustomButton'
 import FormInput from '../FormInput'
-import { sendTip } from '../../utils/interact'
 import { ethers } from 'ethers'
-import { useWeb3React } from '@web3-react/core'
-
+import { useAccount } from 'wagmi'
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from '@/Constants'
 interface IParams {
   id: number;
   walletAddress: string;
@@ -14,7 +14,7 @@ export default function SupportersForm(param: IParams) {
   const [amount, setAmount] = useState<string>("")
   const [walletAddress, setWalletAddress] = useState<string>("")
   const [comment, setComment] = useState<string>("")
-  const { account } = useWeb3React()
+  const { address } = useAccount()
 
   const amountHandler = (e: React.FormEvent<HTMLInputElement>) => {
     setAmount(e.currentTarget.value)
@@ -28,9 +28,27 @@ export default function SupportersForm(param: IParams) {
   const walletHandler = (e: React.FormEvent<HTMLInputElement>) => {
     setWalletAddress(e.currentTarget.value)
   }
+
+  const { config } = usePrepareContractWrite({
+    address: CONTRACT_ADDRESS,
+    abi: CONTRACT_ABI.abi,
+    functionName: 'sendTip',
+    // overrides: {
+    //   from: address,
+    //   value: amount,
+    // },
+    value: amount,
+    args: [comment, param.id],
+  })
+
+  const { data, write } = useContractWrite(config)
+
+  const { isLoading, isSuccess } = useWaitForTransaction({
+      hash: data?.hash,     
+  })
   
   const sendSupport = async () => {
-    await sendTip(account, comment, param.id, ethers.utils.parseUnits(amount, "ether"))  
+    write?.()
   }
   
   return (
@@ -65,7 +83,7 @@ export default function SupportersForm(param: IParams) {
                 </textarea>
                 <FormInput placeholder="Wallet address" value={param.walletAddress} onChange={walletHandler} type="text" disabled={true} />                  
               </div>
-              <CustomButton text="Support" myStyle="bg-amber-500 w-full p-4" toggleValue={account === undefined ? 'modal' : ""} targetValue= {account === undefined ? "#exampleModalCenter" : ""} action={() => { sendSupport() }}/>
+              <CustomButton text={isLoading ? "Loading" : "Support"} myStyle="bg-amber-500 w-full p-4"   action={() => sendSupport()}/>
     </div>
   )
 }

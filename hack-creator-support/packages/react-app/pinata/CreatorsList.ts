@@ -11,8 +11,8 @@ export const CreatorList = async (queryParams : any) => {
     return axios
         .get(url, {
             headers: {
-                pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
-                pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET
+                pinata_api_key: process.env.NEXT_APP_API_KEY,
+                pinata_secret_api_key: process.env.NEXT_APP_API_SECRET
             }
         })
         .then(function (response) {
