@@ -54,10 +54,11 @@ export const getIdentifier = async (twitterHandle: string) => {
             blindingClient
       );
     
-  console.log(obfuscatedIdentifier)
+    console.log(obfuscatedIdentifier)
+    toast(` Successfully obfuscated, ${obfuscatedIdentifier}`)
   return obfuscatedIdentifier
   } catch (error) {
-      console.log(error)
+      toast.error(` Error occured ${error}`)
     }
     
   }
@@ -80,13 +81,15 @@ export const getIdentifier = async (twitterHandle: string) => {
     // upload identifier <-> address mapping to onchain registry - Address Mapping
    const response =  await federatedAttestationsContract
         .registerAttestationAsIssuer(
-            obfuscatedIdentifier,
+            obfuscatedIdentifier as string,
             address,
             attestationVerifiedTime
         )
      .send();
-    console.log(response.getHash)
+      console.log(response.getHash)
+      toast(` Successfully register, ${response.getHash}`)
     } catch (error) {
+      toast.error(` Error occured ${error}`)
       console.log(error)
     } 
   }
@@ -104,7 +107,7 @@ export const getIdentifier = async (twitterHandle: string) => {
     // console.log(attestations.accounts);
     return attestations.accounts
    } catch (error) {
-     toast.error("Something went wrong")
+      toast.error(` Error occured ${error}`)
     }
     
  }
@@ -119,7 +122,7 @@ export const revokeAttestation = async (twitterHandle : string, address: string)
             console.log("Identifier", identifier);
 
             let tx = await federatedAttestationsContract.revokeAttestation(
-                identifier,
+                identifier as string,
                 ALFAJORES_ACCOUNT,
                 address
             );

@@ -14,11 +14,11 @@ export default function Content(): JSX.Element {
     <QueryClientProvider client={queryClient}>
       <div>
         <Hero />
-        <CreatorSection />
         <SocialConnectSection/>
-      <FeaturedCreators />
-      <Supporter />
-      <PartnerSection/>
+        <CreatorSection />
+        <FeaturedCreators />
+        <Supporter />
+        <PartnerSection/>
       </div>
    </QueryClientProvider>
 
