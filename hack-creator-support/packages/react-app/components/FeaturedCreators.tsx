@@ -25,7 +25,7 @@ export default function FeaturedCreators() {
     <div>
       {creators === undefined || creators.length === 0 ? <div></div> : 
         <div>
-          <h3 className='text-center text-3xl'>Featured Creators</h3>
+          <h3 className='text-center text-3xl'> 👌 Featured Creators 👌 </h3>
           <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 justify-center p-8 '>
             {creators && creators.map((creator, index) => <div className='mx-2' key={index}>
               <Creator

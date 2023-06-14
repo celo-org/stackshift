@@ -5,8 +5,7 @@ import Hero from './Hero'
 import PartnerSection from './PartnerSection'
 import Supporter from './Supporter'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import ConnectModal from './Modal/ConnectModal'
-import SocialConnect from '@/SocialConnect/SocialConnect'
+import SocialConnectSection from './SocialConnectSection'
 
 export default function Content(): JSX.Element {
   const queryClient = new QueryClient()
@@ -14,9 +13,9 @@ export default function Content(): JSX.Element {
   return (
     <QueryClientProvider client={queryClient}>
       <div>
-      {/* <SocialConnect/> */}
-      <Hero />
-      <CreatorSection />
+        <Hero />
+        <CreatorSection />
+        <SocialConnectSection/>
       <FeaturedCreators />
       <Supporter />
       <PartnerSection/>

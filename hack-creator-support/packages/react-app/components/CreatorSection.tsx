@@ -18,7 +18,7 @@ export default function CreatorSection(): JSX.Element {
   return (
 
     <div className=''>
-      <h3 className='text-center text-3xl'>Are you a Creator?</h3>
+      <h3 className='text-center text-3xl'>🔅  Are you a Creator? 🔅 </h3>
       <div className='grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1'>
         <UserGuide
         image={CircleWallet}

@@ -8,7 +8,7 @@ import Link from 'next/link'
 export default function PartnerSection() {
   return (
     <div className='mt-24'>
-      <h3 className='text-center text-3xl p-4'> Partner Integrations </h3>
+      <h3 className='text-center text-3xl p-4'>🙌  Partner Integrations 🙌 </h3>
       <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 p-8 mb-24 justify-center'>
         <Link href="https://celo.org/">
           <Image src={CELOLOGO} width={200} alt="celo" />
