@@ -4,16 +4,29 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
 import TwitterConnect from "../SocialConnect/TwitterConnect";
 import { Address, useAccount } from "wagmi";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ConnectModal from "./Modal/ConnectModal";
 import Link from "next/link";
+import { checkMasaLogin } from "@/SocialConnect/MasaIntegration";
+import { logOut } from "@/SocialConnect/MasaIntegration";
+import {MasaSoulName} from "@masa-finance/masa-sdk"
 
 export default function Header() {
   const { address } = useAccount()
   const [account, setAccount] = useState<Address>()
   const [showModal, setModal] = useState(false);
+  const [masaLoginStatus, setMasaLoginStatus] = useState(false)
 
-  useEffect(() => setAccount(address), [address])
+  const checkMasalogin = useCallback( async () => {
+   const status = await checkMasaLogin()
+    setMasaLoginStatus(status)
+   return status
+  }, [])
+  
+  useEffect(() => {
+    setAccount(address), [address]
+    checkMasalogin()
+   },[address, checkMasalogin])
   
     return (
       <Disclosure as="nav" className="bg-black text-white border-b border-slate-600">
@@ -68,9 +81,17 @@ export default function Header() {
                     {/* <ConnectButton showBalance={{ smallScreen: true, largeScreen: false }} /> */}
                   </div>
                 } 
+                {masaLoginStatus &&
+                  <div>
+                    <button className="bg-blue-500 p-2 rounded-lg">Connected to Masa </button>
+                    <button className="bg-blue-500 p-2 mt-4 rounded-lg mx-2" onClick={async () => await logOut()}>Disconnect</button>
+                    <TwitterConnect/>
+                  </div>
+                }
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  {!account &&
-                    <button onClick={() => setModal(true)} className="bg-blue-500 rounded-lg p-2">Connect Wallet</button>}
+                  {!account && !masaLoginStatus ?
+                    <button onClick={() => setModal(true)} className="bg-blue-500 rounded-lg p-2">Connect Wallet</button>: null
+                  }
                   <ConnectModal show={showModal} onHide={() => setModal(false)} />
                 </div>
               </div>

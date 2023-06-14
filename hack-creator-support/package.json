@@ -16,6 +16,7 @@
     "bin/*"
   ],
   "dependencies": {
+    "@masa-finance/masa-sdk": "^3.4.0",
     "chalk": "4.1.2",
     "commander": "^9.4.0",
     "fs-extra": "^10.1.0",

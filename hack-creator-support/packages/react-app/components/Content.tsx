@@ -7,7 +7,6 @@ import Supporter from './Supporter'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import ConnectModal from './Modal/ConnectModal'
 import SocialConnect from '@/SocialConnect/SocialConnect'
-import MasaIntegration from '@/SocialConnect/MasaIntegration'
 
 export default function Content(): JSX.Element {
   const queryClient = new QueryClient()
@@ -16,7 +15,6 @@ export default function Content(): JSX.Element {
     <QueryClientProvider client={queryClient}>
       <div>
       {/* <SocialConnect/> */}
-      <MasaIntegration/>
       <Hero />
       <CreatorSection />
       <FeaturedCreators />
