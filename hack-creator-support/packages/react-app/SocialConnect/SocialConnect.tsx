@@ -1,35 +1,29 @@
-import React, { useEffect, useState } from 'react'
 import { newKit } from "@celo/contractkit";
 import { ALFAJORES_ACCOUNT_PK, ALFAJORES_ACCOUNT } from "../Constants"
-import { useAccount } from 'wagmi';
-import { useSession, signIn, signOut } from "next-auth/react"
 import { OdisUtils } from '@celo/identity';
 import { OdisContextName } from "@celo/identity/lib/odis/query";
 import { AuthSigner } from "@celo/identity/lib/odis/query";
 import { WebBlsBlindingClient } from "@/utils/WebBlindingClient";
-
-
-export default function SocialConnect() {
-  const { address } = useAccount()
-  const { data: session } = useSession()
-  const [identifier, setIdentifier] = useState<string>("")
-
-  const mapIdentifierToAddress = async () => {
-    // the issuer is the account that is registering the attestation
+import toast, { Toast } from "react-hot-toast";
     
-    // create alfajores contractKit instance with the issuer private key
-    const kit = await newKit("https://alfajores-forno.celo-testnet.org");
-    kit.addAccount(ALFAJORES_ACCOUNT_PK);
-    const issuerAddress =
-        kit.web3.eth.accounts.privateKeyToAccount(ALFAJORES_ACCOUNT_PK).address;
-    kit.defaultAccount = issuerAddress;
+const kit = newKit("https://alfajores-forno.celo-testnet.org");
+kit.addAccount(ALFAJORES_ACCOUNT_PK);
+    
+const issuerAddress =
+kit.web3.eth.accounts.privateKeyToAccount(ALFAJORES_ACCOUNT_PK).address;
+kit.defaultAccount = issuerAddress;
+    
+// time at which issuer verified the user owns their identifier
+const attestationVerifiedTime = Date.now();
 
-    // information provided by user, issuer should confirm they do own the identifier
-    const userPlaintextIdentifier = session?.user && session.user.email;
-    const userAccountAddress = !address ? "" : address;
 
-    // time at which issuer verified the user owns their identifier
-    const attestationVerifiedTime = Date.now();
+export const getIdentifier = async (twitterHandle: string) => {
+     // the issuer is the account that is registering the attestation
+    
+  try {
+      // information provided by user, issuer should confirm they do own the identifier
+    const userPlaintextIdentifier = twitterHandle;
+
 
      // authSigner provides information needed to authenticate with ODIS
   const authSigner: AuthSigner = {
@@ -60,28 +54,46 @@ export default function SocialConnect() {
             blindingClient
       );
     
-    console.log(obfuscatedIdentifier)
-    setIdentifier(obfuscatedIdentifier)
+  console.log(obfuscatedIdentifier)
+  return obfuscatedIdentifier
+  } catch (error) {
+      console.log(error)
+    }
+    
+  }
+
+  export const registerIdentifier = async (twitterHandle: string, address: string) => {
+    // the issuer is the account that is registering the attestation
+
+    try {
+       // create alfajores contractKit instance with the issuer private key
+    const kit = await newKit("https://alfajores-forno.celo-testnet.org");
+    kit.addAccount(ALFAJORES_ACCOUNT_PK);
+    const issuerAddress =
+        kit.web3.eth.accounts.privateKeyToAccount(ALFAJORES_ACCOUNT_PK).address;
+    kit.defaultAccount = issuerAddress;
 
     const federatedAttestationsContract =
     await kit.contracts.getFederatedAttestations();
 
+    const obfuscatedIdentifier = await getIdentifier(twitterHandle)
     // upload identifier <-> address mapping to onchain registry - Address Mapping
    const response =  await federatedAttestationsContract
         .registerAttestationAsIssuer(
             obfuscatedIdentifier,
-            userAccountAddress as string,
+            address,
             attestationVerifiedTime
         )
      .send();
-    console.log(response)
+    console.log(response.getHash)
+    } catch (error) {
+      console.log(error)
+    } 
   }
 
-  const accountAddressLookUp = async () => {
-    const kit = await newKit("https://alfajores-forno.celo-testnet.org");
-    kit.addAccount(ALFAJORES_ACCOUNT_PK);
-
-    const federatedAttestationsContract =
+ export const accountAddressLookUp = async (identifier: string) => {
+   try {
+      const federatedAttestationsContract =
       await kit.contracts.getFederatedAttestations();
     
     const attestations = await federatedAttestationsContract.lookupAttestations(
@@ -90,15 +102,33 @@ export default function SocialConnect() {
     );
 
     // console.log(attestations.accounts);
-    return attestations.accounts[0]
-  }
-  // useEffect(() => {
-  //   accountAddressLookUp()
-  // })
+    return attestations.accounts
+   } catch (error) {
+     toast.error("Something went wrong")
+    }
+    
+ }
+  
+export const revokeAttestation = async (twitterHandle : string, address: string) => {
+  try {
+      const federatedAttestationsContract =
+        await kit.contracts.getFederatedAttestations();
+    
+            const identifier = await getIdentifier(twitterHandle);
 
-  return (
-    <div>
-      <button onClick={mapIdentifierToAddress} className='bg-blue-500 p-2'> Map Connected User</button>
-    </div>
-  )
-}
+            console.log("Identifier", identifier);
+
+            let tx = await federatedAttestationsContract.revokeAttestation(
+                identifier,
+                ALFAJORES_ACCOUNT,
+                address
+            );
+
+            let receipt = await tx.wait();
+            console.log(receipt);
+            toast.success("Revoked!", { icon: "🔥" });
+        } catch {
+            toast.error("Something Went Wrong", { icon: "😞" });
+        }
+ }
+
