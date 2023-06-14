@@ -1,0 +1,43 @@
+{
+    "name": "@celo-social-connect-dapp/react-app",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@celo/identity": "^4.1.0",
+        "@celo/rainbowkit-celo": "^1.0.0",
+        "@headlessui/react": "^1.7.14",
+        "@heroicons/react": "^2.0.18",
+        "@rainbow-me/rainbowkit": "^1.0.0",
+        "blind-threshold-bls": "https://github.com/celo-org/blind-threshold-bls-wasm#3d1013af",
+        "ethers": "^5.7.2",
+        "next": "^13.4.2",
+        "next-auth": "^4.22.1",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "react-icons": "^4.8.0",
+        "viem": "^0.3.30",
+        "wagmi": "^1.0.5"
+    },
+    "devDependencies": {
+        "@types/node": "^20.2.1",
+        "@types/react": "^18.2.6",
+        "@types/react-dom": "^18.2.4",
+        "autoprefixer": "^10.4.14",
+        "eslint": "^8.40.0",
+        "eslint-config-next": "^13.4.2",
+        "postcss": "^8.4.23",
+        "tailwindcss": "^3.3.2",
+        "typescript": "^5.0.4"
+    },
+    "browser": {
+        "@celo/poprf": false,
+        "source-map-support": false,
+        "net": false
+    }
+}
