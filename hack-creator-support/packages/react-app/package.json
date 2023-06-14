@@ -14,6 +14,7 @@
         "@celo/rainbowkit-celo": "^1.0.0",
         "@headlessui/react": "^1.7.14",
         "@heroicons/react": "^2.0.18",
+        "@masa-finance/masa-sdk": "^3.3.7",
         "@rainbow-me/rainbowkit": "^1.0.0",
         "@tanstack/react-query": "^4.29.12",
         "blind-threshold-bls": "https://github.com/celo-org/blind-threshold-bls-wasm#3d1013af",
