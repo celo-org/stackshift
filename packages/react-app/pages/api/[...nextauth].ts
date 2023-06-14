@@ -4,8 +4,8 @@ import TwitterProvider from "next-auth/providers/twitter";
 export default NextAuth ({
   providers: [
     TwitterProvider({
-      clientId: "YTkzTEpQWEU2MzgwRXZxNS13SEI6MTpjaQ",
-      clientSecret: "HHqoCsPlb24LoD1CL9aMyn4W4HkCOzcagL2cOiQgH2VEOXoo2x"
+      clientId: process.env.TWITTER_ID,
+      clientSecret: process.env.TWITTER_SECRET
     })
   ],
   callbacks: {
