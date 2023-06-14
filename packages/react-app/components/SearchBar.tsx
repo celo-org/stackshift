@@ -6,7 +6,7 @@ const SearchBar = () => {
       <input
         type="text"
         className="w-3/5 p-2 rounded-l-md outline-none"
-        placeholder="Find your friend on Celo"
+        placeholder="Twitter handle only (not @)"
       />
       <button className="w-2/5 p-2 bg-prosperity hover:bg-yellow-400  rounded-md text-black">
         Search
