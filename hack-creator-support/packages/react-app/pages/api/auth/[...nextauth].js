@@ -48,7 +48,7 @@ import TwitterProvider from 'next-auth/providers/twitter'
           return token;
       },
       async session({ session, token, user }) {
-          console.log("Session", token);
+          console.log("Session", token.username);
           if (token.username) {
               session.username = token.username;
           }

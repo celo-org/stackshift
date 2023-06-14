@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { newKit } from "@celo/contractkit";
 import { ALFAJORES_ACCOUNT_PK, ALFAJORES_ACCOUNT } from "../Constants"
 import { useAccount } from 'wagmi';
@@ -6,6 +6,7 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import { OdisUtils } from '@celo/identity';
 import { OdisContextName } from "@celo/identity/lib/odis/query";
 import { AuthSigner } from "@celo/identity/lib/odis/query";
+import { WebBlsBlindingClient } from "@/utils/WebBlindingClient";
 
 
 export default function SocialConnect() {
@@ -25,7 +26,7 @@ export default function SocialConnect() {
 
     // information provided by user, issuer should confirm they do own the identifier
     const userPlaintextIdentifier = session?.user && session.user.email;
-    const userAccountAddress = address;
+    const userAccountAddress = !address ? "" : address;
 
     // time at which issuer verified the user owns their identifier
     const attestationVerifiedTime = Date.now();
@@ -40,6 +41,12 @@ export default function SocialConnect() {
     OdisContextName.ALFAJORES,
   );
     
+    const blindingClient = new WebBlsBlindingClient(
+                serviceContext.odisPubKey
+            );
+
+            await blindingClient.init();
+    
     // get obfuscated identifier from plaintext identifier by querying ODIS
     const { obfuscatedIdentifier } =
         await OdisUtils.Identifier.getObfuscatedIdentifier(
@@ -47,7 +54,10 @@ export default function SocialConnect() {
             OdisUtils.Identifier.IdentifierPrefix.TWITTER,
             issuerAddress,
             authSigner,
-            serviceContext
+          serviceContext,
+            undefined,
+            undefined,
+            blindingClient
       );
     
     console.log(obfuscatedIdentifier)
@@ -57,13 +67,14 @@ export default function SocialConnect() {
     await kit.contracts.getFederatedAttestations();
 
     // upload identifier <-> address mapping to onchain registry - Address Mapping
-    await federatedAttestationsContract
+   const response =  await federatedAttestationsContract
         .registerAttestationAsIssuer(
             obfuscatedIdentifier,
             userAccountAddress as string,
             attestationVerifiedTime
         )
-        .send();
+     .send();
+    console.log(response)
   }
 
   const accountAddressLookUp = async () => {
@@ -78,8 +89,12 @@ export default function SocialConnect() {
         [ALFAJORES_ACCOUNT]
     );
 
-    console.log(attestations.accounts);
+    // console.log(attestations.accounts);
+    return attestations.accounts[0]
   }
+  // useEffect(() => {
+  //   accountAddressLookUp()
+  // })
 
   return (
     <div>

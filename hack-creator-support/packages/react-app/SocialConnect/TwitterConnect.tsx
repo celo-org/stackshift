@@ -2,12 +2,12 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import React, { useState, useEffect } from "react"
 
 export default function TwitterConnect() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
 
   if (session) {
     return (
       <>
-        Signed in as {session && session.user?.email} <br />
+        Signed in as {session && session.user?.username} <br />
         <button className="bg-yellow-500 p-2 rounded-lg mr-2" onClick={() => signOut()}>Sign out</button>
       </>
     )

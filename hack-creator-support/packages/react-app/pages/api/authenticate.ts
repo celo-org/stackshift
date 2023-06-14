@@ -5,8 +5,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 dotenv.config();
 
 const authClient = new auth.OAuth2User({
-    client_id: process.env.CLIENT_ID as string,
-    client_secret: process.env.CLIENT_SECRET as string,
+    client_id: process.env.TWITTER_CONSUMER_KEY as string,
+    client_secret: process.env.TWITTER_CONSUMER_SECRET as string,
     callback: "http://127.0.0.1:3000/callback",
     scopes: ["tweet.read", "users.read"],
 });
