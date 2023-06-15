@@ -9,16 +9,24 @@
         "lint": "next lint"
     },
     "dependencies": {
-        "@celo/rainbowkit-celo": "^1.0.0",
-        "@headlessui/react": "^1.7.14",
+        "@celo/contractkit": "^3.2.0",
+        "@celo/identity": "^4.1.0",
+        "@celo/rainbowkit-celo": "^0.11.0",
+        "@headlessui/react": "^1.7.15",
         "@heroicons/react": "^2.0.18",
-        "@rainbow-me/rainbowkit": "^1.0.0",
+        "@rainbow-me/rainbowkit": "^0.12.2",
+        "axios": "^1.4.0",
+        "blind-threshold-bls": "^0.0.1-security",
+        "dotenv": "^16.1.4",
         "ethers": "^5.7.2",
         "next": "^13.4.2",
+        "next-auth": "^4.22.1",
         "react": "18.2.0",
         "react-dom": "18.2.0",
+        "react-hot-toast": "^2.4.1",
+        "twitter-api-sdk": "^1.2.1",
         "viem": "^0.3.30",
-        "wagmi": "^1.0.5"
+        "wagmi": "^0.12.2"
     },
     "devDependencies": {
         "@types/node": "^20.2.1",
