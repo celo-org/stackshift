@@ -56,11 +56,11 @@ export const getIdentifier = async (twitterHandle: string) => {
     
     console.log(obfuscatedIdentifier)
     toast(` Successfully obfuscated, ${obfuscatedIdentifier}`)
-  return obfuscatedIdentifier
-  } catch (error) {
-      toast.error(` Error occured ${error}`)
-    }
-    
+    return obfuscatedIdentifier
+    } catch (error) {
+        toast.error(` Error occured ${error}`)
+      }
+      
   }
 
   export const registerIdentifier = async (twitterHandle: string, address: string) => {
@@ -87,29 +87,44 @@ export const getIdentifier = async (twitterHandle: string) => {
         )
      .send();
       console.log(response.getHash)
-      toast(` Successfully register, ${response.getHash}`)
+      toast.success(` Successfully register, ${response.getHash}`)
     } catch (error) {
       toast.error(` Error occured ${error}`)
       console.log(error)
     } 
   }
 
- export const accountAddressLookUp = async (identifier: string) => {
-   try {
-      const federatedAttestationsContract =
-      await kit.contracts.getFederatedAttestations();
-    
-    const attestations = await federatedAttestationsContract.lookupAttestations(
-      identifier,
-        [ALFAJORES_ACCOUNT]
-    );
+ export const accountAddressLookUp = async (twitterHandle: string) => {
+    try {
+            const obfuscatedIdentifier = await getIdentifier(twitterHandle);
+              const federatedAttestationsContract =
+                await kit.contracts.getFederatedAttestations();
 
-    // console.log(attestations.accounts);
-    return attestations.accounts
-   } catch (error) {
-      toast.error(` Error occured ${error}`)
-    }
-    
+            // query onchain mappings
+            const attestations =
+                federatedAttestationsContract.lookupAttestations(
+                    obfuscatedIdentifier as string,
+                    [issuerAddress]
+              );
+                  console.log((await attestations).accounts)
+                  return (await attestations).accounts
+            // toast.promise(attestations, {
+            //     loading: () => "Searching...",
+            //     success: (data) => {
+            //         let accounts = data.accounts;
+            //         if (accounts.length > 0) {
+            //             // setLookupResult(accounts);
+            //           return accounts
+            //         } else {
+            //             toast.error("No Accounts found", { icon: "🧐" });
+            //         }
+            //     },
+            //     error: (err) => "Something Went Wrong",
+            // });
+      
+        } catch {
+            toast.error("Something went wrong", { icon: "😞" });
+        } 
  }
   
 export const revokeAttestation = async (twitterHandle : string, address: string) => {
@@ -123,7 +138,7 @@ export const revokeAttestation = async (twitterHandle : string, address: string)
 
             let tx = await federatedAttestationsContract.revokeAttestation(
                 identifier as string,
-                ALFAJORES_ACCOUNT,
+                issuerAddress,
                 address
             );
 

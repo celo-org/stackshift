@@ -1,5 +1,6 @@
 import { Masa } from "@masa-finance/masa-sdk";
 import { providers } from "ethers";
+import { resolve } from "path";
 
 // with metamask
 export const MasaIntegration = () => {
@@ -23,13 +24,8 @@ export const LoginWithMasa = async () => {
     try {
     const masa  =   MasaIntegration()
     const connect = await masa.session.login()
-    console.log(connect.address)
-    
-    const identity = await masa.identity.createWithSoulName("CELO", "glory", 20000)
-    // console.log(identity)
-        const account = await masa?.soulName.resolve("0xFa31f1b8CbC9A0310Dff7F8bedD33BA8Aab44372")
-        console.log(account)
-        window.location.reload()
+    console.log(connect?.address)
+    window.location.reload()
     } catch (error) {
         console.log(error)
     }
@@ -49,4 +45,20 @@ export const logOut = async () => {
     const signout = await masa.session.logout()
     console.log(signout)
     window.location.reload()
+}
+
+ export const masaConnectedAccount = async () => {
+    const masa = MasaIntegration()
+    console.log(await masa?.config.signer.getAddress())
+    return await masa?.config.signer.getAddress()
+ }
+  
+export const createSoulName = async (soulName : string) => {       
+    const identity = await masa.identity.createWithSoulName("CELO", soulName, 20000)
+    return identity
+}
+ 
+export const resolveDomain = async (address : string) => {
+    const account = await masa?.soulName.resolve(address)
+    return account
 }
