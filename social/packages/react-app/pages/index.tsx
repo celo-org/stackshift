@@ -1,359 +1,270 @@
-import { useAccount } from "wagmi";
-import { useSession, signIn, signOut } from "next-auth/react";
-import { useContext, useEffect, useState } from "react";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { OdisContext } from "@/context/OdisContext";
-import { OdisUtils } from "@celo/identity";
-import { ethers } from "ethers";
-import { WebBlsBlindingClient } from "@/utils/WebBlindingClient";
-import { IdentifierPrefix } from "@celo/identity/lib/odis/identifier";
-import { toast } from "react-hot-toast";
+import {
+  ALFAJORES_CUSD_ADDRESS,
+  ALFAJORES_RPC,
+  FA_CONTRACT,
+  FA_PROXY_ADDRESS,
+  ODIS_PAYMENTS_CONTRACT,
+  ODIS_PAYMENTS_PROXY_ADDRESS,
+  STABLE_TOKEN_CONTRACT,
+  ISSUER_PRIVATE_KEY,
+  DEK_PRIVATE_KEY
+} from '../utils/constants';
+import { OdisUtils } from '@celo/identity';
+import {
+  AuthenticationMethod,
+  AuthSigner,
+  OdisContextName
+} from '@celo/identity/lib/odis/query';
+import { ethers, Wallet } from 'ethers';
+import { WebBlsBlindingClient } from '../utils/webBlindingClient';
+import { parseEther } from 'viem';
+import { useSession, signIn, signOut } from 'next-auth/react';
+import { LockOpenIcon, LockClosedIcon } from '@heroicons/react/24/outline';
+import { useAccount, useSendTransaction } from 'wagmi';
+import { ISocialConnect } from '@/utils/ISocialConnect';
 
-let ONE_CENT_CUSD = ethers.utils.parseEther("0.01");
-const NOW_TIMESTAMP = Math.floor(new Date().getTime() / 1000);
+import { useEffect, useState } from 'react';
 
-export default function Home({}) {
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [lookupValue, setLookupValue] = useState("");
-    const [lookupResult, setLookupResult] = useState([]);
-    const {
-        issuer,
-        serviceContext,
-        authSigner,
-        odisPaymentsContract,
-        stableTokenContract,
-        federatedAttestationsContract,
-    } = useContext(OdisContext);
+export default function Home() {
+  let [sc, setSc] = useState<ISocialConnect>();
+  let [phone, setPhone] = useState('');
+  const [amount, setAmount] = useState('');
 
-    const { isConnected, address } = useAccount();
-    const { data: session, status } = useSession();
+  // step no. 1
+  let { address } = useAccount();
 
-    useEffect(() => {
-        setIsLoaded(true);
-    }, []);
+  // step no. 2
+  let { data: session } = useSession();
+  let [socialIdentifier, setSocialIdentifier] = useState('');
 
-    if (!isLoaded) {
-        return null;
-    }
+  // step no. 3
+  // let [identifierToSend, setIdentifierToSend] = useState("");
+  let [addressToSend, setAddressToSend] = useState('');
 
-    function handleLookupValueChange({ target }) {
-        let { value } = target;
-        setLookupValue(value);
-    }
-
-    async function checkAndTopUpODISQuota() {
-        const { remainingQuota } = await OdisUtils.Quota.getPnpQuotaStatus(
-            issuer?.address,
-            authSigner,
-            serviceContext
-        );
-        console.log(remainingQuota);
-
-        if (remainingQuota < 1) {
-            const currentAllowance = await stableTokenContract.allowance(
-                issuer.address,
-                odisPaymentsContract.address
-            );
-            console.log("current allowance:", currentAllowance.toString());
-            let enoughAllowance: boolean = false;
-
-            if (ONE_CENT_CUSD.gt(currentAllowance)) {
-                const approvalTxReceipt = await stableTokenContract
-                    .increaseAllowance(
-                        odisPaymentsContract.address,
-                        ONE_CENT_CUSD
-                    )
-                    .sendAndWaitForReceipt();
-                console.log("approval status", approvalTxReceipt.status);
-                enoughAllowance = approvalTxReceipt.status;
-            } else {
-                enoughAllowance = true;
-            }
-
-            // increase quota
-            if (enoughAllowance) {
-                const odisPayment = await odisPaymentsContract
-                    .payInCUSD(issuer.address, ONE_CENT_CUSD)
-                    .sendAndWaitForReceipt();
-                console.log("odis payment tx status:", odisPayment.status);
-                console.log(
-                    "odis payment tx hash:",
-                    odisPayment.transactionHash
-                );
-            } else {
-                throw "cUSD approval failed";
-            }
-        }
-    }
-
-    async function getIdentifier(twitterHandle: string) {
-        try {
-            await checkAndTopUpODISQuota();
-
-            const blindingClient = new WebBlsBlindingClient(
-                serviceContext.odisPubKey
-            );
-
-            await blindingClient.init();
-
-            const { obfuscatedIdentifier } =
-                await OdisUtils.Identifier.getObfuscatedIdentifier(
-                    twitterHandle,
-                    IdentifierPrefix.TWITTER,
-                    issuer.address,
-                    authSigner,
-                    serviceContext,
-                    undefined,
-                    undefined,
-                    blindingClient
-                );
-
-            return obfuscatedIdentifier;
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    async function registerIdentifier(twitterHandle: string, address: string) {
-        try {
-            const identifier = await getIdentifier(twitterHandle);
-
-            console.log("Identifier", identifier);
-
-            let tx =
-                await federatedAttestationsContract.registerAttestationAsIssuer(
-                    identifier,
-                    address,
-                    NOW_TIMESTAMP
-                );
-
-            let receipt = await tx.wait();
-            console.log(receipt);
-            toast.success("Registered!", { icon: "🔥" });
-        } catch {
-            toast.error("Something Went Wrong", { icon: "😞" });
-        }
-    }
-
-    async function revokeIdentifier(twitterHandle: string, address: string) {
-        try {
-            const identifier = await getIdentifier(twitterHandle);
-
-            console.log("Identifier", identifier);
-
-            let tx = await federatedAttestationsContract.revokeAttestation(
-                identifier,
-                issuer.address,
-                address
-            );
-
-            let receipt = await tx.wait();
-            console.log(receipt);
-            toast.success("Revoked!", { icon: "🔥" });
-        } catch {
-            toast.error("Something Went Wrong", { icon: "😞" });
-        }
-    }
-
-    async function lookupAddresses(twitterHandle: string) {
-        try {
-            const obfuscatedIdentifier = await getIdentifier(twitterHandle);
-
-            // query onchain mappings
-            const attestations =
-                federatedAttestationsContract.lookupAttestations(
-                    obfuscatedIdentifier,
-                    [issuer.address]
-                );
-
-            toast.promise(attestations, {
-                loading: () => "Searching...",
-                success: (data) => {
-                    let accounts = data.accounts;
-                    if (accounts.length > 0) {
-                        setLookupResult(accounts);
-                    } else {
-                        toast.error("No Accounts found", { icon: "🧐" });
-                    }
-                },
-                error: (err) => "Something Went Wrong",
-            });
-        } catch {
-            toast.error("Something went wrong", { icon: "😞" });
-        }
-    }
-
-    return (
-        <div className="flex flex-col space-y-4">
-            <div className="flex space-x-4">
-                <div className="w-[400px] border border-black p-4 flex-col flex space-y-2">
-                    <h2>Registration</h2>
-                    <div className="border w-full space-y-4 p-4 flex items-center flex-col border-black">
-                        {isConnected && <h3>Connected as:</h3>}
-                        <ConnectButton showBalance={false} />
-                    </div>
-                    <div className="border w-full space-y-4 p-4 flex flex-col border-black">
-                        {status === "unauthenticated" ? (
-                            <button
-                                onClick={() => signIn("twitter")}
-                                className="border-2 border-black px-4 py-2"
-                            >
-                                Sign in with Twitter
-                            </button>
-                        ) : status === "loading" ? (
-                            <h1>Loading...</h1>
-                        ) : (
-                            <>
-                                <h3>Signed as:</h3>
-                                <div className="flex space-x-2 w-full items-center">
-                                    <img
-                                        style={{
-                                            width: "50px",
-                                            height: "50px",
-                                            borderRadius: "100%",
-                                        }}
-                                        src={session!.user?.image as string}
-                                    />
-                                    <div className="flex flex-col">
-                                        <h2>{session!.user!.name}</h2>
-                                        <h3>{`@${session!.username.toLowerCase()}`}</h3>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col w-full space-y-2">
-                                    <button
-                                        className="border-2 border-black px-4 py-2"
-                                        onClick={() => signOut()}
-                                    >
-                                        Sign Out
-                                    </button>
-                                </div>
-                            </>
-                        )}
-                    </div>
-                    {isConnected && status === "authenticated" && (
-                        <button
-                            onClick={() =>
-                                registerIdentifier(
-                                    session.username.toLowerCase(),
-                                    address
-                                )
-                            }
-                            className="border-2 border-black px-4 py-2"
-                        >
-                            Link Wallet
-                        </button>
-                    )}
-                </div>
-                <div className="w-[400px] border justify-between border-black p-4 flex-col flex space-y-2">
-                    <div className="flex flex-col space-y-2">
-                        <h2>Lookup</h2>
-                        <input
-                            className="border border-black px-4 py-2"
-                            placeholder="Twitter handle only (not @)"
-                            value={lookupValue}
-                            onChange={handleLookupValueChange}
-                        />
-                    </div>
-                    <div className="flex flex-col justify-start h-full">
-                        {lookupResult.map((address) => {
-                            return (
-                                <div className="flex border py-2 px-4 border-black">
-                                    <a
-                                        href={`https://explorer.celo.org/address/${address}`}
-                                        target="_blank"
-                                        key={address}
-                                    >
-                                        <h4 className="underline">{`${(
-                                            address as string
-                                        ).slice(0, 10)}...${(
-                                            address as string
-                                        ).slice(-10)}`}</h4>
-                                    </a>
-                                </div>
-                            );
-                        })}
-                    </div>
-                    <button
-                        onClick={() => lookupAddresses(lookupValue)}
-                        className="border-2 border-black px-4 py-2"
-                        disabled={lookupValue == ""}
-                    >
-                        Search
-                    </button>
-                </div>
-                <div className="w-[400px] border border-black p-4 flex-col flex space-y-2">
-                    <h2>Revoke</h2>
-                    <div className="border w-full space-y-4 p-4 flex items-center flex-col border-black">
-                        {isConnected && <h3>Connected as:</h3>}
-                        <ConnectButton showBalance={false} />
-                    </div>
-                    <div className="border w-full space-y-4 p-4 flex flex-col border-black">
-                        {status === "unauthenticated" ? (
-                            <button
-                                onClick={() => signIn("twitter")}
-                                className="border-2 border-black px-4 py-2"
-                            >
-                                Sign in with Twitter
-                            </button>
-                        ) : status === "loading" ? (
-                            <h1>Loading...</h1>
-                        ) : (
-                            <>
-                                <h3>Signed as:</h3>
-                                <div className="flex space-x-2 w-full items-center">
-                                    <img
-                                        style={{
-                                            width: "50px",
-                                            height: "50px",
-                                            borderRadius: "100%",
-                                        }}
-                                        src={session!.user?.image as string}
-                                    />
-                                    <div className="flex flex-col">
-                                        <h2>{session!.user!.name}</h2>
-                                        <h3>{`@${session!.username.toLowerCase()}`}</h3>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col w-full space-y-2">
-                                    <button
-                                        className="border-2 border-black px-4 py-2"
-                                        onClick={() => signOut()}
-                                    >
-                                        Sign Out
-                                    </button>
-                                </div>
-                            </>
-                        )}
-                    </div>
-                    {isConnected && status === "authenticated" && (
-                        <button
-                            onClick={() =>
-                                revokeIdentifier(
-                                    session.username.toLowerCase(),
-                                    address
-                                )
-                            }
-                            className="border-2 border-black px-4 py-2"
-                        >
-                            Unlink Wallet
-                        </button>
-                    )}
-                </div>
-            </div>
-            {issuer && (
-                <div className="border flex py-2 justify-center border-black">
-                    <h3>
-                        Issuer Address:{" "}
-                        <a
-                            href={`https://explorer.celo.org/alfajores/address/${issuer.address}`}
-                            className="underline"
-                            target="_blank"
-                        >
-                            {issuer.address}
-                        </a>
-                    </h3>
-                </div>
-            )}
-        </div>
+  useEffect(() => {
+    let provider = new ethers.providers.JsonRpcProvider(ALFAJORES_RPC);
+    let issuer = new Wallet(ISSUER_PRIVATE_KEY!, provider);
+    let serviceContext = OdisUtils.Query.getServiceContext(
+      OdisContextName.ALFAJORES
     );
+    let blindingClient = new WebBlsBlindingClient(serviceContext.odisPubKey);
+    let quotaFee = ethers.utils.parseEther('0.01');
+    let authSigner: AuthSigner = {
+      authenticationMethod: AuthenticationMethod.ENCRYPTION_KEY,
+      rawKey: DEK_PRIVATE_KEY!
+    };
+    let federatedAttestationsContract = new ethers.Contract(
+      FA_PROXY_ADDRESS!,
+      FA_CONTRACT.abi,
+      issuer
+    );
+    let odisPaymentsContract = new ethers.Contract(
+      ODIS_PAYMENTS_PROXY_ADDRESS!,
+      ODIS_PAYMENTS_CONTRACT.abi,
+      issuer
+    );
+    let stableTokenContract = new ethers.Contract(
+      ALFAJORES_CUSD_ADDRESS!,
+      STABLE_TOKEN_CONTRACT.abi,
+      issuer
+    );
+    let sCVars: ISocialConnect = {
+      issuerAddress: issuer.address,
+      federatedAttestationsContract,
+      odisPaymentsContract,
+      stableTokenContract,
+      authSigner,
+      serviceContext,
+      quotaFee,
+      blindingClient
+    };
+    setSc(sCVars);
+  }, []);
+
+  // const bigintAmount: bigint = BigInt(amount.toString());
+  let { sendTransaction } = useSendTransaction({
+    to: addressToSend,
+    value: parseEther('1', 'wei')
+    // value: ethers.utils.parseUnits(amount, 18)
+    // value: ethers.utils.parseEther(amount)
+  });
+
+  async function checkAndTopUpODISQuota() {
+    const { remainingQuota } = await OdisUtils.Quota.getPnpQuotaStatus(
+      sc!.issuerAddress,
+      sc!.authSigner,
+      sc!.serviceContext
+    );
+    if (remainingQuota < 1) {
+      let currentAllowance = await sc!.stableTokenContract.allowance(
+        sc!.issuerAddress,
+        sc!.odisPaymentsContract.address
+      );
+      let enoughAllowance = false;
+      if (sc!.quotaFee.gt(currentAllowance)) {
+        let approvalTxReceipt = await sc!.stableTokenContract.increaseAllowance(
+          sc!.odisPaymentsContract.address,
+          sc!.quotaFee
+        );
+        enoughAllowance = approvalTxReceipt.status;
+      } else {
+        enoughAllowance = true;
+      }
+      if (enoughAllowance) {
+        let odisPayment = await sc!.odisPaymentsContract.payInCUSD(
+          sc!.issuerAddress,
+          sc!.quotaFee
+        );
+      } else {
+        throw 'ODIS => cUSD approval failed';
+      }
+    }
+  }
+
+  async function getObfuscatedIdentifier(identifier: string) {
+    let obfuscatedIdentifier = (
+      await OdisUtils.Identifier.getObfuscatedIdentifier(
+        identifier,
+        OdisUtils.Identifier.IdentifierPrefix.PHONE_NUMBER,
+        sc!.issuerAddress,
+        sc!.authSigner,
+        sc!.serviceContext,
+        undefined,
+        undefined,
+        sc!.blindingClient
+      )
+    ).obfuscatedIdentifier;
+    return obfuscatedIdentifier;
+  }
+
+  async function registerAttestation(identifier: string, account: string) {
+    // check and top up ODIS quota
+    await checkAndTopUpODISQuota();
+    let nowTimestamp = Math.floor(new Date().getTime() / 1000);
+    let obfuscatedIdentifier = getObfuscatedIdentifier(identifier);
+    await sc!.federatedAttestationsContract.registerAttestationAsIssuer(
+      obfuscatedIdentifier,
+      account,
+      nowTimestamp
+    );
+    alert('Address mapped.');
+  }
+
+  async function lookupAddress() {
+    let obfuscatedIdentifier = getObfuscatedIdentifier(socialIdentifier);
+    let attestations =
+      await sc!.federatedAttestationsContract.lookupAttestations(
+        obfuscatedIdentifier,
+        [sc!.issuerAddress]
+      );
+    let [latestAddress] = attestations.accounts;
+    setAddressToSend(latestAddress);
+  }
+
+  async function deregisterIdentifier(identifier: string) {
+    try {
+      let obfuscatedIdentifier = getObfuscatedIdentifier(identifier);
+      await sc!.federatedAttestationsContract.revokeAttestation(
+        obfuscatedIdentifier,
+        sc!.issuerAddress,
+        address
+      );
+      alert('Address de-registered.');
+    } catch (error) {}
+  }
+
+  return (
+    <main>
+      <div>
+        <div>
+          <div>
+            <div className=' flex flex-col items-center'>
+              <h1 className=' text-[4rem] text-center font-bold'>
+                Social Connect DAPP
+              </h1>
+            </div>
+          </div>
+
+          <div></div>
+        </div>
+        {/* registration part */}
+        <div>
+          <p className=' pt-10 font-semibold text-[20px]'>Registration</p>
+          <p> (Skip if already registered)</p>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              registerAttestation(phone, address!);
+            }}
+            className=' flex gap-10'
+          >
+            <input
+              type='tel'
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder='Enter phone number'
+              className=' border-red-300 border-2 py-4 px-2 rounded-lg w-[500px]'
+            />
+
+            <button
+              type='submit'
+              className=' border-black border-2 px-8  rounded-lg text-[25px]'
+            >
+              Register
+            </button>
+          </form>
+        </div>
+
+        {/* lookup part */}
+        <div>
+          <p className=' pt-10 font-semibold text-[20px]'>Verify Recepient</p>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              lookupAddress();
+            }}
+            className=' flex gap-10'
+          >
+            <input
+              type='tel'
+              onChange={(e) => setSocialIdentifier(e.target.value)}
+              placeholder="Enter reciever's phone number"
+              className='  border-red-300 border-2 py-4 px-2 rounded-lg w-[500px]'
+            />
+
+            <button
+              type='submit'
+              className=' border-black border-2 px-8  rounded-lg text-[25px]'
+            >
+              Search
+            </button>
+          </form>
+
+          <div>
+            <p className=' pt-10 font-semibold text-[20px]'>Send Celo</p>
+            <p className=' mb-5 bg-slate-600 text-white py-4 px-2 rounded-lg w-[500px]'>
+              Verified recipient address: {addressToSend}
+            </p>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                sendTransaction();
+              }}
+              className=' flex '
+            >
+              {/* <p  className="  border-red-300 border-2 py-4 px-2 rounded-lg w-[500px]">
+                hello
+                </p> */}
+
+              <button
+                type='submit'
+                className=' border-black border-2 px-8  rounded-lg text-[25px] w-[500px]'
+              >
+                Send 1 celo
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
 }
