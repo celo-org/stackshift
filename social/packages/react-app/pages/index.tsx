@@ -18,8 +18,8 @@ import {
 import { ethers, Wallet } from 'ethers';
 import { WebBlsBlindingClient } from '../utils/webBlindingClient';
 import { parseEther } from 'viem';
-import { useSession, signIn, signOut } from 'next-auth/react';
-import { LockOpenIcon, LockClosedIcon } from '@heroicons/react/24/outline';
+import { useSession } from 'next-auth/react';
+
 import { useAccount, useSendTransaction } from 'wagmi';
 import { ISocialConnect } from '@/utils/ISocialConnect';
 
@@ -30,15 +30,10 @@ export default function Home() {
   let [phone, setPhone] = useState('');
   const [amount, setAmount] = useState('');
 
-  // step no. 1
   let { address } = useAccount();
 
-  // step no. 2
-  let { data: session } = useSession();
   let [socialIdentifier, setSocialIdentifier] = useState('');
 
-  // step no. 3
-  // let [identifierToSend, setIdentifierToSend] = useState("");
   let [addressToSend, setAddressToSend] = useState('');
 
   useEffect(() => {
@@ -81,12 +76,9 @@ export default function Home() {
     setSc(sCVars);
   }, []);
 
-  // const bigintAmount: bigint = BigInt(amount.toString());
   let { sendTransaction } = useSendTransaction({
     to: addressToSend,
-    value: parseEther('1', 'wei')
-    // value: ethers.utils.parseUnits(amount, 18)
-    // value: ethers.utils.parseEther(amount)
+    value: parseEther('4', 'wei')
   });
 
   async function checkAndTopUpODISQuota() {
@@ -138,7 +130,6 @@ export default function Home() {
   }
 
   async function registerAttestation(identifier: string, account: string) {
-    // check and top up ODIS quota
     await checkAndTopUpODISQuota();
     let nowTimestamp = Math.floor(new Date().getTime() / 1000);
     let obfuscatedIdentifier = getObfuscatedIdentifier(identifier);
@@ -179,18 +170,14 @@ export default function Home() {
         <div>
           <div>
             <div className=' flex flex-col items-center'>
-              <h1 className=' text-[4rem] text-center font-bold'>
+              <h1 className=' text-[2rem] text-center font-bold'>
                 Social Connect DAPP
               </h1>
             </div>
           </div>
-
-          <div></div>
         </div>
-        {/* registration part */}
         <div>
-          <p className=' pt-10 font-semibold text-[20px]'>Registration</p>
-          <p> (Skip if already registered)</p>
+          <p className=' pt-10 font-semibold text-[20px]'>Register</p>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -201,20 +188,19 @@ export default function Home() {
             <input
               type='tel'
               onChange={(e) => setPhone(e.target.value)}
-              placeholder='Enter phone number'
-              className=' border-red-300 border-2 py-4 px-2 rounded-lg w-[500px]'
+              placeholder='Enter Mobile Number Here'
+              className=' border-red-300 border-2 py-4 h-12 w-80  px-2 rounded-lg w-[500px]'
             />
 
             <button
               type='submit'
-              className=' border-black border-2 px-8  rounded-lg text-[25px]'
+              className=' border-blue border-4 px-8 bg-blue-500 h-12 w-32  rounded-lg text-[14px]'
             >
               Register
             </button>
           </form>
         </div>
 
-        {/* lookup part */}
         <div>
           <p className=' pt-10 font-semibold text-[20px]'>Verify Recepient</p>
           <form
@@ -227,22 +213,22 @@ export default function Home() {
             <input
               type='tel'
               onChange={(e) => setSocialIdentifier(e.target.value)}
-              placeholder="Enter reciever's phone number"
-              className='  border-red-300 border-2 py-4 px-2 rounded-lg w-[500px]'
+              placeholder='Enter Mobile  Number of Receiver'
+              className='  border-red-300 border-2 py-4 px-2 h-12 w-80 rounded-lg w-[500px]'
             />
 
             <button
               type='submit'
-              className=' border-black border-2 px-8  rounded-lg text-[25px]'
+              className=' border-blue border-4 px-8 bg-blue-500 h-12 w-32  rounded-lg text-[14px]'
             >
               Search
             </button>
           </form>
 
           <div>
-            <p className=' pt-10 font-semibold text-[20px]'>Send Celo</p>
-            <p className=' mb-5 bg-slate-600 text-white py-4 px-2 rounded-lg w-[500px]'>
-              Verified recipient address: {addressToSend}
+            {/* <p className=' pt-10 font-semibold text-[20px]'>Send Celo Token</p> */}
+            <p className=' mb-5  text-black py-4 px-2 rounded-lg w-[500px]'>
+              Recepient Address: {addressToSend}
             </p>
             <form
               onSubmit={(e) => {
@@ -251,15 +237,11 @@ export default function Home() {
               }}
               className=' flex '
             >
-              {/* <p  className="  border-red-300 border-2 py-4 px-2 rounded-lg w-[500px]">
-                hello
-                </p> */}
-
               <button
                 type='submit'
-                className=' border-black border-2 px-8  rounded-lg text-[25px] w-[500px]'
+                className=' border-blue border-4 px-8 bg-blue-500 h-12 w-32  rounded-lg text-[14px]'
               >
-                Send 1 celo
+                Send
               </button>
             </form>
           </div>
