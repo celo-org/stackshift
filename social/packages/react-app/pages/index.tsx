@@ -221,7 +221,7 @@ export default function Home() {
               type='submit'
               className=' border-blue border-4 px-8 bg-blue-500 h-12 w-32  rounded-lg text-[14px]'
             >
-              Search
+              Verify
             </button>
           </form>
 
